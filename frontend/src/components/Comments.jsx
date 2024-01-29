@@ -11,6 +11,7 @@ import subreddit from "../assets/subreddit.png"
 import LikeDislike123 from "./LikeDislikeComponent";
 import { useNavigate } from "react-router-dom";
 import CommunityInfoCard from "./Community/CommunityInfoCard";
+import CommentCard from "./Cards/CommentCard";
 
 function CommentSection(params) {
 
@@ -111,11 +112,11 @@ function CommentSection(params) {
                                 <EllipsisHorizontalIcon className="w-6 h-6" />
                             </button>
                         </div>
-                        <div className="flex flex-col gap-2 w-full mx-3">
+                        <div className="flex flex-col gap-2 w-full mx-3 mb-20">
                             <p className="text-start">Comment as  <a className="text-sky-500" href="">{loggedUser.username}</a></p>
                             <textarea className="w-full min-h-[17rem] bg-transparent border rounded-md border-neutral-700 text-base" />
                         </div>
-                        
+                        <CommentCard/>
                     </div>
                 </div>
                 <div className="hidden lg:flex flex-col w-1/3 h-screen gap-7">

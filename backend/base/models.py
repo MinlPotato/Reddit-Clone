@@ -24,9 +24,9 @@ class Post(models.Model):
     title = models.CharField(max_length=70)
     description = models.TextField()
     date_created = models.DateTimeField(default=timezone.now)
-    votes = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0, blank=True, null=True)
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    dislikes = models.IntegerField(default=0, blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     community_id = models.ForeignKey(Community, on_delete=models.CASCADE)
 
@@ -66,19 +66,28 @@ class Post(models.Model):
         return self.community_id.name
 
 
-#class Image(models.Model):
-#   image = models.ImageField(upload_to=)
 
 class Comment(models.Model):
     description = models.TextField(max_length=255)
     date_created = models.DateTimeField(default=timezone.now)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey(
+        'self', on_delete=models.CASCADE, blank=True, null=True)
+    votes = models.IntegerField(default=0, blank=True, null=True)
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    dislikes = models.IntegerField(default=0, blank=True, null=True)
 
-    def __str__(self):
-        return self.comment
-    
+    @property
+    def update_votes(self):
+        likes = self.feedback.filter(type="L").count()
+        dislikes = self.feedback.filter(type="D").count()
+
+        self.likes = likes
+        self.dislikes = dislikes
+        self.votes = likes - dislikes
+        self.save()
+ 
 
 
 class Feedback(models.Model):

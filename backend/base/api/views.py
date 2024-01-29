@@ -87,6 +87,17 @@ def getPostByCommunity(request, pk):
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data)
 
+
+class getPostsByCommunityList(generics.ListAPIView):
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ['date_created', 'votes']
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Post.objects.filter(community_id=pk)
+
+
 @api_view(['POST'])
 def publishPost(request):
     if request.method == 'POST':
@@ -122,11 +133,14 @@ def getUser(request, pk):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def getPostsByUser(request, pk):
-    posts = Post.objects.filter(user_id=pk)
-    serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
+class getPostsByUserList(generics.ListAPIView):
+    serializer_class = PostSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ['date_created', 'votes']
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Post.objects.filter(user_id=pk)
 
 
 @api_view(['POST'])

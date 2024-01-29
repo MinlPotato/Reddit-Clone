@@ -7,8 +7,6 @@ function UserCard(params) {
     
     const infoCard = params.info
 
-    console.log(infoCard);
-
     return (
         <div className="hidden md:hidden lg:flex flex-col gap-7 w-full">
             <div className="w-full p-4 text-start bg-neutral-900 rounded-md border border-neutral-700">

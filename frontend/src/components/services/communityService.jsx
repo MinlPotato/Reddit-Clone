@@ -23,8 +23,8 @@ export let getCommunities = async () => (
         }))
 
 
-export let getPostByCommunity = async (id) => (
-    await axios.get(`http://127.0.0.1:8000/api/communities/${id}/posts/`)
+export let getPostByCommunity = async (id, sort) => (
+    await axios.get(`http://127.0.0.1:8000/api/communities/${id}/posts/?ordering=${sort}`)
         .then(async function (response) {
             const data = response.data
             return data

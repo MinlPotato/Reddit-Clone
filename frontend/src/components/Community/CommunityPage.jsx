@@ -20,11 +20,20 @@ function CommunityPage(params) {
     const [Posts, setPosts] = useState(null)
     const [CommunityData, setCommunityData] = useState(null)
 
+    const sortList = {
+        Hot:'',
+        New:'-date_created',
+        Top:'-votes'
+    }
+
     useEffect(() => {
+        const queryParameters = new URLSearchParams(window.location.search)
+        const sort = queryParameters.get("sort")
+        const sortType = sortList[sort] || ''
         
         getCommunity(community_id).then((response) => setCommunityData(response))
-        getPostByCommunity(community_id).then((response) => setPosts(response))
-    }, [])
+        getPostByCommunity(community_id, sortType).then((response) => setPosts(response))
+    }, [location])
     
 
     return CommunityData ? (
