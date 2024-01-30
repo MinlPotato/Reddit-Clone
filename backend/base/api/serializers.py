@@ -45,9 +45,16 @@ class PublishPostSerializer(ModelSerializer):
 
 
 class CommentSerializer(ModelSerializer):
+
+    username = SerializerMethodField('get_username')
+
+    def get_username(self, obj):
+        return getattr(obj, 'get_username')
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'description', 'date_created', 'user_id', 'post_id', 'parent_comment', 
+                  'votes', 'likes', 'dislikes', 'username']
 
 class UserSerializer(ModelSerializer):
     class Meta:

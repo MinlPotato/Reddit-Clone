@@ -35,8 +35,10 @@ function LikeDislike123(params) {
     }
 
     useEffect(() => {
-        getFeedback({ 'user_id': info.user_id, 'post_id': params.info.post_id })
+        if (params.info.post_id) {
+             getFeedback({ 'user_id': info.user_id, 'post_id': params.info.post_id })
             .then((response) => response == true ? setLikeChecked(true) : response == false ? setDislikeChecked(true) : "")
+        }    
     }, [info])
 
     return info.isLogged ? (

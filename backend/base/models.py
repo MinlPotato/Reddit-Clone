@@ -68,15 +68,22 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    description = models.TextField(max_length=255)
+    description = models.TextField(max_length=1000)
     date_created = models.DateTimeField(default=timezone.now)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     parent_comment = models.ForeignKey(
         'self', on_delete=models.CASCADE, blank=True, null=True)
     votes = models.IntegerField(default=0, blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
     dislikes = models.IntegerField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.post_id.title, self.date_created)
+    
+    @property
+    def get_username(self):
+        return self.user_id.username
 
     @property
     def update_votes(self):

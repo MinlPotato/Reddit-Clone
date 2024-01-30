@@ -53,3 +53,22 @@ export let getPost = async (id) => (
             console.log(error);
         }))
 
+export let getCommentsByPost = async (id) => (
+    await axios.get(`http://127.0.0.1:8000/api/posts/${id}/comments`)
+        .then(async function (response) {
+            const data = response.data
+            return data
+        })
+        .catch(function (error) {
+            console.log(error);
+        }))
+
+export let getCommentsByComment = async (id) => (
+    await axios.get(`http://127.0.0.1:8000/api/comments/${id}`)
+        .then(async function (response) {
+            const data = response.data
+            return data
+        })
+        .catch(function (error) {
+            console.log(error);
+        }))

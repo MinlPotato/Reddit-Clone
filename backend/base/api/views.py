@@ -111,11 +111,25 @@ def publishPost(request):
 
 
 @api_view(['GET'])
-def getComments(request):
-    comments = Comment.objects.all()
-    serializer = CommentSerializer(comments, many=True)
-    return Response(serializer.data)
+def getComments(request, pk):
+    comments = Comment.objects.filter(parent_comment=pk)
+    if comments == None:
+        return Response(None)
+    else:   
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
 
+
+
+
+class getCommentsByPostList(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ['date_created', 'votes']
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Comment.objects.filter(post_id=pk, parent_comment__isnull=True)
 
 
 
@@ -137,6 +151,7 @@ class getPostsByUserList(generics.ListAPIView):
     serializer_class = PostSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['date_created', 'votes']
+    search_fields = ['description']
 
     def get_queryset(self):
         pk = self.kwargs['pk']

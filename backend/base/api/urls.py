@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
-from .views import MyTokenObtainPairView, PostList, CommunityList, getPostsByUserList, getPostsByCommunityList
+from .views import (
+    MyTokenObtainPairView, PostList, 
+    CommunityList, getPostsByUserList, 
+    getPostsByCommunityList, getCommentsByPostList)
 
 
 from rest_framework_simplejwt.views import (
@@ -14,11 +17,12 @@ urlpatterns = [
     path('communities/<int:pk>/posts/', getPostsByCommunityList.as_view()),
     path('posts/', PostList.as_view()),
     path('posts/<int:pk>/', views.getPost),
-    path('posts/<int:pk>/feedbacks/', views.getFeedbacks),
+    path('posts/<int:pk>/comments', getCommentsByPostList.as_view()),
+    path('posts/<int:pk>/feedbacks/', views.getFeedbacks), 
     path('posts/<int:pk>/feedbacks/<int:user_id>/', views.getFeedbackByUser),
     path('posts/feedback/', views.publishFeedback),
     path('posts/publish/', views.publishPost),
-    path('comments/', views.getComments),
+    path('comments/<int:pk>', views.getComments),
     path('users/', views.getUsers),
     path('users/<int:pk>/', views.getUser),
     path('users/<int:pk>/posts', getPostsByUserList.as_view()),
