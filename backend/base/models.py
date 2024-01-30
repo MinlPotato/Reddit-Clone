@@ -23,6 +23,7 @@ class Community(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=70)
     description = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
     date_created = models.DateTimeField(default=timezone.now)
     votes = models.IntegerField(default=0, blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)
@@ -48,6 +49,10 @@ class Post(models.Model):
         self.dislikes = dislikes
         self.votes = likes - dislikes
         self.save()
+    
+    @property
+    def get_comments(self):
+        return self.comments.filter(post_id=self.id).count()
     
     @property
     def get_likes(self):

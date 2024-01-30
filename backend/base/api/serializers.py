@@ -13,17 +13,21 @@ class PostSerializer(ModelSerializer):
 
     username = SerializerMethodField('get_username')
     community_name = SerializerMethodField('get_community')
+    comments = SerializerMethodField('get_comments')
    
     def get_username(self, obj):
         return getattr(obj, 'get_username')
     
     def get_community(self, obj):
         return getattr(obj, 'get_community')
+    
+    def get_comments(self, obj):
+        return getattr(obj, 'get_comments')
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'description', 'date_created', 
-                  'votes', 'user_id', 'community_id', 'likes', 'dislikes', 'username', 'community_name']
+        fields = ['id', 'title', 'image', 'description', 'date_created', 
+                  'votes', 'user_id', 'community_id', 'likes', 'dislikes', 'username', 'community_name', 'comments']
         
 
 

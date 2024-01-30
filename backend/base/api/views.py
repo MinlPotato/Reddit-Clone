@@ -114,7 +114,7 @@ def publishPost(request):
 def getComments(request, pk):
     comments = Comment.objects.filter(parent_comment=pk)
     if comments == None:
-        return Response(None)
+        return Response(False)
     else:   
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)

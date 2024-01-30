@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "./State/Counter/AuthUser";
@@ -12,6 +12,7 @@ function Card(params) {
 
     const loggedUser = useSelector(getUserData)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const infoCard = params.info
 
@@ -19,10 +20,12 @@ function Card(params) {
     let description = infoCard.description
     let id = infoCard.id
     let community_id = infoCard.community_id
-    let post_user_id = infoCard.user_id
+    let user_id = infoCard.user_id
     let date_created = moment(infoCard.date_created).fromNow()
     let community_name = infoCard.community_name
     let username = infoCard.username
+    let image = infoCard.image
+    let comments = infoCard.comments
 
     const LikeDislikeInfo = {
         post_id: id,
@@ -34,26 +37,30 @@ function Card(params) {
     }
 
     return (
-        <div className="flex flex-row py-2 items-start p-3 w-full
+        <div onClick={() => navigate(`/reddit/${id}`)} className="flex flex-row py-2 items-start pl-3 w-full
             bg-neutral-900 rounded-md border border-neutral-700 hover:border-neutral-400 transition">
 
             <div className="flex flex-col items-center mt-1 gap-1">
                 <LikeDislike123 info={LikeDislikeInfo}/>
             </div>
             
-            <div className="flex flex-col  gap-2 items-start w-full">
-                <div className="flex flex-row gap-5 mx-3 text-neutral-500">
-                    <Link className="text-inherit hover:text-neutral-400" to={`r/${community_id}`}>r/{community_name}</Link>
-                     <p className="text-inherit">Posted by u/{username}</p>
+            <div className="flex flex-col gap-2 items-start w-full">
+                <div className="flex flex-row gap-3 mx-3 text-neutral-500">
+                    <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`r/${community_id}`}>r/{community_name}</Link>
+                    <p className="text-inherit">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>
                     <p className="text-inherit">{date_created}</p>
                 </div>
                 <p className="text-2xl text-start font-semibold mx-3 mb-1 w-full">{title}</p>
-                <p className="text-xl w-full font-semibold text-neutral-500 mx-3 text-start line-clamp-1">{description}</p>
+                {image 
+                ? (<div className="flex w-full justify-center"><img src={image} alt="" className="pl-3 max-h-[40rem] object-cover"/> </div>   )
+                : <p className="text-xl w-full font-semibold text-neutral-500 mx-3 text-start line-clamp-1">{description}</p>
+                }
+                
 
                 <div className="flex flex-row gap-1">
-                    <Link to={`/reddit/${id}`} state={{ from: infoCard }} className='flex flex-row items-center px-3 gap-2 bg-transparent hover:bg-neutral-800 border-transparent'>
+                    <Link onClick={(e) => e.stopPropagation()} to={`/reddit/${id}`} state={{ from: infoCard }} className='flex flex-row items-center px-3 gap-2 bg-transparent hover:bg-neutral-800 border-transparent'>
                         <ChatBubbleLeftIcon className="w-6 h-6" />
-                        <p>0</p>
+                        <p>{comments}</p>
                         <p>Comments</p>
                     </Link>
                     <button className='flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>

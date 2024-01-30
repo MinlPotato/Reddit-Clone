@@ -1,8 +1,7 @@
 import { useLocation } from "react-router-dom"
 import React, { useEffect, useState } from "react";
-import { HandThumbUpIcon, HandThumbDownIcon, ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { useDispatch, useSelector } from "react-redux";
-import { increment, selectCount, decrement } from "./State/Counter/CounterSlice";
+import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { useSelector } from "react-redux";
 import { getCommunity, getUser, getPost, getCommentsByPost } from "./services/communityService";
 import { getUserData } from "./State/Counter/AuthUser";
 import moment from 'moment';
@@ -45,6 +44,8 @@ function CommentSection(params) {
     let title = PostData?.title
     let description = PostData?.description
     let date_created = moment(PostData?.date_created).fromNow()
+    let comments = PostData?.comments
+    let user_id = PostData?.user_id
 
     const LikeDislikeInfo1 = {
         post_id: PostData?.id,
@@ -91,11 +92,11 @@ function CommentSection(params) {
 
                         <div className="flex flex-col mr-12 gap-3 items-start w-full">
                             <div className="flex flex-row gap-3 items-center mx-3 text-neutral-500">
-                                {(CommunityData != null) && <Link className="flex flex-row items-center gap-2 text-inherit hover:text-neutral-400" to={`/reddit/r/${CommunityData.id}`}>
+                                {(CommunityData != null) && <Link className="flex flex-row items-center gap-2 text-inherit hover:text-neutral-400 hover:underline" to={`/reddit/r/${CommunityData.id}`}>
                                     <img src={subreddit} alt="" className="w-7 h-7" />
                                     r/{CommunityData.name}
                                 </Link>}
-                                {(UserData != null) && <p className="text-inherit">Posted by {UserData.username}</p>}
+                                {(UserData != null) && <p className="text-inherit">Posted by <Link to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{UserData.username}</Link></p>}
                                 <p className="text-inherit">{date_created}</p>
                             </div>
                             <p className=" text-2xl font-semibold mx-3">{title}</p>
@@ -104,7 +105,7 @@ function CommentSection(params) {
                             <div className="flex flex-row gap-1 mx-3 mb-5">
                                 <div className='flex flex-row font-semibold items-center px-3 gap-2 bg-transparent border-transparent'>
                                     <ChatBubbleLeftIcon className="w-6 h-6" />
-                                    <p>0</p>
+                                    <p>{comments}</p>
                                     <p>Comments</p>
                                 </div>
                                 <button className='flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>

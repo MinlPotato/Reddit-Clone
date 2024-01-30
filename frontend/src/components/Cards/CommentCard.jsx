@@ -42,7 +42,7 @@ function CommentCard(params) {
                     </div>
                 </div>
                 <div className='flex flex-row items-center gap-2 col-span-11 '>
-                    <Link to={`/reddit/user/${infoCard.id}`} className='font-semibold'>{infoCard.username}</Link>
+                    <Link to={`/reddit/user/${infoCard.user_id}`} className='font-semibold'>{infoCard.username}</Link>
                     <p className='text-neutral-500'>·</p>
                     <p className='text-neutral-500'>{moment(infoCard.date_created).fromNow()}</p>
                 </div>
