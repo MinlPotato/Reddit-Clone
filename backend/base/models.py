@@ -115,3 +115,4 @@ class Feedback(models.Model):
     comment_id = models.ForeignKey(
         Comment, on_delete=models.CASCADE, blank=True, null=True, related_name='feedback')
     
+

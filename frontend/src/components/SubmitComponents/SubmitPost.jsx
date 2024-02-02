@@ -10,6 +10,7 @@ import { getCommunity } from "../services/communityService";
 import axios from "axios";
 import CommunityInfoCard from "../Community/CommunityInfoCard";
 import FormPost from "./FormPost";
+import FormImageVideoPost from "./FormImageVideoPost";
 
 function SubmitPost(params) {
 
@@ -50,34 +51,50 @@ function SubmitPost(params) {
                         <SelectCommunityPanel />
                         <div className="flex flex-col gap-5 bg-neutral-900 rounded-md ">
                             <div className="h-14 flex flex-row">
-                                <button className="flex flex-row items-center gap-3 justify-center w-1/4 rounded-none border-0 border-r-2 bg-transparent 
-                                text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white border-neutral-700">
-                                    <PencilSquareIcon className="w-6 hidden md:block stroke-inherit" />
-                                    <p className="text-lg text-inherit">Post</p>
-                                </button>
-                                <button className="flex flex-row items-center gap-3 justify-center w-1/4 rounded-none border-0 border-r-2 bg-transparent
-                                 text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white border-neutral-700">
-                                    <PhotoIcon className="w-6 hidden md:block stroke-inherit" />
-                                    <p className="text-lg text-inherit">Image & Video</p>
-                                </button>
-                                <button className="flex flex-row items-center gap-3 justify-center w-1/4 rounded-none border-0 border-r-2 bg-transparent
-                                 text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white border-neutral-700">
-                                    <LinkIcon className="w-6 hidden md:block stroke-inherit" />
-                                    <p className="text-lg text-inherit">Link</p>
-                                </button>
-                                <button className="flex flex-row items-center gap-3 justify-center w-1/4 rounded-none border-0 border-r-2 bg-transparent
-                                 text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white border-neutral-700">
+                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
+                                    <input type="radio" name="selectSubmit" id="post" className="hidden peer" />
+                                    <label htmlFor="post" className="w-full flex flex-row items-center gap-3 justify-center bg-transparent 
+                                        text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
+                                        peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
+                                        <PencilSquareIcon className="w-6 hidden md:block stroke-inherit" />
+                                        <p className="text-lg text-inherit">Post</p>
+                                    </label>
+                                </div>
+                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
+                                    <input type="radio" name="selectSubmit" id="image&video" className="hidden peer" />
+                                    <label htmlFor="image&video" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
+                                        text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
+                                        peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
+                                        <PhotoIcon className="w-6 hidden md:block stroke-inherit" />
+                                        <p className="text-lg text-inherit">Image & Video</p>
+                                    </label>
+                                </div>
+                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
+                                    <input type="radio" name="selectSubmit" id="link" className="hidden peer" />
+                                    <label htmlFor="link" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
+                                        text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
+                                        peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
+                                        <LinkIcon className="w-6 hidden md:block stroke-inherit" />
+                                        <p className="text-lg text-inherit">Link</p>
+                                    </label>
+                                </div>
+                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
+                                    <input type="radio" name="selectSubmit" id="poll" className="hidden peer" />
+                                    <label htmlFor="poll" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
+                                        text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
+                                        peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
                                     <ListBulletIcon className="w-6 hidden md:block stroke-inherit" />
                                     <p className="text-lg text-inherit">Poll</p>
-                                </button>
+                                    </label>
+                                </div>
                             </div>
-                            <FormPost/>
+                            <FormPost />
                         </div>
                     </div>
                 </div>
                 <div className="w-1/3 lg:flex flex-col gap-9 hidden">
                     {CommunityData && (
-                        <CommunityInfoCard info={CommunityData}/>
+                        <CommunityInfoCard info={CommunityData} />
                     )}
                     <div className="w-full h-fit p-3 bg-neutral-900">
                         <div className="flex flex-row items-center">

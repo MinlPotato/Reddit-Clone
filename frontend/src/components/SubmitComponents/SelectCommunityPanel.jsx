@@ -58,7 +58,7 @@ function SelectCommunityPanel(params) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 p-y max-h-56 sm:w-1/2 w-full overflow-auto rounded-b-md bg-neutral-900 border-t-0 border border-neutral-700 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-20 p-y max-h-56 sm:w-1/2 w-full overflow-auto rounded-b-md bg-neutral-900 border-t-0 border border-neutral-700 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 <p className="text-md mt-3 mb-1 pl-5 font-semibold text-start text-neutral-500">YOUR COMMUNITIES</p>
                 {Communities.map((community) => (
                   <Listbox.Option
@@ -68,6 +68,7 @@ function SelectCommunityPanel(params) {
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
+                    
                     value={community}
                     key={community.id}
                   >

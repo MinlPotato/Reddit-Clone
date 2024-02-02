@@ -44,16 +44,16 @@ function Card(params) {
                 <LikeDislike123 info={LikeDislikeInfo}/>
             </div>
             
-            <div className="flex flex-col gap-2 items-start w-full">
-                <div className="flex flex-row gap-3 mx-3 text-neutral-500">
+            <div className="flex flex-col gap-2 mx-3 items-start w-full ">
+                <div className="flex flex-row gap-3 text-neutral-500">
                     <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`r/${community_id}`}>r/{community_name}</Link>
                     <p className="text-inherit">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>
                     <p className="text-inherit">{date_created}</p>
                 </div>
-                <p className="text-2xl text-start font-semibold mx-3 mb-1 w-full">{title}</p>
+                <p className="text-2xl text-start font-semibold mb-1 w-full">{title}</p>
                 {image 
                 ? (<div className="flex w-full justify-center"><img src={image} alt="" className="pl-3 max-h-[40rem] object-cover"/> </div>   )
-                : <p className="text-xl w-full font-semibold text-neutral-500 mx-3 text-start line-clamp-1">{description}</p>
+                : <p className="text-xl w-full font-semibold text-neutral-500 text-start line-clamp-2">{description}</p>
                 }
                 
 

@@ -2,7 +2,6 @@ import OrderCard from "../OrderCard"
 import { getPostByUser } from "../services/profileServices"
 import ProfileHeader from "./ProfileHeader"
 import { useState, useEffect } from "react"
-import Card from "../Card"
 import SearchCardPost from "../Cards/SearchCardPost"
 import UserCard from "./UserCard"
 import { getUser } from "../services/communityService"
@@ -38,7 +37,6 @@ function ProfileMain(params) {
 
     return (
         <>
-        <ProfileHeader/>
         <div className="mt-28">
                      <div className="flex flex-row h-screen justify-center w-full gap-7">
                         <div className="flex flex-col lg:w-2/3 gap-7">

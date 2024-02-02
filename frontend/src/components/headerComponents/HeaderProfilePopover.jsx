@@ -29,12 +29,6 @@ function HeaderProfilePopover(params) {
         },
         {
             id: 3,
-            text: "Style Avatar",
-            checkbox: false,
-            url: null
-        },
-        {
-            id: 4,
             text: "User Settings",
             checkbox: false,
             url: null

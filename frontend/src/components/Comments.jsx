@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom"
 import React, { useEffect, useState } from "react";
-import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
 import { getCommunity, getUser, getPost, getCommentsByPost } from "./services/communityService";
 import { getUserData } from "./State/Counter/AuthUser";
@@ -120,7 +120,7 @@ function CommentSection(params) {
                                     <EllipsisHorizontalIcon className="w-6 h-6" />
                                 </button>
                             </div>
-                            <div className="flex flex-col gap-2 w-full mx-3 mb-20">
+                            <div className="flex flex-col gap-2 w-full mx-3 pb-20 mb-5 border-b-2 border-neutral-700">
                                 <p className="text-start">Comment as  <Link to={`/reddit/user/${loggedUser.id}`} className="text-sky-500">{loggedUser.username}</Link></p>
                                 <textarea className="w-full min-h-[17rem] bg-transparent border rounded-md border-neutral-700 text-base" />
                             </div>
@@ -135,6 +135,13 @@ function CommentSection(params) {
                                 <p>loading...</p>
                             )}
 
+                            {Comments == false && (
+                                <div className="w-full mt-14 flex flex-col justify-center items-center gap-5">
+                                    <ChatBubbleLeftRightIcon className="w-10 stroke-neutral-500"/>
+                                    <p className="text-neutral-500 text-2xl font-semibold">No comments Yet</p>
+                                    <p className="text-neutral-500 text-lg font-semibold">Be the first to share what you think!</p>
+                                </div>
+                            )}
 
                         </div>
                     </div>

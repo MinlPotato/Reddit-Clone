@@ -26,6 +26,8 @@ urlpatterns = [
     path('users/', views.getUsers),
     path('users/<int:pk>/', views.getUser),
     path('users/<int:pk>/posts', getPostsByUserList.as_view()),
+    path('users/<int:pk>/liked', views.getPostsLikedByUser),
+    path('users/<int:pk>/disliked', views.getPostsDislikedByUser),
     path('users/register/', views.userRegister),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

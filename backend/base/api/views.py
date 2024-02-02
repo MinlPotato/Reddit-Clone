@@ -146,7 +146,6 @@ def getUser(request, pk):
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
-
 class getPostsByUserList(generics.ListAPIView):
     serializer_class = PostSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -187,6 +186,23 @@ def getFeedbacks(request, pk):
 
     serializer = FeedbackSerializer(feedbacks, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getPostsLikedByUser(request, pk):
+    posts = Post.objects.filter(feedback__user_id=pk, feedback__type='L')
+
+    serializer = PostSerializer(posts,  many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getPostsDislikedByUser(request, pk):
+    posts = Post.objects.filter(feedback__user_id=pk, feedback__type='D')
+
+    serializer = PostSerializer(posts,  many=True)
+    return Response(serializer.data)
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

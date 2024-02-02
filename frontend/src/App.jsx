@@ -15,6 +15,9 @@ import SubmitPost from "./components/SubmitComponents/SubmitPost.jsx";
 import CommunityPage from "./components/Community/CommunityPage.jsx";
 import Search from "./components/Search.jsx";
 import ProfileMain from "./components/Profile/ProfileMain.jsx";
+import ProfileHeaderLayout from "./components/Profile/ProfileHeaderLayout.jsx";
+import ProfileUpVoted from "./components/Profile/ProfileUpVoted.jsx";
+import ProfileDownVoted from "./components/Profile/ProfileDownVoted.jsx";
 
 
 function App() {
@@ -38,7 +41,11 @@ function App() {
               <Route exact path="/reddit/submit" element={<SubmitPost/>} />
               <Route exact path="/reddit/r/:id" element={<CommunityPage/>} />
               <Route exact path="/reddit/search" element={<Search/>}/>
-              <Route exact path="/reddit/user/:id" element={<ProfileMain/>}/>
+              <Route element={<ProfileHeaderLayout/>}> 
+                  <Route exact path="/reddit/user/:id" element={<ProfileMain/>}/>
+                  <Route exact path="/reddit/user/:id/upvoted" element={<ProfileUpVoted/>}/>
+                  <Route exact path="/reddit/user/:id/downvoted" element={<ProfileDownVoted/>}/>
+              </Route>
             </Route>
 
           </Routes>
