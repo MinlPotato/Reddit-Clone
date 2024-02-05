@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/24/outline"
-import { deleteFeedback, handleFeedback, getFeedback } from "./services/voteService";
-import LikeDislike from "./LikeDislikeComponent";
-
+import { deleteFeedback, handlePostFeedback, getFeedback } from "./services/voteService";
 
 function LikeDislike123(params) {
     const info = params.info
@@ -12,11 +10,11 @@ function LikeDislike123(params) {
     const [likeChecked, setLikeChecked] = useState(false)
     const [dislikeChecked, setDislikeChecked] = useState(false)
 
-    const handleCheck = async (e) => {
+    const handleCheck2 = async (e) => {
         let data = {
             type: e.target.value,
             user_id: info.user_id,
-            post_id: info.post_id
+            comment_id: info.comment_id
         }
         if (e.target.checked === true) {
             if (e.target.id === `like${info.post_id}${info.like_id}`) {
@@ -26,7 +24,30 @@ function LikeDislike123(params) {
                 setLikeChecked(false)
                 setDislikeChecked(true)
             }
-            handleFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes + 1) : setVotes(votes - 1))
+            handlePostFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes + 1) : setVotes(votes - 1))
+        } else {
+            setLikeChecked(false)
+            setDislikeChecked(false)
+            deleteFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes - 1) : setVotes(votes + 1))
+        }
+    }
+
+    const handleCheck = async (e) => {
+        let data = {
+            type: e.target.value,
+            user_id: info.user_id,
+            post_id: info.post_id
+        }
+
+        if (e.target.checked === true) {
+            if (e.target.id === `like${info.post_id}${info.like_id}`) {
+                setDislikeChecked(false)
+                setLikeChecked(true)
+            } else if (e.target.id === `dislike${info.post_id}${info.like_id}`) {
+                setLikeChecked(false)
+                setDislikeChecked(true)
+            }
+            handlePostFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes + 1) : setVotes(votes - 1))
         } else {
             setLikeChecked(false)
             setDislikeChecked(false)
@@ -36,9 +57,9 @@ function LikeDislike123(params) {
 
     useEffect(() => {
         if (params.info.post_id) {
-             getFeedback({ 'user_id': info.user_id, 'post_id': params.info.post_id })
+            getFeedback({ 'user_id': info.user_id, 'post_id': params.info.post_id })
             .then((response) => response == true ? setLikeChecked(true) : response == false ? setDislikeChecked(true) : "")
-        }    
+        }   
     }, [info])
 
     return info.isLogged ? (

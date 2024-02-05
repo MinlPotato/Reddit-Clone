@@ -12,8 +12,8 @@ from .serializers import (
     CommentSerializer, PostSerializer, 
     CommunitySerializer, UserSerializer, 
     RegisterSerializer, PublishPostSerializer, 
-    FeedbackSerializer)
-from base.models import Community, Post, Comment, Feedback
+    FeedbackSerializer, SaveSerializer)
+from base.models import Community, Post, Comment, Feedback, Saved
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.db import models
@@ -26,7 +26,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
-        token['recent_list'] = []
 
         return token
 
@@ -69,11 +68,7 @@ def getCommunity(request, pk):
 
 
 
-@api_view(['GET'])
-def getPosts(request):
-    posts = Post.objects.all()
-    serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getPost(request, pk):
@@ -108,10 +103,15 @@ def publishPost(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def getAllComments(request):
+    comments = Comment.objects.all()
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
-def getComments(request, pk):
+def getCommentsInComment(request, pk):
     comments = Comment.objects.filter(parent_comment=pk)
     if comments == None:
         return Response(False)
@@ -172,17 +172,28 @@ def publishFeedback(request):
     if request.method == 'POST':
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()         
-            post = Post.objects.get(pk=request.data['post_id'])
-            post.update_votes
+            serializer.save()
+            if request.data['post_id']:
+                post = Post.objects.get(pk=request.data['post_id'])
+                post.update_votes
+            print(request.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
-def getFeedbacks(request, pk):
+def getPostFeedbacks(request, pk):
     post = Post.objects.get(pk=pk)
     feedbacks = post.feedback.all()
+
+    serializer = FeedbackSerializer(feedbacks, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getCommentFeedbacks(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    feedbacks = comment.feedback.all()
 
     serializer = FeedbackSerializer(feedbacks, many=True)
     return Response(serializer.data)
@@ -206,7 +217,7 @@ def getPostsDislikedByUser(request, pk):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def getFeedbackByUser(request, pk, user_id):
+def getPostFeedbackByUser(request, pk, user_id):
     post = Post.objects.get(pk=pk)
         
     if request.method == 'GET':
@@ -222,7 +233,6 @@ def getFeedbackByUser(request, pk, user_id):
         serializer = FeedbackSerializer(instance=feedback, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            post = Post.objects.get(pk=request.data['post_id'])
             post.update_votes
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -230,8 +240,35 @@ def getFeedbackByUser(request, pk, user_id):
     if request.method == 'DELETE':
         feedback = post.feedback.get(user_id=user_id)
         feedback.delete()
-        post = Post.objects.get(pk=request.data['post_id'])
         post.update_votes
+        return Response({'message': 'feedback deleted correctly'}, status=status.HTTP_200_OK)
+    
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def getCommentFeedbackByUser(request, pk, user_id):
+    comment = Comment.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        feedback = comment.feedback.filter(user_id=user_id).first()
+        if feedback == None:
+            return Response(False)
+        else:
+            serializer = FeedbackSerializer(feedback)
+            return Response(serializer.data)
+
+    if request.method == 'PUT':
+        feedback = comment.feedback.get(user_id=user_id)
+        serializer = FeedbackSerializer(instance=feedback, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            comment.update_votes
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        feedback = comment.feedback.get(user_id=user_id)
+        feedback.delete()
+        comment.update_votes
         return Response({'message': 'feedback deleted correctly'}, status=status.HTTP_200_OK)
 
 
@@ -242,3 +279,36 @@ class PostList(generics.ListAPIView):
     search_fields = ['title', 'description', 'community_id__name', 'user_id__username']
     ordering_fields = ['date_created','votes']
 
+
+@api_view(['GET'])
+def getSavedPosts(request, pk):
+    posts = Post.objects.filter(saved__user_id=pk)
+    serializer = PostSerializer(data=posts, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST', 'DELETE'])
+def SavedPost(request, pk, user_id):
+
+    if request.method == 'GET':
+        saved = Saved.objects.get(user_id=user_id, post_id=pk)
+        if saved == None:
+            return Response(False)
+        else:
+            post = Post.objects.get(pk=pk)
+            serializer = PostSerializer(post)
+            return Response(serializer.data)
+
+
+    if request.method == 'DELETE':
+        saved = Saved.objects.get(user_id=user_id, post_id=pk)
+        saved.delete()
+        return Response({'message': 'saved deleted correctly'}, status=status.HTTP_200_OK)
+
+    
+    if request.method == 'POST':
+        serializer = SaveSerializer(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

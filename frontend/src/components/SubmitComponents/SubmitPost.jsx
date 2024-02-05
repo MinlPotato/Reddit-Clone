@@ -3,7 +3,7 @@ import { PlusIcon, TagIcon, ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIco
 import rulesImg from "../../assets/rulesThingy.png"
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Counter/AuthUser";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SelectCommunityPanel from "./SelectCommunityPanel";
 import { getCommunity } from "../services/communityService";
@@ -16,6 +16,7 @@ function SubmitPost(params) {
 
     const userData = useSelector(getUserData)
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [CommunityData, setCommunityData] = useState(null)
 
@@ -33,12 +34,12 @@ function SubmitPost(params) {
             return
         }
         getCommunity(community_id).then((response) => setCommunityData(response))
-    }, [window.location.search])
+    }, [location])
 
     return (
-        <div className="mt-16">
-            <div className="flex flex-row gap-9">
-                <div className="lg:w-8/12 w-full flex flex-col gap-7">
+        <div className="absolute -translate-x-1/2 top-10 mt-16 w-full p-3 md:w-[50rem] lg:w-[70rem] xl:w-[80rem]">
+            <div className="flex flex-row gap-9 w-full">
+                <div className="lg:w-10/12 w-full flex flex-col gap-7">
                     <div className="w-full flex flex-row items-center justify-between border-b-2 border-neutral-700">
                         <p className="text-left text-2xl my-5 font-semibold">Create a post</p>
                         <button className="h-10 flex flex-row gap-3 items-center rounded-full bg-transparent hover:bg-neutral-800">
@@ -49,15 +50,15 @@ function SubmitPost(params) {
 
                     <div className="h-fit flex flex-col gap-4">
                         <SelectCommunityPanel />
-                        <div className="flex flex-col gap-5 bg-neutral-900 rounded-md ">
+                        <div className="flex flex-col gap-5 bg-neutral-900 rounded-md">
                             <div className="h-14 flex flex-row">
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
                                     <input type="radio" name="selectSubmit" id="post" className="hidden peer" />
                                     <label htmlFor="post" className="w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
-                                        <PencilSquareIcon className="w-6 hidden md:block stroke-inherit" />
-                                        <p className="text-lg text-inherit">Post</p>
+                                        <PencilSquareIcon className="w-5 hidden md:block stroke-inherit" />
+                                        <p className="text-md text-inherit">Post</p>
                                     </label>
                                 </div>
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
@@ -65,8 +66,8 @@ function SubmitPost(params) {
                                     <label htmlFor="image&video" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
-                                        <PhotoIcon className="w-6 hidden md:block stroke-inherit" />
-                                        <p className="text-lg text-inherit">Image & Video</p>
+                                        <PhotoIcon className="w-5 hidden md:block stroke-inherit" />
+                                        <p className="text-md text-inherit">Image & Video</p>
                                     </label>
                                 </div>
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
@@ -74,17 +75,17 @@ function SubmitPost(params) {
                                     <label htmlFor="link" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
-                                        <LinkIcon className="w-6 hidden md:block stroke-inherit" />
-                                        <p className="text-lg text-inherit">Link</p>
+                                        <LinkIcon className="w-5 hidden md:block stroke-inherit" />
+                                        <p className="text-md text-inherit">Link</p>
                                     </label>
                                 </div>
-                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
+                                <div className="w-1/4 flex justify-center rounded-none border-neutral-700 ">
                                     <input type="radio" name="selectSubmit" id="poll" className="hidden peer" />
                                     <label htmlFor="poll" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
-                                    <ListBulletIcon className="w-6 hidden md:block stroke-inherit" />
-                                    <p className="text-lg text-inherit">Poll</p>
+                                    <ListBulletIcon className="w-5 hidden md:block stroke-inherit" />
+                                    <p className="text-md text-inherit">Poll</p>
                                     </label>
                                 </div>
                             </div>
@@ -108,7 +109,6 @@ function SubmitPost(params) {
                             <p className="border-t-2 border-neutral-700 py-3">4. Search for duplicates before posting</p>
                             <p className="border-y-2 border-neutral-700 py-3">5. Read the community's rules</p>
                         </div>
-
                     </div>
                     <p className="text-start">Please be mindful of reddit's
                         <a href="" className="text-sky-500"> content policy </a>

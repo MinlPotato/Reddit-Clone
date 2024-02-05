@@ -5,11 +5,14 @@ import { Link } from "react-router-dom"
 import moment from "moment"
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ShareIcon, ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, DocumentIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
+import DOMPurify from "dompurify"
 
 function ClassicCard(params) {
 
     const loggedUser = useSelector(getUserData)
     const infoCard = params.info
+
+    const description = DOMPurify.sanitize(infoCard.description)
 
     const [OpenCard, setOpenCard] = useState(false)
 
@@ -75,11 +78,11 @@ function ClassicCard(params) {
                     </div>
                     <div className="flex flex-col" hidden={!OpenCard}>
                         {infoCard.image &&
-                            <div className="flex justify-center w-full">
+                            <div className="flex justify-center w-full mb-4">
                                 <img src={`http://127.0.0.1:8000/${infoCard.image}`} hidden={!OpenCard} alt="" className="max-h-[40rem] w-fit" />
                             </div>
                         }
-                        {infoCard.description && <p hidden={!OpenCard} className="text-start my-1 text-lg font-semibold">{infoCard.description}</p>}
+                        {infoCard.description && <div hidden={!OpenCard} dangerouslySetInnerHTML={{ __html: description }} className="text-start my-1 text-lg font-semibold mb-4"></div>}
 
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from base.models import (Community, Post, Comment, Feedback)
+from base.models import (Community, Post, Comment, Feedback, Saved)
 from django.contrib.auth.models import User
 from django.db.models import Count
 
@@ -59,6 +59,16 @@ class CommentSerializer(ModelSerializer):
         model = Comment
         fields = ['id', 'description', 'date_created', 'user_id', 'post_id', 'parent_comment', 
                   'votes', 'likes', 'dislikes', 'username']
+        
+    def create(self, validated_data):
+        comment = Comment(
+            description=validated_data['description'],
+            user_id=validated_data['user_id'],
+            post_id=validated_data['post_id'],
+            parent_comment=validated_data['parent_comment']
+        )
+        comment.save()
+        return comment
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -97,3 +107,14 @@ class FeedbackSerializer(ModelSerializer):
         instance.save()
         return instance
     
+
+class SaveSerializer(ModelSerializer):
+    class Meta:
+        model = Saved
+        fields = '__all__'
+
+
+    def create(self, validated_data):
+        saved = Saved(**validated_data)
+        saved.save()
+        return saved

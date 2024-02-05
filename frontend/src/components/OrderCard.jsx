@@ -13,7 +13,7 @@ function OrderCard(params) {
 
     return (
         <div className="flex flex-row items-center w-full gap-3 px-2 py-3 bg-neutral-900 rounded-md border border-neutral-700">
-            <ul className="flex flex-row gap-3">
+            <ul className="flex flex-row gap-3 list-none">
                 <li>
                     <input onChange={handleChange} type="radio" name="orderSelect" id="hot" value='Hot' className="hidden peer" />
                     <label htmlFor="hot" 

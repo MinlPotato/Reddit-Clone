@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom"
 import React, { useEffect, useState } from "react";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
-import { getCommunity, getUser, getPost, getCommentsByPost } from "./services/communityService";
+import { getCommunity, getUser, getPost, getCommentsByPost, publishComment } from "./services/communityService";
 import { getUserData } from "./State/Counter/AuthUser";
 import moment from 'moment';
 import { Link } from "react-router-dom";
@@ -11,6 +11,8 @@ import LikeDislike123 from "./LikeDislikeComponent";
 import { useNavigate } from "react-router-dom";
 import CommunityInfoCard from "./Community/CommunityInfoCard";
 import CommentCard from "./Cards/CommentCard";
+import DOMPurify from 'dompurify';
+import QuillTextArea from "./QuillTextArea";
 
 function CommentSection(params) {
 
@@ -23,7 +25,12 @@ function CommentSection(params) {
     const [PostData, setPostData] = useState(null)
     const [Comments, setComments] = useState(null)
 
+    const [TextAreaValue, setTextAreaValue] = useState('')
+    const [DisableCommentSubmit, setDisableCommentSubmit] = useState(true)
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         if (location.state) {
             const { from } = location.state
             setPostData(from)
@@ -41,11 +48,20 @@ function CommentSection(params) {
         }
     }, [location])
 
+    useEffect(() => {
+        if (TextAreaValue.replace(/<(.|\n)*?>/g, '').trim().length === 0) {
+            setDisableCommentSubmit(true)
+        } else {
+            setDisableCommentSubmit(false)
+        }
+    }, [TextAreaValue])
+
     let title = PostData?.title
-    let description = PostData?.description
+    let description = DOMPurify.sanitize(PostData?.description)
     let date_created = moment(PostData?.date_created).fromNow()
     let comments = PostData?.comments
     let user_id = PostData?.user_id
+    let id = PostData?.id
 
     const LikeDislikeInfo1 = {
         post_id: PostData?.id,
@@ -65,9 +81,34 @@ function CommentSection(params) {
         like_id: 3
     }
 
+    const QuillTextAreaInfo = {
+        value: TextAreaValue, 
+        setValue: setTextAreaValue, 
+        placeholder: 'What are your thoughts?'
+    }
+
+    const handleSubmit = async () => {
+        if (!DisableCommentSubmit) {
+
+            const data = {
+                description: TextAreaValue,
+                user_id: loggedUser.id,
+                post_id: id
+            }
+
+            setDisableCommentSubmit(true)
+            setLoading(true)
+            
+            publishComment(data)
+
+            window.location.reload(false);
+        }
+    }
+
     return (
         <>
             <div className="bg-[#0c0c0c] top-16 left-0 flex justify-center fixed h-14 w-full mb-12">
+
                 <div className="flex flex-row w-2/3 items-center justify-between">
                     <div className="flex flex-row gap-5 w-9/12">
                         <div className=" flex flex-row gap-2 items-center">
@@ -101,7 +142,9 @@ function CommentSection(params) {
                             </div>
                             <p className=" text-2xl font-semibold mx-3">{title}</p>
                             <img className="rounded-md pl-3" alt="" />
-                            <p className="text-left text-lg font-medium mx-3 mb-5">{description}</p>
+
+                            <div dangerouslySetInnerHTML={{ __html: description }} className="w-full text-left text-lg font-medium mx-3 mb-5"></div>
+
                             <div className="flex flex-row gap-1 mx-3 mb-5">
                                 <div className='flex flex-row font-semibold items-center px-3 gap-2 bg-transparent border-transparent'>
                                     <ChatBubbleLeftIcon className="w-6 h-6" />
@@ -122,7 +165,14 @@ function CommentSection(params) {
                             </div>
                             <div className="flex flex-col gap-2 w-full mx-3 pb-20 mb-5 border-b-2 border-neutral-700">
                                 <p className="text-start">Comment as  <Link to={`/reddit/user/${loggedUser.id}`} className="text-sky-500">{loggedUser.username}</Link></p>
-                                <textarea className="w-full min-h-[17rem] bg-transparent border rounded-md border-neutral-700 text-base" />
+                                <QuillTextArea info={QuillTextAreaInfo} />
+                                <div className="w-full flex justify-end mt-2">
+                                    <button onClick={handleSubmit} disabled={DisableCommentSubmit}
+                                        className="rounded-full w-1/5 p-2 bg-white disabled:bg-neutral-200 text-neutral-800 disabled:text-neutral-500">
+                                        {loading ? <p className="text-black">loading...</p> : <p className="text-inherit font-semibold text-base">Comment</p>} 
+                                    </button>
+                                </div>
+
                             </div>
 
                             {Comments ? (
@@ -137,7 +187,7 @@ function CommentSection(params) {
 
                             {Comments == false && (
                                 <div className="w-full mt-14 flex flex-col justify-center items-center gap-5">
-                                    <ChatBubbleLeftRightIcon className="w-10 stroke-neutral-500"/>
+                                    <ChatBubbleLeftRightIcon className="w-10 stroke-neutral-500" />
                                     <p className="text-neutral-500 text-2xl font-semibold">No comments Yet</p>
                                     <p className="text-neutral-500 text-lg font-semibold">Be the first to share what you think!</p>
                                 </div>

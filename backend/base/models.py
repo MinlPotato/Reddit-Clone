@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+from datetime import timedelta
 # Create your models here.
 
 class Community(models.Model):
@@ -84,7 +85,7 @@ class Comment(models.Model):
     dislikes = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
-        return '%s - %s' % (self.post_id.title, self.date_created)
+        return '%s - %s' % (self.post_id.title, self.id)
     
     @property
     def get_username(self):
@@ -115,4 +116,31 @@ class Feedback(models.Model):
     comment_id = models.ForeignKey(
         Comment, on_delete=models.CASCADE, blank=True, null=True, related_name='feedback')
     
+    def __str__(self):
+        return '%s - %s - %s' % (self.post_id.title, self.user_id.username, self.type)
+    
 
+class Saved(models.Model):
+    user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='saved')
+    post_id = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='saved')
+    
+
+    class Meta:
+        verbose_name = ("Saved")
+        verbose_name_plural = ("Saved")
+
+    def __str__(self):
+        return '%s - %s' % (self.post_id.title, self.user_id.username)
+
+class History(models.Model):
+    user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='recent')
+    post_id = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='recent')
+    date_created = models.DateTimeField(default=timezone.now)
+
+    @property
+    def is_expired(self):
+        return timezone.now() - self.date_created < timedelta(days=1)

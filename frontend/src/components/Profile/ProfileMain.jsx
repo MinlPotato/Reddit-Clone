@@ -20,10 +20,6 @@ function ProfileMain(params) {
         Top:'-votes'
     }
 
-    const [sortType, setsortType] = useState('date_created')
-
-
-
     useEffect(() => {
         const user_id = location.pathname.split('/')[3]
         const queryParameters = new URLSearchParams(window.location.search)

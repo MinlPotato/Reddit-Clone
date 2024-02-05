@@ -1,15 +1,32 @@
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { PlusIcon, TagIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import QuillTextArea from "../QuillTextArea"
+import 'react-quill/dist/quill.snow.css';
+import { useSelector } from "react-redux"
+import { getUserData } from "../State/Counter/AuthUser"
 
 function FormPost(params) {
+
+    const userData = useSelector(getUserData)
 
     const [TitleLimitNumber, setTitleLimitNumber] = useState(0)
     const [TitleLimit, setTitleLimit] = useState(false)
 
     const [Fields, setFields] = useState({})
     const [Errors, setErrors] = useState([])
+
+    const [TextAreaValue, setTextAreaValue] = useState('')
+    const [TextTitleValue, setTextTitleValue] = useState('')
+
+    useEffect(() => {
+        setFields({
+            title: TextTitleValue,
+            description: TextAreaValue
+        })
+
+    }, [TextAreaValue, TextTitleValue])
 
     const handleValidation = () => {
         const formFields = { ...Fields }
@@ -32,13 +49,6 @@ function FormPost(params) {
         return formIsValid;
     }
 
-    const handleChange = (e) => {
-        setFields({
-            ...Fields,
-            [e.target.name]: e.target.value
-        })
-
-    }
 
     const handleSubmit = async (e) => {
         const queryParameters = new URLSearchParams(window.location.search)
@@ -49,8 +59,8 @@ function FormPost(params) {
         }
 
         if (handleValidation()) {
-            const title = e.target.title.value
-            const description = e.target.description.value
+            const title = TextTitleValue
+            const description = TextAreaValue
             const user_id = userData.id
 
             await axios.post(`http://127.0.0.1:8000/api/posts/publish/`, {
@@ -60,7 +70,10 @@ function FormPost(params) {
                 community_id
             })
                 .then(async function (response) {
+                    e.preventDefault()
                     console.log('Post Submitted.');
+                    setTextAreaValue('')
+                    setTextTitleValue('')
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -68,12 +81,10 @@ function FormPost(params) {
         } else {
             e.preventDefault()
         }
-
-
-
     }
 
-    const handleTitleLimit = (e) => {
+    const handleTitle = (e) => {
+        setTextTitleValue(e.target.value)
         setTitleLimitNumber(e.target.value.length)
         if (e.target.value.length === e.target.maxLength) {
             setTitleLimit(true)
@@ -82,14 +93,22 @@ function FormPost(params) {
         }
     }
 
+    const QuillTextAreaInfo = { 
+        value: TextAreaValue, 
+        setValue: setTextAreaValue,
+        placeholder: 'Text (optional)' 
+    }
+
     return (
         <>
-            <form onChange={handleChange} onSubmit={handleSubmit} action="" className="flex flex-col gap-5 p-3 relative">
-                <input maxLength={70} onChange={handleTitleLimit} type="text" name="title" id="title" placeholder="Title"
+            <form onSubmit={handleSubmit} action="" className="flex flex-col gap-5 p-3 relative">
+                
+                <input maxLength={70} onChange={handleTitle} value={TextTitleValue} type="text" name="title" id="title" placeholder="Title"
                     className={TitleLimit ? "w-full bg-transparent rounded-md focus:border-red-500 focus:ring-0 " : "w-full bg-transparent rounded-md border-neutral-700 "} />
                 <p className="absolute right-6 top-5 text-neutral-500">{TitleLimitNumber}/70</p>
-                <textarea name="description" id="description" placeholder="Text (optional)"
-                    className="w-full min-h-[17rem] bg-transparent border rounded-md border-neutral-700 text-base" />
+
+                <QuillTextArea info={QuillTextAreaInfo} />
+
                 <div className="flex flex-row flex-wrap gap-3 justify-start border-b-2 border-neutral-700 pb-5">
                     <div>
                         <input name="spoiler" id="spoiler" type="checkbox" className="hidden peer" />

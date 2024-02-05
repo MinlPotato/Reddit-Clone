@@ -6,6 +6,7 @@ import { json } from "react-router-dom"
 import Policies from "./Policies"
 import RecentPosts from "./RecentPosts"
 import axios from "axios"
+import OrderCard from "./OrderCard"
 
 function Main() {
 
@@ -41,10 +42,11 @@ function Main() {
 
 
     return (
-        <div className="mt-14">
+        <div className=" top-10 mt-16 w-full xl:w-[75rem]">
             <div className="flex flex-row h-screen justify-center w-full gap-7">
-                <div className="flex flex-col lg:w-2/3 gap-7">
+                <div className="flex flex-col mx-10 w-full lg:mx-0 lg:w-2/3 gap-7">
                     <CreatePost />
+                    <OrderCard/>
                     {(Posts != null) ? (      
                         Posts.map((Post) => (
                             <div key={Post.id}>
@@ -56,7 +58,7 @@ function Main() {
                     )}
 
                 </div>
-                <div ref={infoDiv} id="infoDiv" className="hidden md:hidden lg:flex flex-col w-1/3 gap-7">
+                <div ref={infoDiv} id="infoDiv" className="hidden lg:hidden xl:flex flex-col w-1/3 gap-7">
                     <div className="w-full h-24 bg-neutral-900 rounded-md border border-neutral-700"></div>
                     <RecentPosts />
                     <Policies />

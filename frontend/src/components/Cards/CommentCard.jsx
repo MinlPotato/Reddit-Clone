@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import profilePic from '../../assets/profile_pic.jpg'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { getCommentsByComment } from '../services/communityService'
+import { getCommentsByComment, publishComment } from '../services/communityService'
 import { ArrowsPointingOutIcon, ChatBubbleLeftIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import LikeDislike123 from '../LikeDislikeComponent'
 import { getUserData } from '../State/Counter/AuthUser'
 import { useSelector } from 'react-redux'
+import DOMPurify from 'dompurify';
+import QuillTextArea from '../QuillTextArea'
 
 function CommentCard(params) {
 
@@ -16,12 +18,24 @@ function CommentCard(params) {
     const [Hide, setHide] = useState(false)
     const [Reply, setReply] = useState(false)
     const [Comments, setComments] = useState(null)
+    const [TextAreaValue, setTextAreaValue] = useState('')
 
-    const description = infoCard.description.replace('/\\r\\/g', '<br>')
+    const [DisableCommentSubmit, setDisableCommentSubmit] = useState(true)
+    const [loading, setLoading] = useState(false)
+
+    const description = DOMPurify.sanitize(infoCard.description)
 
     useEffect(() => {
         getCommentsByComment(infoCard.id).then((resposne) => setComments(resposne))
     }, [])
+
+    useEffect(() => {
+        if (TextAreaValue.replace(/<(.|\n)*?>/g, '').trim().length === 0) {
+            setDisableCommentSubmit(true)
+        } else {
+            setDisableCommentSubmit(false)
+        }
+    }, [TextAreaValue])
 
     const LikeInfo = {
         comment_id: infoCard.id,
@@ -30,6 +44,31 @@ function CommentCard(params) {
         dislikes: infoCard.dislikes,
         isLogged: loggedUser.isLogged,
         like_id: 1
+    }
+
+    const QuillTextAreaInfo = {
+        value: TextAreaValue,
+        setValue: setTextAreaValue,
+        placeholder: 'What are your thoughts?'
+    }
+
+        const handleSubmit = async () => {
+        if (!DisableCommentSubmit) {
+
+            const data = {
+                description: TextAreaValue,
+                user_id: loggedUser.id,
+                post_id: infoCard.post_id,
+                parent_comment: infoCard.id
+            }
+
+            setDisableCommentSubmit(true)
+            setLoading(true)
+            
+            publishComment(data)
+
+            window.location.reload(false);
+        }
     }
 
     return Hide == false ? (
@@ -47,14 +86,12 @@ function CommentCard(params) {
                     <p className='text-neutral-500'>{moment(infoCard.date_created).fromNow()}</p>
                 </div>
                 <div className='col-span-11'>
-                    <p className='text-start text-neutral-300 text-lg whitespace-pre-line'>
-                        {description}
-                    </p>
+                    <div dangerouslySetInnerHTML={{ __html: description }} className='text-start text-neutral-300 text-lg whitespace-pre-line'></div>
                 </div>
                 <div className="mt-3 flex flex-row gap-2 items-center col-span-11">
                     <LikeDislike123 info={LikeInfo} />
                     <div className='flex flex-row'>
-                        <button onClick={() => {Reply ? (setReply(false)) : (setReply(true))}} className='p-2 flex flex-row font-semibold items-center px-3 gap-2 
+                        <button onClick={() => { Reply ? (setReply(false)) : (setReply(true)) }} className='p-2 flex flex-row font-semibold items-center px-3 gap-2 
                     rounded-none bg-transparent border-transparent 
                     hover:bg-neutral-800 text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white'>
                             <ChatBubbleLeftIcon className="w-6 h-6 stroke-inherit" />
@@ -71,7 +108,17 @@ function CommentCard(params) {
                 </div>
 
                 {Reply && (
-                    <textarea placeholder='What are your thoughts?' className="col-span-11 min-h-[17rem] text-lg placeholder:text-lg bg-transparent border rounded-md border-neutral-700" />
+                    <div className='col-span-11'>
+                        <QuillTextArea info={QuillTextAreaInfo} />
+                        <div className='mt-2 flex justify-end'>
+                            <button disabled={DisableCommentSubmit} onClick={handleSubmit}
+                                className="rounded-full w-1/5 p-2 bg-white disabled:bg-neutral-200 text-neutral-800 disabled:text-neutral-500">
+                                {loading ? <p className="text-black">loading...</p> : <p className="text-inherit font-semibold text-base">Comment</p>}
+                            </button>
+                        </div>
+
+                    </div>
+
                 )}
 
                 {Comments ? (

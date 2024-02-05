@@ -17,6 +17,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  list-style-type: style;
+  list-style-position: inside;
+}
+
 a {
   font-weight: 500;
 
@@ -68,4 +73,42 @@ button {
 
 @media (prefers-color-scheme: dark) {
 /* override styles here */
+}
+
+.quill {
+  border: none;
+  border-color: #404040;
+  border-radius: 20%;
+}
+
+.ql-container {
+  height: 15rem;
+  border: 0px;
+  font-size: 16px;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #404040;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #404040;
+  border-bottom-right-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+
+.ql-snow .ql-picker-options {
+  background-color: rgb(23 23 23);
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  border-color: #404040;
+}
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  border-color: #404040;
+}
+
+.ql-editor.ql-blank::before {
+  color: #737373;
 }

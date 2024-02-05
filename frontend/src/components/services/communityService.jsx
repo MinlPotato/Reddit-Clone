@@ -72,3 +72,20 @@ export let getCommentsByComment = async (id) => (
         .catch(function (error) {
             console.log(error);
         }))
+
+
+export const publishComment = async (data) => {
+    const description = data.description
+    const user_id = data.user_id
+    const post_id = data.post_id
+    const parent_comment = data.parent_comment || null
+    await axios.post(`http://127.0.0.1:8000/api/comments/publish/`, {
+        description,
+        user_id,
+        post_id,
+        parent_comment
+        
+    }).catch(function (error) {
+            console.log(error);
+    })
+};
