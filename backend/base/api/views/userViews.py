@@ -45,3 +45,7 @@ def getUser(request, pk):
     user = User.objects.get(pk=pk)
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+
+
+

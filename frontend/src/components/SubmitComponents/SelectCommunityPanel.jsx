@@ -5,12 +5,13 @@ import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import subreddit from "../../assets/subreddit.png"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getCommunities } from "../services/communityService";
 
 function SelectCommunityPanel(params) {
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [Communities, setCommunities] = useState(null)
   const [selected, setSelected] = useState(null);
@@ -20,7 +21,16 @@ function SelectCommunityPanel(params) {
   }
 
   useEffect(() => {
-    getCommunities().then((response) => setCommunities(response))
+    const queryParameters = new URLSearchParams(window.location.search)
+    const community_id = queryParameters.get("community")
+    getCommunities().then((response) => {
+      setCommunities(response)
+      const active_community = response.find((element) => element.id == community_id)
+      if (active_community) {
+        setSelected(active_community)
+      }
+      
+    })
   }, [])
 
 

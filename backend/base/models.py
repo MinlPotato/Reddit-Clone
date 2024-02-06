@@ -16,6 +16,15 @@ class Community(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def get_members(self):
+        return self.member.count()
+    
+    @property
+    def get_active_members(self):
+        return self.member.filter(user_id__is_active = True).count()
+
 
     def get_absolute_url(self):
         return reverse("Post_detail", kwargs={"pk": self.pk})
@@ -134,6 +143,7 @@ class Saved(models.Model):
     def __str__(self):
         return '%s - %s' % (self.post_id.title, self.user_id.username)
 
+
 class History(models.Model):
     user_id = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='recent')
@@ -144,3 +154,15 @@ class History(models.Model):
     @property
     def is_expired(self):
         return timezone.now() - self.date_created < timedelta(days=1)
+    
+
+
+class CommunityMember(models.Model):
+    user_id = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='member')
+    community_id = models.ForeignKey(
+        Community, on_delete=models.CASCADE, related_name='member')
+    favorited = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s - %s' % (self.community_id.name, self.user_id.username)

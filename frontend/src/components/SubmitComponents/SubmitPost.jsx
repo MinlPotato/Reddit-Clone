@@ -24,7 +24,7 @@ function SubmitPost(params) {
         if (userData.isLogged == false) {
             navigate('/login')
         }
-        window.history.replaceState(null, null, "/reddit/submit")
+        //window.history.replaceState(null, null, "/reddit/submit")
     }, [])
 
     useEffect(() => {
@@ -84,8 +84,8 @@ function SubmitPost(params) {
                                     <label htmlFor="poll" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
-                                    <ListBulletIcon className="w-5 hidden md:block stroke-inherit" />
-                                    <p className="text-md text-inherit">Poll</p>
+                                        <ListBulletIcon className="w-5 hidden md:block stroke-inherit" />
+                                        <p className="text-md text-inherit">Poll</p>
                                     </label>
                                 </div>
                             </div>

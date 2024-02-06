@@ -1,12 +1,22 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from base.models import (Community, Post, Comment, Feedback, Saved)
+from base.models import (Community, Post, Comment, Feedback, Saved, CommunityMember)
 from django.contrib.auth.models import User
 from django.db.models import Count
 
 class CommunitySerializer(ModelSerializer):
+
+    members = SerializerMethodField('get_members')
+    active_members = SerializerMethodField('get_active_members')
+
+    def get_members(self, obj):
+        return getattr(obj, 'get_members')
+    
+    def get_active_members(self, obj):
+        return getattr(obj, 'get_active_members')
+
     class Meta:
         model = Community
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'date_created', 'members', 'active_members']
 
 
 class PostSerializer(ModelSerializer):
@@ -118,3 +128,16 @@ class SaveSerializer(ModelSerializer):
         saved = Saved(**validated_data)
         saved.save()
         return saved
+    
+
+class MemberSerializer(ModelSerializer):
+    class Meta:
+        model = CommunityMember
+        fields = '__all__'
+
+    
+    def create(self, validated_data):
+        member = CommunityMember(**validated_data)
+        member.save()
+        return member
+    

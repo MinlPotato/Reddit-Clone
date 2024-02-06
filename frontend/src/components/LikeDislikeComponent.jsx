@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/24/outline"
 import { deleteFeedback, handlePostFeedback, getFeedback } from "./services/voteService";
+import { useSelector } from "react-redux";
+import { getUserData } from "./State/Counter/AuthUser";
 
 function LikeDislike123(params) {
+
     const info = params.info
+    const userData = useSelector(getUserData)
 
     const [votes, setVotes] = useState(info.likes - info.dislikes || 0)
 
@@ -56,7 +60,7 @@ function LikeDislike123(params) {
     }
 
     useEffect(() => {
-        if (params.info.post_id) {
+        if (params.info.post_id && userData.isLogged) {
             getFeedback({ 'user_id': info.user_id, 'post_id': params.info.post_id })
             .then((response) => response == true ? setLikeChecked(true) : response == false ? setDislikeChecked(true) : "")
         }   

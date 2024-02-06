@@ -15,6 +15,8 @@ urlpatterns = [
     path('communities/', CommunityList.as_view()),
     path('communities/<int:pk>/', views.getCommunity),
     path('communities/<int:pk>/posts/', getPostsByCommunityList.as_view()),
+    path('communities/<int:pk>/members/', views.getCommunityMembers),
+    path('communities/<int:pk>/members/<int:user_id>/', views.getMember),
     path('posts/', PostList.as_view()),
     path('posts/<int:pk>/', views.getPost),
     path('posts/<int:pk>/comments', getCommentsByPostList.as_view()),
@@ -31,6 +33,7 @@ urlpatterns = [
     path('users/<int:pk>/posts', getPostsByUserList.as_view()),
     path('users/<int:pk>/liked', views.getPostsLikedByUser),
     path('users/<int:pk>/disliked', views.getPostsDislikedByUser),
+    path('users/<int:pk>/member', views.getCommunitiesJoinedByUser),
     path('users/register/', views.userRegister),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
