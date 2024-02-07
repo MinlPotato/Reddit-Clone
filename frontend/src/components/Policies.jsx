@@ -1,4 +1,4 @@
-function Policies(params) {
+function Policies() {
 
     return (
         <div className="sticky top-20 flex flex-col w-full bg-neutral-900 rounded-md border border-neutral-700">

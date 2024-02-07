@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useSelector } from "react-redux"
 import { getUserData } from "../State/Counter/AuthUser"
 
-function FormPost(params) {
+function FormPost() {
 
     const userData = useSelector(getUserData)
 
@@ -69,7 +69,7 @@ function FormPost(params) {
                 user_id,
                 community_id
             })
-                .then(async function (response) {
+                .then(async function () {
                     e.preventDefault()
                     console.log('Post Submitted.');
                     setTextAreaValue('')

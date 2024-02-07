@@ -1,11 +1,10 @@
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserData } from "./State/Counter/AuthUser";
 import moment from 'moment';
-import { getCommunity, getUser } from "./services/communityService";
 import LikeDislike123 from "./LikeDislikeComponent";
 import DOMPurify from 'dompurify';
 import { deleteSaved, getSaved, publishSaved } from "./services/voteService";
@@ -13,8 +12,6 @@ import { deleteSaved, getSaved, publishSaved } from "./services/voteService";
 function Card(params) {
 
     const loggedUser = useSelector(getUserData)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const infoCard = params.info
 

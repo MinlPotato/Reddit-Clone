@@ -7,7 +7,7 @@ import { getUserData } from "../State/Counter/AuthUser"
 import ClassicCard from "../Cards/ClassicCard"
 import { useNavigate } from "react-router-dom"
 
-function ProfileDownVoted(params) {
+function ProfileDownVoted() {
 
 
     const loggedUser = useSelector(getUserData)

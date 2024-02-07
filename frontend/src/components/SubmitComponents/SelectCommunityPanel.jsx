@@ -1,17 +1,14 @@
-import { Popover } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import subreddit from "../../assets/subreddit.png"
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCommunities } from "../services/communityService";
 
-function SelectCommunityPanel(params) {
+function SelectCommunityPanel() {
 
   const navigate = useNavigate()
-  const location = useLocation()
 
   const [Communities, setCommunities] = useState(null)
   const [selected, setSelected] = useState(null);

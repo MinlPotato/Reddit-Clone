@@ -5,9 +5,9 @@ import { useState, useEffect } from "react"
 import telescope_snoo from '../assets/telescope-snoo.png'
 import SearchCardCommunities from "./Cards/SearchCardCommunities"
 import { useNavigate } from "react-router-dom"
-import { Listbox, Transition } from "@headlessui/react";
+import { Listbox } from "@headlessui/react";
 
-function Search(params) {
+function Search() {
 
     const navigate = useNavigate()
 
@@ -77,13 +77,13 @@ function Search(params) {
                                             </>
                                         ) : (
                                             <>
-                                                <p className="text-md font-medium text-neutral-200">Sort</p>
+                                                <p className="text-md font-medium text-neutral-200">Sort {open}</p>
                                             </>
                                         )}
                                 
                                     <ChevronDownIcon className="w-5 h-5" />
                                 </Listbox.Button>
-                                <Listbox.Options className='absolute mt-8 z-10 p-y w-fit overflow-auto bg-neutral-900 shadow-md shadow-neutral-800 rounded-b-md bg-neutral-90 py-2 '>
+                                <Listbox.Options className='absolute list-none mt-8 z-10 p-y w-fit overflow-auto bg-neutral-900 shadow-md shadow-neutral-800 rounded-b-md bg-neutral-90 py-2 '>
                                     {sortTypes.map((sort) => (
                                         <Listbox.Option
                                             className={({ active }) =>
@@ -124,7 +124,7 @@ function Search(params) {
                         {(SearchPosts?.length === 0) && (
                             <div className="flex flex-col items-center gap-5 bg-neutral-900 border rounded-md border-neutral-700 w-[48rem] py-4">
                                 <img src={telescope_snoo} alt="" className="w-48" />
-                                <p className="text-2xl font-semibold">Hm... we couldn't find any results for "{search}"</p>
+                                <p className="text-2xl font-semibold">{`Hm... we couldn't find any results for "${search}"`}</p>
                                 <p className="text-lg font-semibold text-neutral-500">Double-check your spelling or try different keywords to adjust your search</p>
                             </div>
                         )}
@@ -135,7 +135,7 @@ function Search(params) {
                             <p className="text-start text-xl font-semibold ml-5 my-3">Communities</p>
                             {(SearchCommunities != null) ? (
                                 SearchCommunities.map((Community, index) => (
-                                    <div onClick={() => navigate(`/reddit/r/${Community.id}`)} key={Community.id} className="px-3 border-b-[1px] py-4 border-neutral-700/75 hover:bg-neutral-800">
+                                    <div key={index} onClick={() => navigate(`/reddit/r/${Community.id}`)} className="px-3 border-b-[1px] py-4 border-neutral-700/75 hover:bg-neutral-800">
                                         <SearchCardCommunities info={Community} />
                                     </div>
                                 ))

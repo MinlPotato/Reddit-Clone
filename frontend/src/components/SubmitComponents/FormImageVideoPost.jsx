@@ -2,8 +2,12 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { PlusIcon, TagIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useState } from "react"
+import { useSelector } from "react-redux"
+import { getUserData } from "../State/Counter/AuthUser"
 
-function FormImageVideoPost(params) {
+function FormImageVideoPost() {
+
+    const userData = useSelector(getUserData)
 
     const [TitleLimitNumber, setTitleLimitNumber] = useState(0)
     const [TitleLimit, setTitleLimit] = useState(false)
@@ -59,7 +63,7 @@ function FormImageVideoPost(params) {
                 user_id,
                 community_id
             })
-                .then(async function (response) {
+                .then(async function () {
                     console.log('Post Submitted.');
                 })
                 .catch(function (error) {
@@ -67,6 +71,7 @@ function FormImageVideoPost(params) {
                 })
         } else {
             e.preventDefault()
+            console.log(Errors);
             alert('error')
         }
 

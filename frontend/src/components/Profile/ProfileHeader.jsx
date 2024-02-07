@@ -1,10 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { getUserData } from "../State/Counter/AuthUser";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-function ProfileHeader(params) {
+function ProfileHeader() {
 
     const location = useLocation()
     const loggedUser = useSelector(getUserData)
@@ -19,7 +19,7 @@ function ProfileHeader(params) {
         if (loggedUser.id == user_id){
             setisLoggedUser(true)
         }
-    }, [])
+    })
     
 
     let overviewURL = `/reddit/user/${user_id}`

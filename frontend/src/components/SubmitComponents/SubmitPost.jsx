@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { PlusIcon, TagIcon, ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
+import { ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 import rulesImg from "../../assets/rulesThingy.png"
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Counter/AuthUser";
@@ -7,12 +6,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SelectCommunityPanel from "./SelectCommunityPanel";
 import { getCommunity } from "../services/communityService";
-import axios from "axios";
 import CommunityInfoCard from "../Community/CommunityInfoCard";
 import FormPost from "./FormPost";
-import FormImageVideoPost from "./FormImageVideoPost";
 
-function SubmitPost(params) {
+function SubmitPost() {
 
     const userData = useSelector(getUserData)
     const navigate = useNavigate()
@@ -107,10 +104,10 @@ function SubmitPost(params) {
                             <p className="border-t-2 border-neutral-700 py-3">2. Behave like you would in real life</p>
                             <p className="border-t-2 border-neutral-700 py-3">3. Look for the original source of content</p>
                             <p className="border-t-2 border-neutral-700 py-3">4. Search for duplicates before posting</p>
-                            <p className="border-y-2 border-neutral-700 py-3">5. Read the community's rules</p>
+                            <p className="border-y-2 border-neutral-700 py-3">{`5. Read the community's rules`}</p>
                         </div>
                     </div>
-                    <p className="text-start">Please be mindful of reddit's
+                    <p className="text-start">{`Please be mindful of reddit's`}
                         <a href="" className="text-sky-500"> content policy </a>
                         and practice good
                         <a href="" className="text-sky-500"> reddiquette</a>.

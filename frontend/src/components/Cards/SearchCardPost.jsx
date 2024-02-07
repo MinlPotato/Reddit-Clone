@@ -11,7 +11,6 @@ function SearchCardPost(params) {
     let title = infoCard.title
     let id = infoCard.id
     let community_id = infoCard.community_id
-    let user_id = infoCard.user_id
     let date_created = moment(infoCard.date_created).fromNow()
     let community_name = infoCard.community_name
     let username = infoCard.username

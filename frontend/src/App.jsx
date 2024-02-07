@@ -1,7 +1,4 @@
-import { useState } from "react";
 import "./App.css";
-import StackedList from "./components/stackedList.jsx";
-import Header from "./components/headerComponents/Header.jsx";
 import Main from "./components/Main.jsx";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { BrowserRouter } from 'react-router-dom';
@@ -21,10 +18,7 @@ import ProfileDownVoted from "./components/Profile/ProfileDownVoted.jsx";
 
 
 function App() {
-  <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
-
   
-
   return (
     <>
       <Provider store={store}>

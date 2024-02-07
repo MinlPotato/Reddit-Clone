@@ -1,6 +1,5 @@
 import CreatePost from "./CreatePost"
 import Card from "./Card"
-
 import { useState, useEffect, useRef } from "react"
 import Policies from "./Policies"
 import RecentPosts from "./RecentPosts"
@@ -12,13 +11,12 @@ function Main() {
     const infoDiv = useRef(null)
     const [Posts, setPosts] = useState([])
     const [reload, setReload] = useState(false)
-    const [load, setload] = useState(true)
     const [ReachedBottom, setReachedBottom] = useState(false)
 
     const [Start, setStart] = useState(0)
     const [Limit, setLimit] = useState(3)
 
-    const [Seed, setSeed] = useState(Math.floor(Math.random() * 100))
+    const [Seed] = useState(Math.floor(Math.random() * 100))
 
     let getPosts = async (start = 0, limit = 1, seed) => (
         axios.get(`http://127.0.0.1:8000/api/posts/?limit=${limit}&start=${start}&seed=${seed}`)

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import ProfileHeader from "./ProfileHeader"
 
-function ProfileHeaderLayout(params) {
+function ProfileHeaderLayout() {
 
 
     return (

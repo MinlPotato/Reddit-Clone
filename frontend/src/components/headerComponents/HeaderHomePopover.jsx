@@ -1,20 +1,16 @@
-import { Popover } from "@headlessui/react";
 import { ChevronDownIcon, HomeIcon } from "@heroicons/react/20/solid";
-import { EllipsisHorizontalCircleIcon, StarIcon } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import subreddit from "../../assets/subreddit.png"
 import { useNavigate } from "react-router-dom";
 import { getCommunitiesJoinedByUser } from "../services/communityService";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Counter/AuthUser";
 
-function HeaderHomePopover(params) {
+function HeaderHomePopover() {
 
     const navigate = useNavigate()
-    const location = useLocation()
     const userData = useSelector(getUserData)
 
     const [Communities, setCommunities] = useState([])
@@ -29,11 +25,6 @@ function HeaderHomePopover(params) {
             getCommunitiesJoinedByUser(userData.id).then((response) => setCommunities(response))
         }
     }, [])
-
-    useEffect(() => {
-        const pathnameList = location.pathname.split('/')
-    }, [location])
-
 
     const handleChange = (e) => {
         setSelected(e)

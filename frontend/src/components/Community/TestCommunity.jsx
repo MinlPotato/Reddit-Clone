@@ -1,8 +1,8 @@
 import axios from "axios"
 
-function TestCommunity(params) {
+function TestCommunity() {
 
-    let getCommunities = async (e) => (
+    let getCommunities = async () => (
         axios.get('http://127.0.0.1:8000/api/communities/1')
             .then(function (response) {
                 console.log(response.data);

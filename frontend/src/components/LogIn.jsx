@@ -1,21 +1,15 @@
-import logoReddit from "../assets/reddit-logo.png"
 import logoGoogle from "../assets/google.png"
 import logoApple from "../assets/apple.png"
 import { Link } from "react-router-dom";
-import axios, { AxiosError } from "axios";
-import { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getUserData, login, logout } from "./State/Counter/AuthUser"
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "./State/Counter/AuthUser"
 import { useNavigate } from "react-router-dom";
 
-function LogIn(params) {
+function LogIn() {
 
-    const userData = useSelector(getUserData)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    
 
     let loginUser2 = async (e) => {
         e.preventDefault()

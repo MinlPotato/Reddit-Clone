@@ -1,6 +1,5 @@
-import TestCommunity from "./TestCommunity"
 import CreatePost from "../CreatePost"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Card from "../Card"
 import subreddit from "../../assets/subreddit.png"
 import OrderCard from "../OrderCard"
@@ -12,7 +11,7 @@ import { Link } from "react-router-dom"
 import { getUserData } from "../State/Counter/AuthUser"
 import { useSelector } from "react-redux";
 
-function CommunityPage(params) {
+function CommunityPage() {
 
     const location = useLocation()
     const userData = useSelector(getUserData)

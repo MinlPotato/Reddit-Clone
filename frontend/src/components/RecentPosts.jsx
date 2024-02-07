@@ -1,4 +1,4 @@
-function RecentPosts(params) {
+function RecentPosts() {
 
     return (
         <div className="w-full h-80 bg-neutral-900 rounded-md border border-neutral-700">

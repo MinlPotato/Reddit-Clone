@@ -2,12 +2,10 @@ import  subreddit  from '../../assets/subreddit.png'
 import { CakeIcon } from "@heroicons/react/24/outline"
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 
 function CommunityInfoCard(params) {
 
     const infoCard = params.info
-    const navigate = useNavigate()
 
     return (
         <div className="hidden lg:flex flex-col gap-7 w-full">

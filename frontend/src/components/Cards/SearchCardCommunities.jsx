@@ -1,4 +1,4 @@
-import  subreddit  from "../../assets/subreddit.png"
+import subreddit from "../../assets/subreddit.png"
 
 function SearchCardCommunities(params) {
 

@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const initialState = {
     username: null,
@@ -26,7 +24,7 @@ const AuthSlice = createSlice({
             state.isLogged = true
             localStorage.setItem('authTokens', JSON.stringify(action.payload))
         },
-        logout(state, action) {
+        logout(state) {
             state.authTokens.refresh = null
             state.authTokens.access = null
             state.username = null

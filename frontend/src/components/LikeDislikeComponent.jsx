@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/24/outline"
 import { deleteFeedback, handlePostFeedback, getFeedback } from "./services/voteService";
 import { useSelector } from "react-redux";
@@ -14,6 +14,7 @@ function LikeDislike123(params) {
     const [likeChecked, setLikeChecked] = useState(false)
     const [dislikeChecked, setDislikeChecked] = useState(false)
 
+    /*
     const handleCheck2 = async (e) => {
         let data = {
             type: e.target.value,
@@ -35,6 +36,7 @@ function LikeDislike123(params) {
             deleteFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes - 1) : setVotes(votes + 1))
         }
     }
+    */
 
     const handleCheck = async (e) => {
         let data = {
@@ -51,11 +53,11 @@ function LikeDislike123(params) {
                 setLikeChecked(false)
                 setDislikeChecked(true)
             }
-            handlePostFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes + 1) : setVotes(votes - 1))
+            handlePostFeedback(data).then(() => e.target.value === 'L' ? setVotes(votes + 1) : setVotes(votes - 1))
         } else {
             setLikeChecked(false)
             setDislikeChecked(false)
-            deleteFeedback(data).then((response) => e.target.value === 'L' ? setVotes(votes - 1) : setVotes(votes + 1))
+            deleteFeedback(data).then(() => e.target.value === 'L' ? setVotes(votes - 1) : setVotes(votes + 1))
         }
     }
 

@@ -1,11 +1,10 @@
 import profileImg from "../assets/profile_pic.jpg"
-import { Link } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import { PhotoIcon, LinkIcon } from "@heroicons/react/24/outline";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserData } from "./State/Counter/AuthUser";
 
-function CreatePost(params) {
+function CreatePost() {
 
     const userData = useSelector(getUserData)
     const navigate = useNavigate()

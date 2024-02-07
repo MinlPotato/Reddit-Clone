@@ -6,9 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserData, logout } from "../State/Counter/AuthUser";
 import { Popover } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
 
-function HeaderProfilePopover(params) {
+function HeaderProfilePopover() {
 
     const data = useSelector(getUserData)
     const dispatch = useDispatch()
@@ -34,10 +33,6 @@ function HeaderProfilePopover(params) {
             url: null
         }
     ]
-
-    const [OnlineStatus, setOnlineStatus] = useState(true)
-
-
 
     return (
         <Popover className="w-1/6 my-2 flex items-center ">

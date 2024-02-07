@@ -4,11 +4,10 @@ import { getUser } from "../services/communityService"
 import { useSelector } from "react-redux"
 import UserCard from "./UserCard"
 import { getUserData } from "../State/Counter/AuthUser"
-import SearchCardPost from "../Cards/SearchCardPost"
 import ClassicCard from "../Cards/ClassicCard"
 import { useNavigate } from "react-router-dom"
 
-function ProfileUpVoted(params) {
+function ProfileUpVoted() {
 
     const loggedUser = useSelector(getUserData)
     const navigate = useNavigate()

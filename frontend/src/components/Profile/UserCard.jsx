@@ -1,5 +1,4 @@
 import profilePic from '../../assets/profile_pic.jpg'
-import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { CakeIcon } from '@heroicons/react/24/outline'
 

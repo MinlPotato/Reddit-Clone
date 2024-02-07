@@ -1,11 +1,10 @@
-import logoReddit from "../assets/reddit-logo.png"
 import logoGoogle from "../assets/google.png"
 import logoApple from "../assets/apple.png"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Register(params) {
+function Register() {
 
     const navigate = useNavigate()
 
@@ -21,10 +20,11 @@ function Register(params) {
             username,
             password,
         }
-        ).then((response) => {
+        ).then(() => {
                 navigate('/login')
-        }).catch(err => ({
-        }));
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
     return (

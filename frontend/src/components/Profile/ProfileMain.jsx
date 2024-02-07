@@ -1,13 +1,12 @@
 import OrderCard from "../OrderCard"
 import { getPostByUser } from "../services/profileServices"
-import ProfileHeader from "./ProfileHeader"
 import { useState, useEffect } from "react"
 import SearchCardPost from "../Cards/SearchCardPost"
 import UserCard from "./UserCard"
 import { getUser } from "../services/communityService"
 import { useLocation } from "react-router-dom"
 
-function ProfileMain(params) {
+function ProfileMain() {
 
     const [UserPosts, setUserPosts] = useState(null)
     const [UserData, setUserData] = useState(null)

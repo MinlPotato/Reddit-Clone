@@ -1,19 +1,17 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import { getUserData, login, logout, updateToken } from '../State/Counter/AuthUser';
-import { useDispatch, useSelector } from 'react-redux';
+import { login, logout, updateToken } from '../State/Counter/AuthUser';
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function HeaderLayout(params) {
-
+function HeaderLayout() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [AuthToken, setAuthToken] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
-    const [Loading, setLoading] = useState(true)
+    const [ AuthToken ] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
 
     const updateTokenF = async () => {
         let refresh = JSON.parse(localStorage.getItem('authTokens')).refresh
@@ -36,7 +34,7 @@ function HeaderLayout(params) {
             }
         }, 1.2e+6);
         return () => clearInterval(interval)
-    }, [AuthToken]);
+    }, [AuthToken, updateTokenF]);
 
 
     if (localStorage.getItem('authTokens')) {

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom"
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
 import { getCommunity, getUser, getPost, getCommentsByPost, publishComment } from "./services/communityService";
@@ -14,7 +14,7 @@ import CommentCard from "./Cards/CommentCard";
 import DOMPurify from 'dompurify';
 import QuillTextArea from "./QuillTextArea";
 
-function CommentSection(params) {
+function CommentSection() {
 
     const loggedUser = useSelector(getUserData)
     const location = useLocation()

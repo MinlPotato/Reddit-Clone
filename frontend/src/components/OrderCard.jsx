@@ -1,8 +1,7 @@
 import { FireIcon, ClockIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/outline"
-import { useEffect, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 
-function OrderCard(params) {
+function OrderCard() {
 
     const navigate = useNavigate()
     const location = useLocation()
