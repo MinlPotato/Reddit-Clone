@@ -1,5 +1,5 @@
 import { ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
-import rulesImg from "../../assets/rulesThingy.png"
+import rulesImg from "../../assets/rulesThingy2.png"
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Counter/AuthUser";
 import { useLocation, useNavigate } from "react-router-dom";
