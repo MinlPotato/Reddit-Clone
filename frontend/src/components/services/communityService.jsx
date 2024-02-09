@@ -20,7 +20,24 @@ export let getCommunities = async () => (
         })
         .catch(function (error) {
             console.log(error);
-        }))
+        })
+)
+
+
+export let publishCommunity = async (data) => {
+    const name = data.community_name
+    const description = data.community_description
+    await axios.post(`http://127.0.0.1:8000/api/communities/publish/`, {
+        name,
+        description
+    }).then(async function (response) {
+        const data = response.data
+        return data
+    }).catch(function (error) {
+        console.log(error);
+    })
+};
+
 
 export let getCommunitiesJoinedByUser = async (id) => (
     await axios.get(`http://127.0.0.1:8000/api/users/${id}/member`)
@@ -94,9 +111,9 @@ export const publishComment = async (data) => {
         user_id,
         post_id,
         parent_comment
-        
+
     }).catch(function (error) {
-            console.log(error);
+        console.log(error);
     })
 };
 
@@ -106,7 +123,6 @@ export const publishComment = async (data) => {
 export let getMember = async (data) => (
     await axios.get(`http://127.0.0.1:8000/api/communities/${data.community_id}/members/${data.user_id}/`)
         .then(async function (response) {
-            console.log(response.data);
             if (response.data) {
                 return true
             } else {
@@ -126,8 +142,9 @@ export let joinMember = async (data) => {
         community_id,
         user_id
     }).catch(function (error) {
-            console.log(error);
-        })}
+        console.log(error);
+    })
+}
 
 
 export let leaveMember = async (data) => {

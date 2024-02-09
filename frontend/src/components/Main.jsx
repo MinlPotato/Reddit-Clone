@@ -73,7 +73,8 @@ function Main() {
 
 
     return (
-        <div className="top-10 mt-16 w-full xl:w-[75rem]">
+        <>
+            <div className="top-10 mt-16 w-full xl:w-[75rem]">
             <div className="flex flex-row h-screen justify-center w-full gap-7">
                 <div className="flex flex-col mx-10 w-full lg:mx-0 lg:w-2/3 gap-7">
                     <CreatePost />
@@ -99,6 +100,8 @@ function Main() {
                 </div>
             </div>
         </div>
+        </>
+        
 
     )
 }

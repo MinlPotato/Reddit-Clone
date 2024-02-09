@@ -13,6 +13,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('', views.getRoutes),
     path('communities/', CommunityList.as_view()),
+    path('communities/publish/', views.publishCommunity),
     path('communities/<int:pk>/', views.getCommunity),
     path('communities/<int:pk>/posts/', getPostsByCommunityList.as_view()),
     path('communities/<int:pk>/members/', views.getCommunityMembers),

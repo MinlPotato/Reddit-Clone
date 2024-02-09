@@ -19,6 +19,12 @@ class CommunitySerializer(ModelSerializer):
         fields = ['id', 'name', 'description', 'date_created', 'members', 'active_members']
 
 
+    def create(self, validated_data):
+        community = Community(**validated_data)
+        community.save()
+        return community
+
+
 class PostSerializer(ModelSerializer):
 
     username = SerializerMethodField('get_username')

@@ -6,8 +6,8 @@ from datetime import timedelta
 # Create your models here.
 
 class Community(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.TextField()
+    name = models.CharField(max_length=21)
+    description = models.TextField(null=True, blank=True)
     date_created = models.DateTimeField(default=timezone.now)
 
     class Meta:

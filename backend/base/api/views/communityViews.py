@@ -23,6 +23,16 @@ def getCommunity(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+def publishCommunity(request):
+    serializer = CommunitySerializer(data=request.data)
+    print(request.data)
+    if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET', 'POST'])
 def getCommunityMembers(request, pk):
     community = Community.objects.get(pk=pk)
