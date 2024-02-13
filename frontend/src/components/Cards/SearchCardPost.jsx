@@ -19,7 +19,7 @@ function SearchCardPost(params) {
     let comments = infoCard.comments
 
     return (
-        <div onClick={() => navigate(`/reddit/${id}`)} className=" bg-neutral-900 border-inherit hover:bg-neutral-800 py-4 min-w-[50rem]">
+        <div onClick={() => navigate(`/reddit/${id}`)} className=" bg-neutral-900 border-inherit hover:bg-neutral-800 py-4">
             <div className="flex flex-col justify-between gap-2 items-start w-full">
                 <div className="flex flex-row gap-5 mx-3 items-center text-neutral-500">
                     <div className="flex flex-row gap-2 items-center">

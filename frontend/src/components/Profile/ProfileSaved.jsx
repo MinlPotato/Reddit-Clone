@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getUserDisliked } from "../services/profileServices"
+import { getUserSaved } from "../services/profileServices"
 import { getUser } from "../services/communityService"
 import { useSelector } from "react-redux"
 import UserCard from "./UserCard"
@@ -7,13 +7,12 @@ import { getUserData } from "../State/Counter/AuthUser"
 import ClassicCard from "../Cards/ClassicCard"
 import { useNavigate } from "react-router-dom"
 
-function ProfileDownVoted() {
-
+function ProfileSaved() {
 
     const loggedUser = useSelector(getUserData)
     const navigate = useNavigate()
 
-    const [PostsDisliked, setPostsDisliked] = useState(null)
+    const [PostsSaved, setPostsSaved] = useState(null)
     const [UserData, setUserData] = useState(null)
 
 
@@ -24,21 +23,22 @@ function ProfileDownVoted() {
             navigate(`/reddit/user/${user_id}`)
         }
 
-        getUserDisliked(loggedUser.id).then((response) => { setPostsDisliked(response); console.log(response) })
+        getUserSaved(loggedUser.id).then((response) => setPostsSaved(response))
         getUser(user_id).then((response) => setUserData(response))
     }, [])
+
 
     return (
         <div className="absolute left-0 right-0 top-40 sm:mx-10">
             <div className="flex flex-row justify-center w-full gap-7">
                 <div className="flex flex-col w-full lg:w-3/4 gap-7">
                     <div className="">
-                        {(PostsDisliked != null) ? (
-                            PostsDisliked.length == 0 ? (
-                                <p className="text-xl font-semibold">hmm... looks like you haven't disliked anything yet</p>
+                        {(PostsSaved != null) ? (
+                            PostsSaved.length == 0 ? (
+                                <p className="text-xl font-semibold">hmm... looks like you haven't saved anything yet</p>
                             ) : (
-                                PostsDisliked.map((Post) => (
-                                    <div key={Post.id}>
+                                PostsSaved.map((Post) => (
+                                    <div  key={Post.id}>
                                         <ClassicCard info={Post} />
                                     </div>
                                 ))
@@ -48,7 +48,7 @@ function ProfileDownVoted() {
                         )}
                     </div>
                 </div>
-                <div className="hidden md:hidden lg:flex flex-col w-1/4 gap-7">
+                <div className="hidden xl:flex flex-col w-1/4 gap-7">
                     {UserData && <UserCard info={UserData} />}
                 </div>
             </div>
@@ -56,4 +56,4 @@ function ProfileDownVoted() {
     )
 }
 
-export default ProfileDownVoted
+export default ProfileSaved

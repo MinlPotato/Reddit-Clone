@@ -50,22 +50,16 @@ class getPostsByCommunityList(generics.ListAPIView):
 @api_view(['POST'])
 def publishPost(request):
     if request.method == 'POST':
+        print(request.data['image'])
+        image = request.FILES
+        print(image)
         serializer = PublishPostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(
+                image=request.data.get('image')
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-def get_random_seed(request):
-    # Check if a seed is already stored in the session
-    if 'random_seed' in request.session:
-        random_seed = request.session['random_seed']
-    else:
-        # Generate a new random seed and store it in the session
-        random_seed = random.randint(0, 100000)
-        request.session['random_seed'] = random_seed
-    return random_seed
 
 class PostList(generics.ListAPIView):
     serializer_class = PostSerializer
@@ -74,12 +68,9 @@ class PostList(generics.ListAPIView):
 
         seed = self.request.query_params.get('seed', None)
 
-        print(seed)
-
         random.seed(seed)
         queryset = Post.objects.order_by('?')
-        
-        
+           
         limit = self.request.query_params.get('limit', None)
         start = self.request.query_params.get('start', None)
 

@@ -104,7 +104,7 @@ function FormPost() {
             <form onSubmit={handleSubmit} action="" className="flex flex-col gap-5 p-3 relative">
                 
                 <input maxLength={70} onChange={handleTitle} value={TextTitleValue} type="text" name="title" id="title" placeholder="Title"
-                    className={TitleLimit ? "w-full bg-transparent rounded-md focus:border-red-500 focus:ring-0 " : "w-full bg-transparent rounded-md border-neutral-700 "} />
+                    className={TitleLimit ? "w-full p-2 bg-transparent rounded-md border focus:border-red-500 focus:ring-0 " : "w-full p-2 bg-transparent placeholder:text-neutral-500 rounded-md border border-neutral-700 "} />
                 <p className="absolute right-6 top-5 text-neutral-500">{TitleLimitNumber}/70</p>
 
                 <QuillTextArea info={QuillTextAreaInfo} />

@@ -18,12 +18,10 @@ function HeaderLayout() {
         await axios.post("http://127.0.0.1:8000/api/token/refresh/", {
             refresh,
         }).then((response) => {
-            if (response.status === 200) {
-                dispatch(updateToken(response.data))
-            } else {
-                dispatch(logout())
-                navigate('/')
-            }
+            dispatch(updateToken(response.data))
+        }).catch(() => {
+            dispatch(logout())
+            navigate('/')
         })
     }
 

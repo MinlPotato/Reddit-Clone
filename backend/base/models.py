@@ -32,7 +32,7 @@ class Community(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=70)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
     date_created = models.DateTimeField(default=timezone.now)
     votes = models.IntegerField(default=0, blank=True, null=True)

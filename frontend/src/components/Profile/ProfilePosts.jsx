@@ -6,7 +6,7 @@ import UserCard from "./UserCard"
 import { getUser } from "../services/communityService"
 import { useLocation } from "react-router-dom"
 
-function ProfileMain() {
+function ProfilePosts() {
 
     const [UserPosts, setUserPosts] = useState(null)
     const [UserData, setUserData] = useState(null)
@@ -32,9 +32,9 @@ function ProfileMain() {
 
     return (
         <>
-        <div className="mt-28">
+        <div className="absolute left-0 right-0 top-40 sm:mx-10 lg:mx-52">
                      <div className="flex flex-row h-screen justify-center w-full gap-7">
-                        <div className="flex flex-col lg:w-2/3 gap-7">
+                        <div className="flex flex-col w-full xl:w-2/3 gap-7">
                             <OrderCard />
                             <div className="">
                                 {(UserPosts != null) ? (
@@ -48,7 +48,7 @@ function ProfileMain() {
                                 )}
                             </div>
                         </div>
-                        <div className="hidden md:hidden lg:flex flex-col w-1/3 gap-7">
+                        <div className="hidden xl:flex flex-col w-1/3 gap-7">
                             {UserData && <UserCard info={UserData} />}
                         </div>
                     </div>
@@ -62,4 +62,4 @@ function ProfileMain() {
     )
 }
 
-export default ProfileMain
+export default ProfilePosts

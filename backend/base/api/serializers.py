@@ -54,12 +54,7 @@ class PublishPostSerializer(ModelSerializer):
         fields = ['title','description','user_id','community_id']
 
     def create(self, validated_data):
-        post = Post(
-            title=validated_data['title'],
-            description=validated_data['description'],
-            user_id=validated_data['user_id'],
-            community_id=validated_data['community_id']
-        )
+        post = Post(**validated_data)
         post.save()
         return post
 

@@ -29,16 +29,20 @@ function ProfileUpVoted() {
 
 
     return (
-        <div className="absolute left-0 right-0 top-40 mx-10">
+        <div className="absolute left-0 right-0 top-40 sm:mx-10">
             <div className="flex flex-row justify-center w-full gap-7">
-                <div className="flex flex-col lg:w-3/4 gap-7">
+                <div className="flex flex-col w-full lg:w-3/4 gap-7">
                     <div className="">
                         {(PostsLiked != null) ? (
-                            PostsLiked.map((Post) => (
-                                <div key={Post.id}>
-                                    <ClassicCard info={Post} />
-                                </div>
-                            ))
+                            PostsLiked.length == 0 ? (
+                                <p className="text-xl font-semibold">hmm... looks like you haven't liked anything yet</p>
+                            ) : (
+                                PostsLiked.map((Post) => (
+                                    <div key={Post.id}>
+                                        <ClassicCard info={Post} />
+                                    </div>
+                                ))
+                            )
                         ) : (
                             <p>Loading...</p>
                         )}

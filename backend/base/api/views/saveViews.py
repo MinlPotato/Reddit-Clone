@@ -45,3 +45,11 @@ def SavedPost(request, pk, user_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getSavedByUser(request, pk):
+    posts = Post.objects.filter(saved__user_id=pk)
+
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)

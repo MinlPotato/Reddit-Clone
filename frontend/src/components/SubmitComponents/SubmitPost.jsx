@@ -8,6 +8,7 @@ import SelectCommunityPanel from "./SelectCommunityPanel";
 import { getCommunity } from "../services/communityService";
 import CommunityInfoCard from "../Community/CommunityInfoCard";
 import FormPost from "./FormPost";
+import FormImageVideoPost from "./FormImageVideoPost"
 
 function SubmitPost() {
 
@@ -16,6 +17,7 @@ function SubmitPost() {
     const location = useLocation()
 
     const [CommunityData, setCommunityData] = useState(null)
+    const [FormType, setFormType] = useState('post')
 
     useEffect(() => {
         if (userData.isLogged == false) {
@@ -50,7 +52,7 @@ function SubmitPost() {
                         <div className="flex flex-col gap-5 bg-neutral-900 rounded-md">
                             <div className="h-14 flex flex-row">
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
-                                    <input type="radio" name="selectSubmit" id="post" className="hidden peer" />
+                                    <input defaultChecked onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="post" value='post' className="hidden peer" />
                                     <label htmlFor="post" className="w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
@@ -59,7 +61,7 @@ function SubmitPost() {
                                     </label>
                                 </div>
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
-                                    <input type="radio" name="selectSubmit" id="image&video" className="hidden peer" />
+                                    <input onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="image&video" value="image&video" className="hidden peer" />
                                     <label htmlFor="image&video" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
@@ -68,7 +70,7 @@ function SubmitPost() {
                                     </label>
                                 </div>
                                 <div className="w-1/4 flex justify-center rounded-none border-0 border-r-2 border-neutral-700 ">
-                                    <input type="radio" name="selectSubmit" id="link" className="hidden peer" />
+                                    <input onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="link" value="link" className="hidden peer" />
                                     <label htmlFor="link" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4 rounded-b-sm">
@@ -86,13 +88,16 @@ function SubmitPost() {
                                     </label>
                                 </div>
                             </div>
-                            <FormPost />
+
+                            {FormType == "post" && <FormPost />}
+                            {FormType == "image&video" && <FormImageVideoPost/>}
+
                         </div>
                     </div>
                 </div>
                 <div className="w-1/3 lg:flex flex-col gap-9 hidden">
                     {CommunityData && (
-                        <CommunityInfoCard info={CommunityData} />
+                        <CommunityInfoCard info={CommunityData} userData={userData} />
                     )}
                     <div className="w-full h-fit p-3 bg-neutral-900">
                         <div className="flex flex-row items-center">

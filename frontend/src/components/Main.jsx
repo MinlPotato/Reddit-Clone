@@ -1,27 +1,35 @@
 import CreatePost from "./CreatePost"
 import Card from "./Card"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import Policies from "./Policies"
 import RecentPosts from "./RecentPosts"
 import axios from "axios"
 import OrderCard from "./OrderCard"
+import { cachePosts } from "./State/Counter/PostsSlice"
+import { getPostsCached } from "./State/Counter/PostsSlice"
+import { useSelector, useDispatch } from "react-redux"
 
 function Main() {
 
+    const postConf = useSelector(getPostsCached)
+    const dispatch = useDispatch()
+    
+
+    let start = postConf.start
+    let limit = postConf.limit
+    let seed = postConf.seed
+
     const infoDiv = useRef(null)
-    const [Posts, setPosts] = useState([])
     const [reload, setReload] = useState(false)
     const [ReachedBottom, setReachedBottom] = useState(false)
-
-    const [Start, setStart] = useState(0)
-    const [Limit, setLimit] = useState(3)
-
-    const [Seed] = useState(Math.floor(Math.random() * 100))
 
     let getPosts = async (start = 0, limit = 1, seed) => (
         axios.get(`http://127.0.0.1:8000/api/posts/?limit=${limit}&start=${start}&seed=${seed}`)
             .then(function (response) {
-                setPosts([...Posts, ...response.data])
+                if (response.data.length == 0) {
+                    return
+                }
+                dispatch(cachePosts(response.data))
                 setReload(false)
             })
             .catch(function (error) {
@@ -30,18 +38,15 @@ function Main() {
             }))
 
     useEffect(() => {
-        if (ReachedBottom) {
-            getPosts(Start, Limit, Seed)
-            setLimit(Limit + 3)
-            setStart(Limit)
-        }       
-    }, [ReachedBottom])
+        if (ReachedBottom || reload) {
+            getPosts(start, limit, seed)
+        }
+    }, [ReachedBottom, reload])
 
     useEffect(() => {
-        getPosts(Start, Limit, Seed)
-        setStart(Limit)
-        setLimit(Limit + 3)
+        setReload(true)
     }, [])
+    
 
     const resizeDiv = () => {
         const div = infoDiv.current
@@ -56,7 +61,7 @@ function Main() {
             const documentHeight = document.documentElement.scrollHeight;
 
             if (windowHeight + scrollTop >= documentHeight - 100) {
-                setReachedBottom(true);         
+                setReachedBottom(true);
             } else {
                 setReachedBottom(false);
             }
@@ -74,34 +79,33 @@ function Main() {
 
     return (
         <>
-            <div className="top-10 mt-16 w-full xl:w-[75rem]">
-            <div className="flex flex-row h-screen justify-center w-full gap-7">
-                <div className="flex flex-col mx-10 w-full lg:mx-0 lg:w-2/3 gap-7">
-                    <CreatePost />
-                    <OrderCard />
-                    {(Posts != null) ? (
-                        Posts.map((Post, index) => (
-                            <div key={index}>
-                                <Card info={Post}></Card>
+            <div className="mt-16 w-full xl:w-[75rem]">
+                <div className="flex flex-row justify-center w-full gap-7">
+                    <div className="flex flex-col w-full lg:w-2/3 gap-7">
+                        <CreatePost />
+                        <OrderCard />
+                        {(postConf.posts != null) ? (
+                            postConf.posts.map((Post, index) => (
+                                <div className="w-full" key={index}>
+                                    <Card info={Post}></Card>
+                                </div>
+                            ))
+                        ) : !reload ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <div className="flex justify-center">
+                                <button onClick={getPosts} className="w-1/4 rounded-full text-black bg-white hover:bg-neutral-100">Reload</button>
                             </div>
-                        ))
-                    ) : !reload ? (
-                        <p>Loading...</p>
-                    ) : (
-                        <div className="flex justify-center">
-                            <button onClick={getPosts} className="w-1/4 rounded-full text-black bg-white hover:bg-neutral-100">Reload</button>
-                        </div>
-                    )}
-                </div>
-                <div ref={infoDiv} id="infoDiv" className="hidden lg:hidden xl:flex flex-col w-1/3 gap-7">
-                    <div className="w-full h-24 bg-neutral-900 rounded-md border border-neutral-700"></div>
-                    <RecentPosts />
-                    <Policies />
+                        )}
+                    </div>
+                    <div ref={infoDiv} id="infoDiv" className="hidden lg:flex flex-col lg:w-1/3 gap-7">
+                        <RecentPosts />
+                        <Policies />
+                    </div>
                 </div>
             </div>
-        </div>
         </>
-        
+
 
     )
 }

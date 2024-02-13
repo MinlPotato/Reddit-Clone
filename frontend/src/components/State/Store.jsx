@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthUserReducer from "./Counter/AuthUser"
+import PostCacheReducer from "./Counter/PostsSlice"
 
 export const store = configureStore({
     reducer: {
-        authUser: AuthUserReducer
+        authUser: AuthUserReducer,
+        postsCache: PostCacheReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

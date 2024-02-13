@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getCommunity, getUser, getPost, getCommentsByPost, publishComment } from "./services/communityService";
 import { getUserData } from "./State/Counter/AuthUser";
 import moment from 'moment';
@@ -13,40 +13,45 @@ import CommunityInfoCard from "./Community/CommunityInfoCard";
 import CommentCard from "./Cards/CommentCard";
 import DOMPurify from 'dompurify';
 import QuillTextArea from "./QuillTextArea";
+import { getSaved, deleteSaved, publishSaved } from "./services/voteService";
+import { recentPosts } from "./State/Counter/PostsSlice";
 
 function CommentSection() {
 
     const loggedUser = useSelector(getUserData)
     const location = useLocation()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [CommunityData, setCommunityData] = useState(null)
     const [UserData, setUserData] = useState(null)
     const [PostData, setPostData] = useState(null)
     const [Comments, setComments] = useState(null)
+    const [Saved, setSaved] = useState(false)
 
     const [TextAreaValue, setTextAreaValue] = useState('')
     const [DisableCommentSubmit, setDisableCommentSubmit] = useState(true)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        if (location.state) {
-            const { from } = location.state
-            setPostData(from)
-            getCommunity(from.community_id).then((response) => setCommunityData(response))
-            setUserData({ username: from.username })
-            getCommentsByPost(from.id).then((response) => setComments(response))
-        } else {
-            const post_id = location.pathname.split('/')[2]
-            getPost(post_id).then((response) => {
-                setPostData(response)
-                getCommunity(response.community_id).then((response) => setCommunityData(response))
-                getUser(response.user_id).then((response) => setUserData(response))
-                getCommentsByPost(post_id).then((response) => setComments(response))
-            })
-        }
+        window.scrollTo({ top: 0, left: 0 });
+        const post_id = location.pathname.split('/')[2]
+        getPost(post_id).then((response) => {
+            setPostData(response)
+            getCommunity(response.community_id).then((response) => setCommunityData(response))
+            getUser(response.user_id).then((response) => setUserData(response))
+            getCommentsByPost(post_id).then((response) => setComments(response))
+            getSaved({ post_id: post_id, user_id: loggedUser.id }).then((response) => setSaved(response))
+        })
+
     }, [location])
+
+    useEffect(() => {
+        if (PostData != null) {
+            dispatch(recentPosts(PostData))
+        }
+    }, [PostData])
+
 
     useEffect(() => {
         if (TextAreaValue.replace(/<(.|\n)*?>/g, '').trim().length === 0) {
@@ -62,6 +67,8 @@ function CommentSection() {
     let comments = PostData?.comments
     let user_id = PostData?.user_id
     let id = PostData?.id
+    let image = PostData?.image
+
 
     const LikeDislikeInfo1 = {
         post_id: PostData?.id,
@@ -82,8 +89,8 @@ function CommentSection() {
     }
 
     const QuillTextAreaInfo = {
-        value: TextAreaValue, 
-        setValue: setTextAreaValue, 
+        value: TextAreaValue,
+        setValue: setTextAreaValue,
         placeholder: 'What are your thoughts?'
     }
 
@@ -98,10 +105,18 @@ function CommentSection() {
 
             setDisableCommentSubmit(true)
             setLoading(true)
-            
+
             publishComment(data)
 
             window.location.reload(false);
+        }
+    }
+
+    const handleSave = () => {
+        if (Saved) {
+            deleteSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(false))
+        } else {
+            publishSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(true))
         }
     }
 
@@ -123,9 +138,9 @@ function CommentSection() {
                 </div>
 
             </div>
-            <div className="mt-28">
-                <div className="flex flex-row gap-7">
-                    <div className="flex flex-row py-6 px-3 w-full lg:w-9/12 items-start bg-neutral-900 rounded-md border border-neutral-700">
+            <div className="mt-28 w-full">
+                <div className="flex w-full flex-row gap-7">
+                    <div className="flex flex-row py-6 h-fit px-3 w-full lg:w-2/3 items-start bg-neutral-900 rounded-md border border-neutral-700">
 
                         <div className=" flex flex-col items-center gap-1">
                             {PostData && <LikeDislike123 info={LikeDislikeInfo2} />}
@@ -141,7 +156,7 @@ function CommentSection() {
                                 <p className="text-inherit">{date_created}</p>
                             </div>
                             <p className=" text-2xl font-semibold mx-3">{title}</p>
-                            <img className="rounded-md pl-3" alt="" />
+                            <div className="flex w-full mx-3 justify-center"><img src={image} alt="" className="max-h-[40rem] object-cover" /> </div>
 
                             <div dangerouslySetInnerHTML={{ __html: description }} className="w-full text-left text-lg font-medium mx-3 mb-5"></div>
 
@@ -151,12 +166,9 @@ function CommentSection() {
                                     <p>{comments}</p>
                                     <p>Comments</p>
                                 </div>
-                                <button className='flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
-                                    <ShareIcon className="w-6 h-6" />
-                                    <p>Share</p>
-                                </button>
-                                <button className='flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
-                                    <BookmarkIcon className="w-6 h-6" />
+                                <button onClick={handleSave} className='hidden sm:flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
+                                    {Saved ? <BookmarkIcon className="w-6 h-6 fill-white" /> : <BookmarkIcon className="w-6 h-6 " />}
+
                                     <p>Save</p>
                                 </button>
                                 <button className='bg-transparent hover:bg-neutral-800 rounded-none border-transparent'>
@@ -169,7 +181,7 @@ function CommentSection() {
                                 <div className="w-full flex justify-end mt-2">
                                     <button onClick={handleSubmit} disabled={DisableCommentSubmit}
                                         className="rounded-full w-1/5 p-2 bg-white disabled:bg-neutral-200 text-neutral-800 disabled:text-neutral-500">
-                                        {loading ? <p className="text-black">loading...</p> : <p className="text-inherit font-semibold text-base">Comment</p>} 
+                                        {loading ? <p className="text-black">loading...</p> : <p className="text-inherit font-semibold text-base">Comment</p>}
                                     </button>
                                 </div>
 
@@ -195,8 +207,8 @@ function CommentSection() {
 
                         </div>
                     </div>
-                    <div className="hidden lg:flex flex-col w-1/3 h-screen gap-7">
-                        {CommunityData && (<CommunityInfoCard info={CommunityData} />)}
+                    <div className="hidden lg:flex flex-col lg:w-1/3 h-screen gap-7">
+                        {CommunityData && (<CommunityInfoCard info={CommunityData} userData={loggedUser} />)}
                     </div>
                 </div>
             </div>

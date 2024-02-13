@@ -47,9 +47,9 @@ function Header() {
     }
 
     return (
-
-        <header className="z-20 fixed flex flex-row  gap-4 w-full h-16 left-0 top-0 px-5 bg-neutral-900 border-b border-neutral-700 ">
-            <a href="/" className='flex-none  w-12 h-12 inset-0 mt-2 items-center rounded-full'>
+        
+        <header className="z-20 fixed flex flex-row justify-center gap-4 w-full h-16 left-0 top-0 px-5 bg-neutral-900 border-b border-neutral-700 ">
+            <a href="/" className='flex-none w-12 h-12 inset-0 mt-2 items-center rounded-full'>
                 <img className="min-h-full min-w-full" src={RedditLogo} alt="" />
             </a>
 
@@ -63,7 +63,7 @@ function Header() {
 
             <div className='hidden md:flex flex-row items-center my-4 gap-2'>
                 {Buttons.map((buttonInfo) => (
-                    <Link to={buttonInfo.url || '/'} key={buttonInfo.id} className='w-12 h-12 flex items-center justify-center border-neutral-700 bg-transparent hover:bg-neutral-800 hover:border-transparent'>
+                    <Link to={buttonInfo.url || '/'} key={buttonInfo.id} className='w-12 h-12 flex items-center justify-center rounded-md border-neutral-700 bg-transparent hover:bg-neutral-800 hover:border-transparent'>
                         {buttonInfo.svg}
                     </Link>
                 ))}

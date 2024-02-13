@@ -73,8 +73,8 @@ function CommentCard(params) {
 
     return Hide == false ? (
         <>
-            <div className='grid grid-cols-12'>
-                <div className='flex flex-col items-center justify-center col-span-1 row-span-6'>
+            <div className='grid grid-cols-12 gap-x-12'>
+                <div className='flex flex-col items-center justify-center w-10 col-span-1 row-span-6'>
                     <img src={profilePic} alt="" className='rounded-full w-10 h-10' />
                     <div onClick={() => setHide(true)} className='group flex justify-center h-full w-full'>
                         <div className='w-[2px] rounded-full bg-neutral-700 group-hover:bg-neutral-400'></div>

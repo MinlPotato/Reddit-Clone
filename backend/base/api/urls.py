@@ -35,6 +35,8 @@ urlpatterns = [
     path('users/<int:pk>/liked', views.getPostsLikedByUser),
     path('users/<int:pk>/disliked', views.getPostsDislikedByUser),
     path('users/<int:pk>/member', views.getCommunitiesJoinedByUser),
+    path('users/<int:pk>/comments', views.getCommentsByUser),
+    path('users/<int:pk>/saved', views.getSavedByUser),
     path('users/register/', views.userRegister),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

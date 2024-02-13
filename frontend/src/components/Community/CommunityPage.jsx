@@ -39,14 +39,12 @@ function CommunityPage() {
     }, [location])
 
     const handleJoin = () => {
-
         if (IsMember) {
             leaveMember({user_id: userData.id, community_id: community_id}).then(() => setIsMember(false))
         } else {
             joinMember({user_id: userData.id, community_id: community_id}).then(() => setIsMember(true))
         }
     }
-
 
     return CommunityData ? (
         <>
@@ -58,7 +56,7 @@ function CommunityPage() {
                 <div className="flex flex-row items-center text-start w-9/12">
                     <img src={subreddit} className="w-32 h-32 mb-10 rounded-full"></img>
                     <div className="flex flex-col gap-2 justify-between w-full">
-                        <div className="flex flex-row justify-between items-center">
+                        <div className="flex flex-row gap-10 justify-between items-center">
                             <p className="text-4xl font-bold ">{CommunityData.name}</p>
                             {IsMember ? (
                                 <button onClick={handleJoin} title="Joined" className="flex items-center justify-center w-24 h-10 border-white bg-transparent hover:bg-neutral-800 font-semibold rounded-full">

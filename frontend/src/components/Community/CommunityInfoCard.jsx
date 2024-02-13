@@ -1,11 +1,35 @@
-import  subreddit  from '../../assets/subreddit.png'
+import subreddit from '../../assets/subreddit.png'
 import { CakeIcon } from "@heroicons/react/24/outline"
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { getMember, leaveMember, joinMember } from '../services/communityService'
 
 function CommunityInfoCard(params) {
 
     const infoCard = params.info
+    const userData = params.userData
+
+    const [IsMember, setIsMember] = useState(false)
+    const [Members, setMembers] = useState(infoCard.members || 0)
+    const [ActiveMembers, setActiveMembers] = useState(infoCard.active_members || 0)
+
+    useEffect(() => {
+        getMember({ user_id: userData.id, community_id: infoCard.id }).then((response) => setIsMember(response))
+    }, [])
+
+
+    const handleJoin = () => {
+        if (IsMember) {
+            leaveMember({ user_id: userData.id, community_id: infoCard.id }).then(() => setIsMember(false))
+            setMembers(Members - 1)
+            setActiveMembers(Members - 1)
+        } else {
+            joinMember({ user_id: userData.id, community_id: infoCard.id }).then(() => setIsMember(true))
+            setMembers(Members + 1)
+            setActiveMembers(Members + 1)
+        }
+    }
 
     return (
         <div className="hidden lg:flex flex-col gap-7 w-full">
@@ -14,7 +38,7 @@ function CommunityInfoCard(params) {
                 <div className="border-b-2 pb-6 border-neutral-800">
                     <div className="flex flex-row items-center gap-1 mb-1">
                         <img src={subreddit} alt="" className="w-20" />
-                        <Link to={`/reddit/r/${infoCard.id}`} className="text-xl font-bold">r/{infoCard.name}</Link>
+                        <Link to={`/reddit/r/${infoCard.id}`} className="text-xl font-bold hover:underline">r/{infoCard.name}</Link>
                     </div>
 
                     <p className="text-lg font-semibold mb-4">
@@ -27,23 +51,30 @@ function CommunityInfoCard(params) {
                 </div>
                 <div className="flex flex-row gap-20 border-b-2 pb-6 pt-6 border-neutral-800">
                     <div className='flex flex-col'>
-                        <p className="text-xl font-semibold ">{infoCard.members}</p>
+                        <p className="text-xl font-semibold ">{Members}</p>
                         <p className="text-md font-semibold text-neutral-500">Members</p>
                     </div>
                     <div className='flex flex-col'>
                         <div className='flex flex-row items-center gap-1'>
                             <div className='rounded-full w-2 h-2 bg-green-400'></div>
-                            <p className="text-xl font-semibold">{infoCard.active_members}</p>
+                            <p className="text-xl font-semibold">{ActiveMembers}</p>
                         </div>
                         <p className="text-md font-semibold text-neutral-500">Online</p>
                     </div>
-                    
+
                 </div>
 
                 <div className="border-b-2 pb-6 pt-6 border-neutral-800">
-                    <button className='w-full rounded-full border-neutral-200 hover:bg-neutral-800'>
-                        <p className='text-lg font-bold text-inherit'>Join</p>
-                    </button>                  
+
+                    {IsMember ? (
+                        <button onClick={handleJoin} title="Joined" className="w-full border-white bg-transparent hover:bg-neutral-800 font-semibold rounded-full">
+                            <p className="text-white text-lg">Joined</p>
+                        </button>
+                    ) : (
+                        <button onClick={handleJoin} className="w-full bg-neutral-200 hover:bg-neutral-300 font-semibold rounded-full">
+                            <p className="text-black text-lg">Join</p>
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
