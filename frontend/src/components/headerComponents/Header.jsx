@@ -58,7 +58,7 @@ function Header() {
             <form onSubmit={HandleSubmit} className='w-full md:w-2/5 my-2 flex flex-row pointer-events-auto items-center bg-neutral-800 rounded-full border border-neutral-700'>
                 <input type="submit" id="searchSubmit" className="hidden" />
                 <label htmlFor="searchSubmit" className="absolute ml-3 w-8 h-8 pointer-events-none"><MagnifyingGlassIcon className=" fill-neutral-500" /></label>
-                <input type="search" name="q" id="q" className='pl-14 h-full w-full rounded-full placeholder:text-neutral-500 bg-transparent focus:outline-none' placeholder='Search Reddit' />
+                <input type="search" name="q" id="q" className='pl-14 pr-5 h-full w-full rounded-full placeholder:text-neutral-500 bg-transparent focus:outline-none' placeholder='Search Reddit' />
             </form>
 
             <div className='hidden md:flex flex-row items-center my-4 gap-2'>

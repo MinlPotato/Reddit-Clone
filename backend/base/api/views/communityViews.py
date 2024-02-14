@@ -12,7 +12,7 @@ class CommunityList(generics.ListAPIView):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['name']
+    search_fields = ['name', 'posts__title', 'posts__user_id__username']
     ordering_fields = ['date_created']
 
 

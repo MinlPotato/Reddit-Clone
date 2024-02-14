@@ -10,6 +10,7 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 import { getUserData } from "../State/Counter/AuthUser"
 import { useSelector } from "react-redux";
+import MemberJoinButton from "./MemberJoinButton"
 
 function CommunityPage() {
 
@@ -20,7 +21,6 @@ function CommunityPage() {
 
     const [Posts, setPosts] = useState(null)
     const [CommunityData, setCommunityData] = useState(null)
-    const [IsMember, setIsMember] = useState(false)
 
     const sortList = {
         Hot: '',
@@ -35,16 +35,8 @@ function CommunityPage() {
 
         getCommunity(community_id).then((response) => setCommunityData(response))
         getPostByCommunity(community_id, sortType).then((response) => setPosts(response))
-        getMember({user_id: userData.id, community_id: community_id}).then((response) => setIsMember(response))
     }, [location])
 
-    const handleJoin = () => {
-        if (IsMember) {
-            leaveMember({user_id: userData.id, community_id: community_id}).then(() => setIsMember(false))
-        } else {
-            joinMember({user_id: userData.id, community_id: community_id}).then(() => setIsMember(true))
-        }
-    }
 
     return CommunityData ? (
         <>
@@ -58,15 +50,8 @@ function CommunityPage() {
                     <div className="flex flex-col gap-2 justify-between w-full">
                         <div className="flex flex-row gap-10 justify-between items-center">
                             <p className="text-4xl font-bold ">{CommunityData.name}</p>
-                            {IsMember ? (
-                                <button onClick={handleJoin} title="Joined" className="flex items-center justify-center w-24 h-10 border-white bg-transparent hover:bg-neutral-800 font-semibold rounded-full">
-                                    <p className="text-white text-lg">Joined</p>
-                                </button>
-                            ) : (
-                                <button onClick={handleJoin} className="flex items-center justify-center w-24 h-10 bg-neutral-200 hover:bg-neutral-300 font-semibold rounded-full">
-                                    <p className="text-black text-lg">Join</p>
-                                </button>
-                            )}
+                            
+                            <MemberJoinButton info={{user_id: userData.id, community_id: community_id}}/>
                             
                         </div>
                         <p className="text-lg text-neutral-500 font-semibold">r/{CommunityData.name}</p>

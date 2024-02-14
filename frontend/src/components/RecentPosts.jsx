@@ -9,9 +9,6 @@ function RecentPosts() {
     const dispatch = useDispatch()
     const recentPosts = useSelector(getPostsCached)
 
-    console.log(recentPosts.recent);
-    console.log(recentPosts.recent.length);
-
     return (
         <div className="w-full min-h-[5rem] bg-neutral-900 rounded-md border border-neutral-700">
             <p className="m-3 font-semibold text-neutral-300 text-sm text-left">RECENT POSTS</p>
@@ -32,7 +29,7 @@ function RecentPosts() {
                             </Link>
                             
                             <div className="row row-col text-start mt-3">
-                                <Link to={`/reddit/${post.id}`} className="font-medium  text-lg text-left overflow-clip hover:underline">{post.title}</Link>
+                                <Link to={`/reddit/${post.id}`} className="font-medium  text-lg text-left line-clamp-1 hover:underline">{post.title}</Link>
                                 <p className=" text-left mb-3 text-neutral-500">{post.votes} points • {post.comments} comments • {moment(post.date_created).fromNow()}</p>
                             </div>
 

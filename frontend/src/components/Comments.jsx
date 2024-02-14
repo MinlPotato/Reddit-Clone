@@ -2,7 +2,8 @@ import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import { useSelector, useDispatch } from "react-redux";
-import { getCommunity, getUser, getPost, getCommentsByPost, publishComment } from "./services/communityService";
+import { getCommunity, getUser, getPost } from "./services/communityService";
+import { getCommentsByPost, publishComment } from "./services/commentService"
 import { getUserData } from "./State/Counter/AuthUser";
 import moment from 'moment';
 import { Link } from "react-router-dom";

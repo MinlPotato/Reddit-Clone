@@ -10,7 +10,7 @@ import HeaderLayout from "./components/headerComponents/HeaderLayOut.jsx";
 import Register from "./components/Register.jsx";
 import SubmitPost from "./components/SubmitComponents/SubmitPost.jsx";
 import CommunityPage from "./components/Community/CommunityPage.jsx";
-import Search from "./components/Search.jsx";
+import Search from "./components/SearchComponents/Search.jsx";
 import ProfileHeaderLayout from "./components/Profile/ProfileHeaderLayout.jsx";
 import ProfileUpVoted from "./components/Profile/ProfileUpVoted.jsx";
 import ProfileDownVoted from "./components/Profile/ProfileDownVoted.jsx";

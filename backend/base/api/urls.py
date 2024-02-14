@@ -3,7 +3,7 @@ from . import views
 from .views import (
     MyTokenObtainPairView, PostList, 
     CommunityList, getPostsByUserList, 
-    getPostsByCommunityList, getCommentsByPostList)
+    getPostsByCommunityList, getCommentsByPostList, getUsers)
 
 
 from rest_framework_simplejwt.views import (
@@ -27,9 +27,10 @@ urlpatterns = [
     path('posts/publish/', views.publishPost),
     path('comments/', views.getAllComments),
     path('comments/publish/', views.publishComment),
-    path('comments/<int:pk>', views.getCommentsInComment),
+    path('comments/<int:pk>/comments', views.getCommentsInComment),
+    path('comments/<int:pk>/feedback', views.getAllComments),
     path('feedback/', views.publishFeedback),
-    path('users/', views.getUsers),
+    path('users/', getUsers.as_view()),
     path('users/<int:pk>/', views.getUser),
     path('users/<int:pk>/posts', getPostsByUserList.as_view()),
     path('users/<int:pk>/liked', views.getPostsLikedByUser),
@@ -37,6 +38,7 @@ urlpatterns = [
     path('users/<int:pk>/member', views.getCommunitiesJoinedByUser),
     path('users/<int:pk>/comments', views.getCommentsByUser),
     path('users/<int:pk>/saved', views.getSavedByUser),
+    path('users/<int:pk>/feedbacks', views.getFeedbackByUser),
     path('users/register/', views.userRegister),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

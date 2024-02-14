@@ -21,3 +21,14 @@ export let getSearchCommunities = async (value) => (
         .catch(function (error) {
             console.log(error);
         }))
+
+
+export let getSearchPeople = async (value) => (
+    await axios.get(`http://127.0.0.1:8000/api/users/?search=${value}`)
+        .then(async function (response) {
+            const data = response.data
+            return data
+        })
+        .catch(function (error) {
+            console.log(error);
+        }))
