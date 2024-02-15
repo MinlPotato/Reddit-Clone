@@ -10,6 +10,9 @@ export default {
       colors: {
         primary: "#ff4800",
       },
+      scale: {
+        "-100": "-1",
+      },
     },
   },
 };

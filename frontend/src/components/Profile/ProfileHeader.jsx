@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { getUserData } from "../State/Counter/AuthUser";
+import { getUserData } from "../State/Slices/AuthUser";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 

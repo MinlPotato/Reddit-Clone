@@ -1,7 +1,7 @@
 import { ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 import rulesImg from "../../assets/rulesThingy2.png"
 import { useSelector } from "react-redux";
-import { getUserData } from "../State/Counter/AuthUser";
+import { getUserData } from "../State/Slices/AuthUser";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SelectCommunityPanel from "./SelectCommunityPanel";
@@ -36,7 +36,7 @@ function SubmitPost() {
     }, [location])
 
     return (
-        <div className="absolute -translate-x-1/2 top-10 mt-16 w-full p-3 md:w-[50rem] lg:w-[70rem] xl:w-[80rem]">
+        <div className="absolute -translate-x-1/2 top-10 mt-16 w-full p-3  xl:w-[80rem]">
             <div className="flex flex-row gap-9 w-full">
                 <div className="lg:w-10/12 w-full flex flex-col gap-7">
                     <div className="w-full flex flex-row items-center justify-between border-b-2 border-neutral-700">

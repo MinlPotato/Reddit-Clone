@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AuthUserReducer from "./Counter/AuthUser"
-import PostCacheReducer from "./Counter/PostsSlice"
+import AuthUserReducer from "./Slices/AuthUser"
+import PostCacheReducer from "./Slices/PostsSlice"
 
 export const store = configureStore({
     reducer: {

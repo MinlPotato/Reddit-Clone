@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/24/outline"
 import { deleteFeedback, handleFeedback, getFeedback } from "./services/voteService";
 import { useSelector } from "react-redux";
-import { getUserData } from "./State/Counter/AuthUser";
+import { getUserData } from "./State/Slices/AuthUser";
 
 function LikeDislike123(params) {
 

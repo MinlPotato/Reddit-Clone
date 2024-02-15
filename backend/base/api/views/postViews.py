@@ -8,6 +8,9 @@ from base.models import Post
 from rest_framework import status
 import random
 from random import shuffle
+from django.utils import timezone
+from datetime import timedelta
+
 
 
 @api_view(['GET'])
@@ -60,6 +63,47 @@ def publishPost(request):
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class DateFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+
+        date = request.query_params.get('date', None)
+
+        if date == "all":
+            return queryset
+
+        if date == "year":
+            one_year_ago = timezone.now() - timedelta(days=365)
+            queryset = queryset.filter(date_created__gte=one_year_ago)
+
+            return queryset
+
+        if date == "month":
+            one_month_ago = timezone.now() - timedelta(days=30)
+            queryset = queryset.filter(date_created__gte=one_month_ago)
+
+            return queryset
+        
+        if date == "week":
+            one_week_ago = timezone.now() - timedelta(days=7)
+            queryset = queryset.filter(date_created__gte=one_week_ago)
+
+            return queryset
+        
+        if date == "day":
+            one_day_ago = timezone.now() - timedelta(days=1)
+            queryset = queryset.filter(date_created__gte=one_day_ago)
+
+            return queryset
+        
+        if date == "hour":
+            one_hour_ago = timezone.now() - timedelta(hours=1)
+            queryset = queryset.filter(date_created__gte=one_hour_ago)
+
+            return queryset
+
+        return queryset
 
 class PostList(generics.ListAPIView):
     serializer_class = PostSerializer
@@ -79,7 +123,7 @@ class PostList(generics.ListAPIView):
 
         return queryset
      
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DateFilter]
     search_fields = ['title', 'description',
                      'community_id__name', 'user_id__username']
     ordering_fields = ['date_created', 'votes']
@@ -110,3 +154,6 @@ def getPostsDislikedByUser(request, pk):
 
     serializer = PostSerializer(posts,  many=True)
     return Response(serializer.data)
+
+
+

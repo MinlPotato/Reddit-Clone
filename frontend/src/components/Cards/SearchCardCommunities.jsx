@@ -2,7 +2,7 @@ import subreddit from "../../assets/subreddit.png"
 import { Link } from "react-router-dom"
 import MemberJoinButton from "../Community/MemberJoinButton"
 import { useSelector } from "react-redux";
-import { getUserData } from "../State/Counter/AuthUser";
+import { getUserData } from "../State/Slices/AuthUser";
 
 export default function SearchCardCommunitiesSmall(params) {
 

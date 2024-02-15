@@ -4,12 +4,16 @@ import SearchSortPanel from "./SearchSortPanel"
 import SearchOverview from "./SearchOverview"
 import SearchCommunity from "./SearchCommunity"
 import SearchPeople from "./SearchPeople"
+import { useLocation } from "react-router-dom"
 
 function Search() {
+
+    const location = useLocation()
 
     const queryParameters = new URLSearchParams(window.location.search)
     const search = queryParameters.get("q")
     const sort = queryParameters.get("sort")
+    const date = queryParameters.get("date")
 
     const [SearchPosts, setSearchPosts] = useState(null)
     const [SearchCommunities, setSearchCommunities] = useState(null)
@@ -18,10 +22,10 @@ function Search() {
     const [SearchType, setSearchType] = useState('posts')
 
     useEffect(() => {
-        getSearchPosts(search, sort).then((response) => { setSearchPosts(response) })
+        getSearchPosts(search, sort, date).then((response) => { setSearchPosts(response) })
         getSearchCommunities(search).then((response) => { setSearchCommunities(response) })
         getSearchPeople(search).then((response) => { setSearchUsers(response) })
-    }, [search, sort])
+    }, [search, sort, date, location])
 
 
     return (

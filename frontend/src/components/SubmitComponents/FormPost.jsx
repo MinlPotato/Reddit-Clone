@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import QuillTextArea from "../QuillTextArea"
 import 'react-quill/dist/quill.snow.css';
 import { useSelector } from "react-redux"
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 
 function FormPost() {
 
@@ -55,6 +55,7 @@ function FormPost() {
         const community_id = queryParameters.get("community")
 
         if (community_id === null) {
+            e.preventDefault()
             return alert('Community not Selected.')
         }
 
@@ -70,10 +71,7 @@ function FormPost() {
                 community_id
             })
                 .then(async function () {
-                    e.preventDefault()
                     console.log('Post Submitted.');
-                    setTextAreaValue('')
-                    setTextTitleValue('')
                 })
                 .catch(function (error) {
                     console.log(error);

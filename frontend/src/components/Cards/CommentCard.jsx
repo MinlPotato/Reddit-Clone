@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { getCommentsByComment, publishComment } from '../services/commentService'
 import { ArrowsPointingOutIcon, ChatBubbleLeftIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
 import LikeDislike123 from '../LikeDislikeComponent'
-import { getUserData } from '../State/Counter/AuthUser'
+import { getUserData } from '../State/Slices/AuthUser'
 import { useSelector } from 'react-redux'
 import DOMPurify from 'dompurify';
 import QuillTextArea from '../QuillTextArea'

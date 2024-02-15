@@ -2,7 +2,7 @@ import profileImg from "../assets/profile_pic.jpg"
 import { useNavigate } from 'react-router-dom';
 import { PhotoIcon, LinkIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
-import { getUserData } from "./State/Counter/AuthUser";
+import { getUserData } from "./State/Slices/AuthUser";
 
 function CreatePost() {
 
@@ -10,7 +10,7 @@ function CreatePost() {
     const navigate = useNavigate()
 
     return (
-        <div className="flex flex-row items-center w-full h-20 gap-3 px-2 bg-neutral-900 rounded-md border border-neutral-700">
+        <div className="flex flex-row items-center w-full h-20 gap-3 px-2 py-2 bg-neutral-900 rounded-md border border-neutral-700">
             {userData.isLogged ? (
                 <>
                     <img className="w-10 h-10 lg:w-16 lg:h-16 rounded-full" src={profileImg} alt="" />

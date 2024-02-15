@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import { login, logout, updateToken } from '../State/Counter/AuthUser';
+import { login, logout, updateToken } from '../State/Slices/AuthUser';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from "axios";

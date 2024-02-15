@@ -3,7 +3,7 @@ import { getUserLiked } from "../services/profileServices"
 import { getUser } from "../services/communityService"
 import { useSelector } from "react-redux"
 import UserCard from "./UserCard"
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 import ClassicCard from "../Cards/ClassicCard"
 import { useNavigate } from "react-router-dom"
 

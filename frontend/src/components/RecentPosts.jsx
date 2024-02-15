@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { getPostsCached, resetRecentPosts } from "./State/Counter/PostsSlice"
+import { getPostsCached, resetRecentPosts } from "./State/Slices/PostsSlice"
 import moment from "moment";
 import { DocumentIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ function RecentPosts() {
     const recentPosts = useSelector(getPostsCached)
 
     return (
-        <div className="w-full min-h-[5rem] bg-neutral-900 rounded-md border border-neutral-700">
+        <div className="sticky top-20 w-full min-h-[5rem] bg-neutral-900 rounded-md border border-neutral-700">
             <p className="m-3 font-semibold text-neutral-300 text-sm text-left">RECENT POSTS</p>
             {recentPosts.recent.length > 0 ? (
                 recentPosts.recent.toReversed().map((post, index) => (

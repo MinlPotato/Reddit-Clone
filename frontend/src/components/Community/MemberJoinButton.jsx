@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { leaveMember, joinMember, getMember } from "../services/communityService"
 
 function MemberJoinButton(params) {

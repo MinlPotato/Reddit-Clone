@@ -3,7 +3,7 @@ import logoApple from "../assets/apple.png"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "./State/Counter/AuthUser"
+import { login } from "./State/Slices/AuthUser"
 import { useNavigate } from "react-router-dom";
 
 function LogIn() {

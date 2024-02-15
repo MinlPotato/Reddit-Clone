@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 import { ArrowTrendingUpIcon } from "@heroicons/react/24/solid"
 import { ChatBubbleOvalLeftEllipsisIcon, BellIcon, PlusIcon, MegaphoneIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 import HeaderProfilePopover from './HeaderProfilePopover';
 import RedditLogo from '../../assets/reddit-logo.png'
 import { useNavigate } from "react-router-dom";

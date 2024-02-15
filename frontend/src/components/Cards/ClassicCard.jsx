@@ -1,6 +1,6 @@
 import LikeDislike123 from "../LikeDislikeComponent"
 import { useSelector } from "react-redux"
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 import { Link } from "react-router-dom"
 import moment from "moment"
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, DocumentIcon } from "@heroicons/react/24/outline"

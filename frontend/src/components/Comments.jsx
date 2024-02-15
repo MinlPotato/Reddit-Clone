@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import { useSelector, useDispatch } from "react-redux";
 import { getCommunity, getUser, getPost } from "./services/communityService";
 import { getCommentsByPost, publishComment } from "./services/commentService"
-import { getUserData } from "./State/Counter/AuthUser";
+import { getUserData } from "./State/Slices/AuthUser";
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import subreddit from "../assets/subreddit.png"
@@ -15,7 +15,7 @@ import CommentCard from "./Cards/CommentCard";
 import DOMPurify from 'dompurify';
 import QuillTextArea from "./QuillTextArea";
 import { getSaved, deleteSaved, publishSaved } from "./services/voteService";
-import { recentPosts } from "./State/Counter/PostsSlice";
+import { recentPosts } from "./State/Slices/PostsSlice";
 
 function CommentSection() {
 
@@ -157,7 +157,7 @@ function CommentSection() {
                                 <p className="text-inherit">{date_created}</p>
                             </div>
                             <p className=" text-2xl font-semibold mx-3">{title}</p>
-                            <div className="flex w-full mx-3 justify-center"><img src={image} alt="" className="max-h-[40rem] object-cover" /> </div>
+                            {image && <div className="flex w-full mx-3 justify-center"><img src={`http://127.0.0.1:8000/${image}`} alt="" className="min-h-[20rem] max-w-[30rem] max-h-[40rem] object-cover" /> </div>}
 
                             <div dangerouslySetInnerHTML={{ __html: description }} className="w-full text-left text-lg font-medium mx-3 mb-5"></div>
 

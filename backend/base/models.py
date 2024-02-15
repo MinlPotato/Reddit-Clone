@@ -59,7 +59,7 @@ class Post(models.Model):
         self.dislikes = dislikes
         self.votes = likes - dislikes
         self.save()
-    
+
     @property
     def get_comments(self):
         return self.comments.filter(post_id=self.id).count()

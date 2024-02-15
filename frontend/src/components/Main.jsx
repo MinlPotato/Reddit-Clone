@@ -5,13 +5,16 @@ import Policies from "./Policies"
 import RecentPosts from "./RecentPosts"
 import axios from "axios"
 import OrderCard from "./OrderCard"
-import { cachePosts } from "./State/Counter/PostsSlice"
-import { getPostsCached } from "./State/Counter/PostsSlice"
+import { cachePosts } from "./State/Slices/PostsSlice"
+import { getPostsCached } from "./State/Slices/PostsSlice"
 import { useSelector, useDispatch } from "react-redux"
+import HomeCard from "./Cards/HomeCard"
+import { getUserData } from "./State/Slices/AuthUser"
 
 function Main() {
 
     const postConf = useSelector(getPostsCached)
+    const userData = useSelector(getUserData)
     const dispatch = useDispatch()
     
 
@@ -20,6 +23,7 @@ function Main() {
     let seed = postConf.seed
 
     const infoDiv = useRef(null)
+    const postDiv = useRef(null)
     const [reload, setReload] = useState(false)
     const [ReachedBottom, setReachedBottom] = useState(false)
 
@@ -49,9 +53,9 @@ function Main() {
     
 
     const resizeDiv = () => {
-        const div = infoDiv.current
-        const newHeight = document.body.scrollHeight - 200
-        div.style.height = `${newHeight}px`
+        const div1 = infoDiv.current
+        const div2 = postDiv.current   
+        div1.style.height = div2.style.height
     }
 
     useEffect(() => {
@@ -74,14 +78,14 @@ function Main() {
     useEffect(() => {
         window.addEventListener('resize', resizeDiv())
         return window.removeEventListener('resize', resizeDiv())
-    }, [document.body.scrollHeight])
+    }, [postDiv.current])
 
 
     return (
         <>
             <div className="mt-16 w-full xl:w-[75rem]">
                 <div className="flex flex-row justify-center w-full gap-7">
-                    <div className="flex flex-col w-full lg:w-2/3 gap-7">
+                    <div ref={postDiv} className="flex flex-col w-full lg:w-2/3 gap-7">
                         <CreatePost />
                         <OrderCard />
                         {(postConf.posts != null) ? (
@@ -99,8 +103,9 @@ function Main() {
                         )}
                     </div>
                     <div ref={infoDiv} id="infoDiv" className="hidden lg:flex flex-col lg:w-1/3 gap-7">
-                        <RecentPosts />
-                        <Policies />
+                        {userData.isLogged && <HomeCard/>}
+                        <RecentPosts/>
+                        
                     </div>
                 </div>
             </div>

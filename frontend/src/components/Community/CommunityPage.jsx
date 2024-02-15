@@ -8,7 +8,7 @@ import { getPostByCommunity, getCommunity, getMember, joinMember, leaveMember } 
 import { useLocation } from "react-router-dom"
 import moment from "moment"
 import { Link } from "react-router-dom"
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 import { useSelector } from "react-redux";
 import MemberJoinButton from "./MemberJoinButton"
 
@@ -40,13 +40,13 @@ function CommunityPage() {
 
     return CommunityData ? (
         <>
-            <div className="mb-[7rem] -z-10">
+            <div className="mb-[10rem] sm:mb-[7rem] -z-10">
                 <div className="absolute object-cover left-0 bg-sky-500/95 w-full h-36 -z-10"></div>
                 <div className="absolute flex justify-start gap-2 items-center left-0 top-44 bg-neutral-900 w-full h-28 -z-10"></div>
             </div>
             <div className="mt-14">
-                <div className="flex flex-row items-center text-start w-9/12">
-                    <img src={subreddit} className="w-32 h-32 mb-10 rounded-full"></img>
+                <div className="flex flex-row items-center text-start w-9/12 mb-10 sm:mb-0">
+                    <img src={subreddit} className="hidden sm:block w-32 h-32 mb-10 rounded-full"></img>
                     <div className="flex flex-col gap-2 justify-between w-full">
                         <div className="flex flex-row gap-10 justify-between items-center">
                             <p className="text-4xl font-bold ">{CommunityData.name}</p>
@@ -99,7 +99,7 @@ function CommunityPage() {
                                 </div>
                             </div>
                             <Link to={`/reddit/submit?community=${CommunityData.id}`} className='w-full p-2 mt-6 flex flex-row justify-center items-center rounded-full bg-white hover:bg-neutral-200 hover:border-transparent'>
-                                <p className='text-lg text-black'>Create Post</p>
+                                <p className='text-xl text-black'>Create Post</p>
                             </Link>
 
                         </div>

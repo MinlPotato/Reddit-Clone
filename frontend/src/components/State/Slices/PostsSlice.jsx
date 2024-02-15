@@ -18,7 +18,7 @@ const PostSlice = createSlice({
             state.limit = state.limit + 3
         },
         recentPosts(state, action) {
-            if (state.recent.length == 5) {
+            if (state.recent.length == 6) {
                 state.recent.shift()
             }
             for (let index = 0; index < state.recent.length; index++) {

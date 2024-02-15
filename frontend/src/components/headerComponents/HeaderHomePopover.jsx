@@ -1,12 +1,12 @@
 import { ChevronDownIcon, HomeIcon } from "@heroicons/react/20/solid";
-import { StarIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import subreddit from "../../assets/subreddit.png"
 import { useNavigate } from "react-router-dom";
 import { getCommunitiesJoinedByUser } from "../services/communityService";
 import { useSelector } from "react-redux";
-import { getUserData } from "../State/Counter/AuthUser";
+import { getUserData } from "../State/Slices/AuthUser";
 import CreateCommunity from "../Community/CreateCommunity";
 
 function HeaderHomePopover() {
@@ -35,7 +35,7 @@ function HeaderHomePopover() {
 
     return Communities && (
         <>
-            {Create && <CreateCommunity info={{setActive: setCreate, Active: Create}}/>}
+            {Create && <CreateCommunity info={{ setActive: setCreate, Active: Create }} />}
             <Listbox value={selected} onChange={handleChange}>
                 {({ open }) => (
                     <>
@@ -72,8 +72,6 @@ function HeaderHomePopover() {
                             >
                                 <Listbox.Options className="absolute min-w-[22rem] w-full list-none p-y max-h-[35rem] overflow-auto rounded-b-md bg-neutral-900 border-t-0 border border-neutral-700 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 
-                                    <p className="text-md mt-3 mb-1 pl-5 font-semibold text-start text-neutral-500">FAVORITES</p>
-
                                     <p className="text-md mt-3 mb-1 pl-5 font-semibold text-start text-neutral-500">YOUR COMMUNITIES</p>
 
                                     <button onClick={() => setCreate(true)} className="flex flex-row gap-2 bg-transparent rounded-none hover:bg-neutral-800 border-none w-full items-center my-3 py-2 pl-3 pr-9">
@@ -93,12 +91,9 @@ function HeaderHomePopover() {
                                                 value={community}
                                                 key={community.id}
                                             >
-                                                <div className="flex flex-row items-center justify-between">
-                                                    <div className="flex flex-row items-center gap-2">
-                                                        <img src={subreddit} alt="" className="w-8 h-8" />
-                                                        <p className="text-inherit text-lg text-start">r/{community.name}</p>
-                                                    </div>
-                                                    <StarIcon onClick={() => console.log('a')} className="w-6 h-6" />
+                                                <div className="flex flex-row gap-2 items-center">
+                                                    <img src={subreddit} alt="" className="w-8 h-8" />
+                                                    <p className="text-inherit text-lg text-start">r/{community.name}</p>
                                                 </div>
                                             </Listbox.Option>
                                         ))

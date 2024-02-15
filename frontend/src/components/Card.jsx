@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
-import { getUserData } from "./State/Counter/AuthUser";
+import { getUserData } from "./State/Slices/AuthUser";
 import moment from 'moment';
 import LikeDislike123 from "./LikeDislikeComponent";
 import DOMPurify from 'dompurify';
@@ -50,8 +50,6 @@ function Card(params) {
             publishSaved({post_id: id  , user_id: loggedUser.id}).then(() => setSaved(true))
         }
     }
-    
-    //onClick={() => navigate(`/reddit/${id}`)}
 
     return (
         <div className="flex flex-row py-2 items-start pl-3 w-full
@@ -69,7 +67,7 @@ function Card(params) {
                 </div>
                 <p className="md:text-2xl text-base text-start font-semibold mb-1 w-full">{title}</p>
                 {image 
-                ? (<div className="flex w-full justify-center"><img src={image} alt="" className="max-h-[40rem] object-cover"/> </div>   )
+                ? (<div className="flex w-full justify-center"><img src={image} alt="" className="min-h-[20rem] max-h-[40rem] object-cover"/> </div>   )
                 : <div dangerouslySetInnerHTML={{__html: description}} className="text-base md:text-xl w-full font-semibold text-neutral-500 text-start line-clamp-3"></div>
                 }
                 

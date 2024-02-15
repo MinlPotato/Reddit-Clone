@@ -3,7 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { CircleStackIcon, UserCircleIcon, ArrowLeftStartOnRectangleIcon, EyeIcon } from "@heroicons/react/24/outline"
 import ProfilePic from "../../assets/profile_pic.jpg"
 import { useSelector, useDispatch } from "react-redux";
-import { getUserData, logout } from "../State/Counter/AuthUser";
+import { getUserData, logout } from "../State/Slices/AuthUser";
 import { Popover } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 

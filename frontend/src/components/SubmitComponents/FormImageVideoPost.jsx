@@ -3,7 +3,7 @@ import { PlusIcon, TagIcon, PhotoIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { getUserData } from "../State/Counter/AuthUser"
+import { getUserData } from "../State/Slices/AuthUser"
 import { useNavigate } from "react-router-dom"
 
 function FormImageVideoPost() {
@@ -62,11 +62,12 @@ function FormImageVideoPost() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        
         const queryParameters = new URLSearchParams(window.location.search)
         const community_id = queryParameters.get("community")
 
         if (community_id === null) {
+            e.preventDefault()
             return alert('Community not Selected.')
         }
 
@@ -86,15 +87,14 @@ function FormImageVideoPost() {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-                .then(async function (response) {
+                .then(async function () {
                     console.log('Post Submitted.');
-                    navigate(`/reddit/${response.data.id}`)
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         } else {
-
+            e.preventDefault()
             console.log(Errors);
             alert('error')
         }
