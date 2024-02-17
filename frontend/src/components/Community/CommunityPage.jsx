@@ -45,28 +45,31 @@ function CommunityPage() {
                 <div className="absolute flex justify-start gap-2 items-center left-0 top-44 bg-neutral-900 w-full h-28 -z-10"></div>
             </div>
             <div className="mt-14">
-                <div className="flex flex-row items-center text-start w-9/12 mb-10 sm:mb-0">
+                <div className="flex flex-row items-center text-start w-full sm:w-9/12 mb-10 sm:mb-0">
                     <img src={subreddit} className="hidden sm:block w-32 h-32 mb-10 rounded-full"></img>
                     <div className="flex flex-col gap-2 justify-between w-full">
-                        <div className="flex flex-row gap-10 justify-between items-center">
-                            <p className="text-4xl font-bold ">{CommunityData.name}</p>
-                            
-                            <MemberJoinButton info={{user_id: userData.id, community_id: community_id}}/>
-                            
+                        <div className="flex flex-row w-full sm:gap-10 justify-between items-center">
+                            <p className="text-3xl sm:text-4xl font-bold ">{CommunityData.name}</p>
+
+                            <MemberJoinButton info={{ user_id: userData.id, community_id: community_id }} />
+
                         </div>
                         <p className="text-lg text-neutral-500 font-semibold">r/{CommunityData.name}</p>
                     </div>
                 </div>
                 <div className="flex flex-row h-screen justify-center w-full gap-7">
-                    <div className="flex flex-col md:w-100 lg:w-2/3 gap-7">
+                    <div className="flex flex-col md:w-100 w-full lg:w-2/3 gap-7">
                         <CreatePost />
                         <OrderCard />
                         {Posts ? (
-                            Posts.map((Post) => (
-                                <div key={Post.id}>
-                                    <Card info={Post}></Card>
-                                </div>
-                            ))
+                            <div className="flex flex-col w-full gap-3">
+                                {Posts.map((Post) => (
+                                    <div key={Post.id}>
+                                        <Card info={Post}></Card>
+                                    </div>
+                                ))}
+                            </div>
+
                         ) : (
                             <p>loading...</p>
                         )}

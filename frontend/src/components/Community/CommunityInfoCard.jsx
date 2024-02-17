@@ -16,7 +16,7 @@ function CommunityInfoCard(params) {
 
     useEffect(() => {
         getMember({ user_id: userData.id, community_id: infoCard.id }).then((response) => setIsMember(response))
-    }, [])
+    }, [params])
 
 
     const handleJoin = () => {

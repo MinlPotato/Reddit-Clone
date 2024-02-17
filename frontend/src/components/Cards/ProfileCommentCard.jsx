@@ -23,10 +23,7 @@ function ProfileCommentCard(params) {
                 </div>
                 <div className="flex flex-row flex-wrap gap-x-3 items-center">
                     <p className="font-semibold">{commentInfo.username}</p>
-
-                    <p className="text-neutral-500">Commented on
-                        <Link to={`/reddit/${PostData.id}`} className="text-lg font-semibold text-neutral-300"> {PostData.title}</Link>
-                    </p>
+                    <p className="text-neutral-500">Commented on <Link to={`/reddit/${PostData.id}`} className="text-lg font-semibold text-neutral-300 hover:underline">{PostData.title}</Link></p>
                     <p className="text-lg text-neutral-500">·</p>
                     <Link to={`/reddit/r/${PostData.community_id}`} className="hover:underline">r/{PostData.community_name}</Link>
                     <div className="flex flex-row items-center gap-2">

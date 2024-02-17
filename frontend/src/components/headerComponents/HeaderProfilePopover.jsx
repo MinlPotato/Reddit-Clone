@@ -35,7 +35,7 @@ function HeaderProfilePopover() {
     ]
 
     return (
-        <Popover className="w-1/6 my-2 flex items-center ">
+        <Popover className="w-1/6 min-w-[4rem] my-2 flex items-center ">
             <Popover.Button className='p-0 px-2 w-full flex flex-row items-center xl:justify-between justify-center border-transparent bg-transparent hover:bg-neutral-800 hover:border-transparent'>
                 <div className='flex flex-row items-center gap-3'>
                     <img className='object-cover min-h-full w-10 h-10 rounded-full' src={ProfilePic} alt="" />

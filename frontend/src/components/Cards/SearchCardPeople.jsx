@@ -7,10 +7,10 @@ function SearchCardPeople(params) {
     const name = infoCard.username
 
     return (
-        <div className="flex flex-row gap-2 mx-2 items-center justify-start ">
+        <Link to={`/reddit/user/${infoCard.id}`} className="flex flex-row gap-2 mx-2 items-center justify-start ">
             <img src={profile_pic} alt="" className="w-10 h-10 rounded-full" />
-            <Link to={`/reddit/user/${params.id}`} className="text-inherit text-lg text-start font-semibold hover:underline">u/{name}</Link>
-        </div>
+            <p  className="text-inherit text-lg text-start font-semibold hover:underline">u/{name}</p>
+        </Link>
     )
 }
 

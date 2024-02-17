@@ -45,7 +45,7 @@ function HeaderHomePopover() {
                                     {selected ? (
                                         <>
                                             <div className="flex flex-row w-full lg:w-fit h-full items-center justify-center lg:justify-start">
-                                                <img src={subreddit} alt="" className="w-9" />
+                                                <div className="w-9 h-9"><img src={subreddit} alt="" className="w-9 h-9" /></div>
                                                 <p className='hidden lg:hidden xl:block text-lg ml-3'>{selected.name}</p>
                                             </div>
 
@@ -60,7 +60,7 @@ function HeaderHomePopover() {
                                         </>
                                     )}
                                 </div>
-                                <ChevronDownIcon className="w-8 h-8" />
+                                <div><ChevronDownIcon className="w-8 h-8" /></div>
                             </Listbox.Button>
 
                             <Transition

@@ -53,14 +53,16 @@ class getPostsByCommunityList(generics.ListAPIView):
 @api_view(['POST'])
 def publishPost(request):
     if request.method == 'POST':
-        print(request.data['image'])
-        image = request.FILES
-        print(image)
+        print(request.data)
         serializer = PublishPostSerializer(data=request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
-            serializer.save(
-                image=request.data.get('image')
-            )
+            if 'image' in request.data:
+                serializer.save(
+                    image=request.data.get('image')
+                )
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

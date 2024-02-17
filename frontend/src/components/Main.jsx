@@ -16,7 +16,7 @@ function Main() {
     const postConf = useSelector(getPostsCached)
     const userData = useSelector(getUserData)
     const dispatch = useDispatch()
-    
+
 
     let start = postConf.start
     let limit = postConf.limit
@@ -50,11 +50,11 @@ function Main() {
     useEffect(() => {
         setReload(true)
     }, [])
-    
+
 
     const resizeDiv = () => {
         const div1 = infoDiv.current
-        const div2 = postDiv.current   
+        const div2 = postDiv.current
         div1.style.height = div2.style.height
     }
 
@@ -84,16 +84,19 @@ function Main() {
     return (
         <>
             <div className="mt-16 w-full xl:w-[75rem]">
-                <div className="flex flex-row justify-center w-full gap-7">
+                <div className="flex flex-row  w-full gap-7">
                     <div ref={postDiv} className="flex flex-col w-full lg:w-2/3 gap-7">
                         <CreatePost />
                         <OrderCard />
                         {(postConf.posts != null) ? (
-                            postConf.posts.map((Post, index) => (
-                                <div className="w-full" key={index}>
-                                    <Card info={Post}></Card>
-                                </div>
-                            ))
+                            <div className="flex flex-col w-full gap-3">
+                                {postConf.posts.map((Post, index) => (
+                                    <div className="w-full" key={index}>
+                                        <Card info={Post}></Card>
+                                    </div>
+                                ))}
+                            </div>
+
                         ) : !reload ? (
                             <p>Loading...</p>
                         ) : (
@@ -103,9 +106,9 @@ function Main() {
                         )}
                     </div>
                     <div ref={infoDiv} id="infoDiv" className="hidden lg:flex flex-col lg:w-1/3 gap-7">
-                        {userData.isLogged && <HomeCard/>}
-                        <RecentPosts/>
-                        
+                        {userData.isLogged && <HomeCard />}
+                        <RecentPosts />
+
                     </div>
                 </div>
             </div>

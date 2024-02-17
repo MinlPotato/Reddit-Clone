@@ -6,7 +6,8 @@ function MemberJoinButton(params) {
     const info = params.info
     const [IsMember, setIsMember] = useState(false)
 
-    const handleJoin = () => {
+    const handleJoin = (e) => {
+        e.stopPropagation()
         if (IsMember) {
             leaveMember({user_id: info.user_id, community_id: info.community_id}).then(() => setIsMember(false))
         } else {

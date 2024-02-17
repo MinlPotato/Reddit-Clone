@@ -81,7 +81,7 @@ function CommentCard(params) {
                     </div>
                 </div>
                 <div className='flex flex-row items-center gap-2 col-span-11 '>
-                    <Link to={`/reddit/user/${infoCard.user_id}`} className='font-semibold'>{infoCard.username}</Link>
+                    <Link to={`/reddit/user/${infoCard.user_id}`} className='font-semibold hover:underline'>{infoCard.username}</Link>
                     <p className='text-neutral-500'>·</p>
                     <p className='text-neutral-500'>{moment(infoCard.date_created).fromNow()}</p>
                 </div>
@@ -96,9 +96,6 @@ function CommentCard(params) {
                     hover:bg-neutral-800 text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white'>
                             <ChatBubbleLeftIcon className="w-6 h-6 stroke-inherit" />
                             <p className='text-inherit'>Reply</p>
-                        </button>
-                        <button className='p-2 bg-transparent hover:bg-neutral-800 rounded-none border-transparent text-neutral-500 hover:text-white'>
-                            <p className='text-inherit'>Share</p>
                         </button>
                         <button className='p-2 bg-transparent hover:bg-neutral-800 rounded-none border-transparent stroke-neutral-500 hover:stroke-white'>
                             <EllipsisHorizontalIcon className="w-6 h-6 stroke-inherit" />

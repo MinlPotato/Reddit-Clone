@@ -1,7 +1,9 @@
 import { SearchCardCommunitiesBig } from "../Cards/SearchCardCommunities"
+import { useNavigate } from "react-router-dom"
 
 function SearchCommunity(params) {
     
+    const navigate = useNavigate()
     const SearchCommunities = params.SearchCommunities
 
     return (

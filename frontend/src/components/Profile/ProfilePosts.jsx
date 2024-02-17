@@ -32,7 +32,7 @@ function ProfilePosts() {
 
     return (
         <>
-        <div className="absolute left-0 right-0 top-40 sm:mx-10 lg:mx-52">
+        <div className="absolute left-0 right-0 top-40 sm:mx-10 xl:mx-52">
                      <div className="flex flex-row h-screen justify-center w-full gap-7">
                         <div className="flex flex-col w-full xl:w-2/3 gap-7">
                             <OrderCard />

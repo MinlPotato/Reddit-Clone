@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom"
 function FormImageVideoPost() {
 
     const userData = useSelector(getUserData)
-    const navigate = useNavigate()
 
     const [TitleLimitNumber, setTitleLimitNumber] = useState(0)
     const [TitleLimit, setTitleLimit] = useState(false)
@@ -25,14 +24,12 @@ function FormImageVideoPost() {
 
         //title
         if (!formFields["title"]) {
-            console.log("a");
             formIsValid = false;
             formErrors["title"] = "Cannot be empty";
         }
 
         //description
         if (!formFields["file"]) {
-            console.log("b");
             formIsValid = false;
             formErrors["description"] = "Cannot be empty";
         }
@@ -46,7 +43,6 @@ function FormImageVideoPost() {
             ...Fields,
             [e.target.name]: e.target.value
         })
-
     }
 
     const HandleImageChange = (event) => {

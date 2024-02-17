@@ -4,11 +4,14 @@ import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import subreddit from "../../assets/subreddit.png"
 import { useNavigate } from "react-router-dom";
-import { getCommunities } from "../services/communityService";
+import { getCommunities, getCommunitiesJoinedByUser, getCommunity } from "../services/communityService";
+import { useSelector } from "react-redux";
+import { getUserData } from "../State/Slices/AuthUser";
 
 function SelectCommunityPanel() {
 
   const navigate = useNavigate()
+  const userData = useSelector(getUserData)
 
   const [Communities, setCommunities] = useState(null)
   const [selected, setSelected] = useState(null);
@@ -20,14 +23,20 @@ function SelectCommunityPanel() {
   useEffect(() => {
     const queryParameters = new URLSearchParams(window.location.search)
     const community_id = queryParameters.get("community")
-    getCommunities().then((response) => {
-      setCommunities(response)
-      const active_community = response.find((element) => element.id == community_id)
-      if (active_community) {
-        setSelected(active_community)
-      }
-      
-    })
+
+    if (userData.isLogged) {
+      getCommunitiesJoinedByUser(userData.id).then((response) => {
+        setCommunities(response)
+        if (!community_id == null || !community_id == '') {
+          const active_community = response.find((element) => element.id == community_id)
+          if (active_community) {
+            setSelected(active_community)
+          } else {
+            getCommunity(community_id).then((response) => setSelected(response))
+          }
+        }
+      })
+    }
   }, [])
 
 
@@ -44,10 +53,10 @@ function SelectCommunityPanel() {
             <Listbox.Button className="sm:w-1/2 h-12 w-full flex flex-row items-center rounded-t-md rounded-b-none justify-between bg-neutral-900 border border-neutral-700">
               <div className="flex flex-row items-center gap-2">
                 {selected ? (
-                  <>  
-                    <img src={subreddit} alt="" className="w-8"/>
+                  <>
+                    <img src={subreddit} alt="" className="w-8" />
                     <p className="text-lg">{selected.name}</p>
-                  </>                 
+                  </>
                 ) : (
                   <>
                     <EllipsisHorizontalCircleIcon className="w-8 stroke-neutral-400" />
@@ -75,7 +84,7 @@ function SelectCommunityPanel() {
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
                     }
-                    
+
                     value={community}
                     key={community.id}
                   >

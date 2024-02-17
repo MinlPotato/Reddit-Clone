@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react";
-import { ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, XMarkIcon, ChatBubbleLeftRightIcon, LinkIcon } from "@heroicons/react/24/outline"
 import { useSelector, useDispatch } from "react-redux";
 import { getCommunity, getUser, getPost } from "./services/communityService";
 import { getCommentsByPost, publishComment } from "./services/commentService"
@@ -16,8 +16,11 @@ import DOMPurify from 'dompurify';
 import QuillTextArea from "./QuillTextArea";
 import { getSaved, deleteSaved, publishSaved } from "./services/voteService";
 import { recentPosts } from "./State/Slices/PostsSlice";
+import urlMetadata from 'url-metadata';
 
 function CommentSection() {
+
+    window.scrollTo({ top: 0, left: 0 });
 
     const loggedUser = useSelector(getUserData)
     const location = useLocation()
@@ -35,7 +38,6 @@ function CommentSection() {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        window.scrollTo({ top: 0, left: 0 });
         const post_id = location.pathname.split('/')[2]
         getPost(post_id).then((response) => {
             setPostData(response)
@@ -69,6 +71,7 @@ function CommentSection() {
     let user_id = PostData?.user_id
     let id = PostData?.id
     let image = PostData?.image
+    let link = PostData?.link
 
 
     const LikeDislikeInfo1 = {
@@ -113,6 +116,18 @@ function CommentSection() {
         }
     }
 
+    async function MetaData(url) {
+        try {
+            const metadata = await urlMetadata(url, {
+                mode: 'no-cors',
+                
+            });
+            console.log(metadata);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     const handleSave = () => {
         if (Saved) {
             deleteSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(false))
@@ -147,7 +162,7 @@ function CommentSection() {
                             {PostData && <LikeDislike123 info={LikeDislikeInfo2} />}
                         </div>
 
-                        <div className="flex flex-col mr-12 gap-3 items-start w-full">
+                        <div className="flex flex-col  mr-12 gap-3 items-start text-start w-full">
                             <div className="flex flex-row gap-3 items-center mx-3 text-neutral-500">
                                 {(CommunityData != null) && <Link className="flex flex-row items-center gap-2 text-inherit hover:text-neutral-400 hover:underline" to={`/reddit/r/${CommunityData.id}`}>
                                     <img src={subreddit} alt="" className="w-7 h-7" />
@@ -156,8 +171,17 @@ function CommentSection() {
                                 {(UserData != null) && <p className="text-inherit">Posted by <Link to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{UserData.username}</Link></p>}
                                 <p className="text-inherit">{date_created}</p>
                             </div>
-                            <p className=" text-2xl font-semibold mx-3">{title}</p>
-                            {image && <div className="flex w-full mx-3 justify-center"><img src={`http://127.0.0.1:8000/${image}`} alt="" className="min-h-[20rem] max-w-[30rem] max-h-[40rem] object-cover" /> </div>}
+
+                            <p className="text-2xl font-semibold mx-3">{title}</p>
+
+                            {image && <div className="flex w-full mx-3 justify-center"><img src={`http://127.0.0.1:8000/${image}`} alt="" className="min-h-[20rem] max-w-[42rem] max-h-[40rem] object-cover" /> </div>}
+
+                            {link &&
+                                <div className="flex flex-row items-center w-1/2">
+                                    <a href={link} target="_blank" className="mx-3 hover:underline text-blue-500 line-clamp-1">{link}</a>
+                                    <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
+                                </div>
+                            }
 
                             <div dangerouslySetInnerHTML={{ __html: description }} className="w-full text-left text-lg font-medium mx-3 mb-5"></div>
 

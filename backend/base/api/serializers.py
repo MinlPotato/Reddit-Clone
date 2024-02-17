@@ -42,7 +42,7 @@ class PostSerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'image', 'description', 'date_created', 
+        fields = ['id', 'title', 'link', 'image', 'description', 'date_created', 
                   'votes', 'user_id', 'community_id', 'likes', 'dislikes', 'username', 'community_name', 'comments']
         
 
@@ -51,7 +51,7 @@ class PublishPostSerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title','description','user_id','community_id']
+        fields = ['title','description','user_id','community_id','link']
 
     def create(self, validated_data):
         post = Post(**validated_data)

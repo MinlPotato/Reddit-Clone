@@ -48,8 +48,9 @@ function Header() {
 
     return (
         
-        <header className="z-20 fixed flex flex-row justify-center gap-4 w-full h-16 left-0 top-0 px-5 bg-neutral-900 border-b border-neutral-700 ">
-            <a href="/" className='flex-none w-12 h-12 inset-0 mt-2 items-center rounded-full'>
+        <header className="z-20 fixed flex flex-row justify-center sm:gap-4 w-full h-16 left-0 top-0 sm:px-5 bg-neutral-900 border-b border-neutral-700 ">
+            
+            <a href="/" className='flex-none w-12 h-12 inset-0 mt-2 mx-2 items-center rounded-full'>
                 <img className="min-h-full min-w-full" src={RedditLogo} alt="" />
             </a>
 

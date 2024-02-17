@@ -24,14 +24,14 @@ function ProfileDownVoted() {
             navigate(`/reddit/user/${user_id}`)
         }
 
-        getUserDisliked(loggedUser.id).then((response) => { setPostsDisliked(response); console.log(response) })
+        getUserDisliked(loggedUser.id).then((response) => { setPostsDisliked(response) })
         getUser(user_id).then((response) => setUserData(response))
     }, [])
 
     return (
         <div className="absolute left-0 right-0 top-40 sm:mx-10">
             <div className="flex flex-row justify-center w-full gap-7">
-                <div className="flex flex-col w-full lg:w-3/4 gap-7">
+                <div className="flex flex-col w-full xl:w-3/4 gap-7">
                     <div className="">
                         {(PostsDisliked != null) ? (
                             PostsDisliked.length == 0 ? (
@@ -48,7 +48,7 @@ function ProfileDownVoted() {
                         )}
                     </div>
                 </div>
-                <div className="hidden md:hidden lg:flex flex-col w-1/4 gap-7">
+                <div className="hidden xl:flex flex-col w-1/4 gap-7">
                     {UserData && <UserCard info={UserData} />}
                 </div>
             </div>

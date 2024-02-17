@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, LinkIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
 import { getUserData } from "./State/Slices/AuthUser";
 import moment from 'moment';
@@ -16,7 +16,7 @@ function Card(params) {
     const infoCard = params.info
 
     let title = infoCard.title
-    let description = DOMPurify.sanitize(infoCard.description) 
+    let description = DOMPurify.sanitize(infoCard.description)
     let id = infoCard.id
     let community_id = infoCard.community_id
     let user_id = infoCard.user_id
@@ -25,6 +25,7 @@ function Card(params) {
     let username = infoCard.username
     let image = infoCard.image
     let comments = infoCard.comments
+    let link = infoCard.link
 
     const LikeDislikeInfo = {
         post_id: id,
@@ -39,15 +40,15 @@ function Card(params) {
 
     useEffect(() => {
         if (loggedUser.isLogged) {
-             getSaved({post_id: id  , user_id: loggedUser.id}).then((response) => setSaved(response))
+            getSaved({ post_id: id, user_id: loggedUser.id }).then((response) => setSaved(response))
         }
     }, [])
 
     const handleSave = () => {
         if (Saved) {
-            deleteSaved({post_id: id  , user_id: loggedUser.id}).then(() => setSaved(false))
+            deleteSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(false))
         } else {
-            publishSaved({post_id: id  , user_id: loggedUser.id}).then(() => setSaved(true))
+            publishSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(true))
         }
     }
 
@@ -56,21 +57,27 @@ function Card(params) {
             bg-neutral-900 rounded-md border border-neutral-700 hover:border-neutral-400 transition">
 
             <div className="flex flex-col items-center mt-1 gap-1">
-                <LikeDislike123 info={LikeDislikeInfo}/>
+                <LikeDislike123 info={LikeDislikeInfo} />
             </div>
-            
-            <div className="flex flex-col gap-3 mx-3 items-start w-full ">
+
+            <div className="flex flex-col gap-2 mx-3 items-start w-full text-start">
                 <div className="flex flex-row flex- gap-5 text-neutral-500 md:text-base text-xs">
                     <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`r/${community_id}`}>r/{community_name}</Link>
                     <p className="text-inherit ">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>
                     <p className="text-inherit hidden sm:block">{date_created}</p>
                 </div>
                 <p className="md:text-2xl text-base text-start font-semibold mb-1 w-full">{title}</p>
-                {image 
-                ? (<div className="flex w-full justify-center"><img src={image} alt="" className="min-h-[20rem] max-h-[40rem] object-cover"/> </div>   )
-                : <div dangerouslySetInnerHTML={{__html: description}} className="text-base md:text-xl w-full font-semibold text-neutral-500 text-start line-clamp-3"></div>
+                {image
+                    ? (<div className="flex w-full justify-center"><img src={image} alt="" className="sm:min-h-[20rem] max-h-[40rem] object-cover" /> </div>)
+                    : <div dangerouslySetInnerHTML={{ __html: description }} className="text-base md:text-xl w-full font-semibold text-neutral-500 line-clamp-3"></div>
                 }
-                
+                {link &&
+                    <div className="flex flex-row items-center">
+                        <a href={link} target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{link}</a>
+                        <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
+                    </div>
+                }
+
 
                 <div className="flex flex-row gap-6">
                     <Link onClick={(e) => e.stopPropagation()} to={`/reddit/${id}`} state={{ from: infoCard }} className='flex flex-row items-center gap-2 bg-transparent hover:bg-neutral-800 border-transparent'>
@@ -83,8 +90,8 @@ function Card(params) {
                         <p>Share</p>
                     </button>
                     <button onClick={handleSave} className='p-0 hidden sm:flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
-                        {Saved ? <BookmarkIcon className="w-6 h-6 fill-white" /> :  <BookmarkIcon className="w-6 h-6 " />}
-                       
+                        {Saved ? <BookmarkIcon className="w-6 h-6 fill-white" /> : <BookmarkIcon className="w-6 h-6 " />}
+
                         <p>Save</p>
                     </button>
                     <button className='bg-transparent hover:bg-neutral-800 rounded-none border-transparent'>

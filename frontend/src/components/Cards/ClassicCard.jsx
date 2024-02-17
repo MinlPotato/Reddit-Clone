@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { getUserData } from "../State/Slices/AuthUser"
 import { Link } from "react-router-dom"
 import moment from "moment"
-import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, DocumentIcon } from "@heroicons/react/24/outline"
+import { ArrowsPointingOutIcon, ArrowsPointingInIcon, ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, DocumentIcon, LinkIcon } from "@heroicons/react/24/outline"
 import { useState, useEffect } from "react"
 import DOMPurify from "dompurify"
 import { getSaved, deleteSaved, publishSaved } from "../services/voteService"
@@ -89,13 +89,21 @@ function ClassicCard(params) {
 
                         </div>
                     </div>
-                    <div className="flex flex-col" hidden={!OpenCard}>
+                    <div className={OpenCard ? "flex flex-col text-start mb-4" : "hidden"}>
                         {infoCard.image &&
                             <div className="flex justify-center w-full">
-                                <img src={`http://127.0.0.1:8000/${infoCard.image}`} hidden={!OpenCard} alt="" className="max-h-[40rem] w-fit" />
+                                <img src={`http://127.0.0.1:8000/${infoCard.image}`} alt="" className="max-h-[40rem] w-fit" />
                             </div>
                         }
-                        {infoCard.description && <div hidden={!OpenCard} dangerouslySetInnerHTML={{ __html: description }} className="text-start my-1 text-lg font-semibold mb-4"></div>}
+
+                        {infoCard.description && <div dangerouslySetInnerHTML={{ __html: description }} className="text-start my-1 text-lg font-semibold "></div>}
+
+                        {infoCard.link && 
+                        <div className="flex flex-row items-center w-1/2">
+                            <a href={infoCard.link} target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{infoCard.link}</a>
+                            <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
+                        </div>
+                        }
 
                     </div>
                 </div>

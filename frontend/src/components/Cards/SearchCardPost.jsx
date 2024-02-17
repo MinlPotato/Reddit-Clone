@@ -11,6 +11,7 @@ function SearchCardPost(params) {
     let title = infoCard.title
     let id = infoCard.id
     let community_id = infoCard.community_id
+    let user_id = infoCard.user_id
     let date_created = moment(infoCard.date_created).fromNow()
     let community_name = infoCard.community_name
     let username = infoCard.username
@@ -26,7 +27,7 @@ function SearchCardPost(params) {
                         <img src={subreddit} alt="" className="w-7 h-7" />
                         <Link onClick={(e) => e.stopPropagation()} to={`/reddit/r/${community_id}`} className="text-inherit hover:text-neutral-400 hover:underline">r/{community_name}</Link>
                     </div>
-                    <p className="text-inherit">Posted by u/{username}</p>
+                    <p className="text-inherit">Posted by <Link onClick={(e) => e.stopPropagation()} className="hover:underline" to={`/reddit/user/${user_id}`}>u/{username}</Link> </p>
                     <p className="text-inherit">{date_created}</p>
                 </div>
                 <div className="flex flex-row justify-between w-full">

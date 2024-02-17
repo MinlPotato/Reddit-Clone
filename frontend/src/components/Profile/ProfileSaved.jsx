@@ -31,7 +31,7 @@ function ProfileSaved() {
     return (
         <div className="absolute left-0 right-0 top-40 sm:mx-10">
             <div className="flex flex-row justify-center w-full gap-7">
-                <div className="flex flex-col w-full lg:w-3/4 gap-7">
+                <div className="flex flex-col w-full xl:w-3/4 gap-7">
                     <div className="">
                         {(PostsSaved != null) ? (
                             PostsSaved.length == 0 ? (
