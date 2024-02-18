@@ -36,31 +36,18 @@ function LogIn() {
 
     return (
 
-        <div className="w-full flex flex-col justify-center items-center">
-            <Link to="/" className="text-left">Go back</Link>
-            <div className="lg:w-2/3 md:w-full flex flex-col bg-neutral-900 rounded-md border border-neutral-700 justify-start px-24 py-12">
+        <div className="h-full w-full flex flex-col justify-center items-center">
+            <div className="flex w-full lg:w-2/3 justify-start mb-3"><Link to="/" className="text-neutral-500 hover:underline">Go back</Link></div>
+            <div className="lg:w-2/3 md:w-full flex flex-col bg-neutral-900 rounded-md border border-neutral-700 justify-start px-10 sm:px-24 py-12">
 
                 <p className="text-4xl text-left mb-3">Log In</p>
                 <p className="text-lg text-left mb-9">
-                    By continuing, you agree to our <a href="">User Agreement</a>  and acknowledge that you understand the <a href="">Privacy Policy</a>.
+                    By continuing, you agree to our 
+                    <span className="font-semibold text-neutral-200"> User Agreement </span>
+                    and acknowledge that you understand the 
+                    <span className="font-semibold text-neutral-200"> Privacy Policy</span>.
                 </p>
-                <div className="flex flex-col gap-5">
-                    <button disabled className="flex flex-row h-14 items-center w-full bg-neutral-100 rounded-full disabled:bg-neutral-300">
-                        <img className="w-10" src={logoGoogle} alt="" />
-                        <p className="w-full text-lg text-neutral-700">Continue with Google</p>
-                    </button>
 
-                    <button disabled className="flex flex-row h-14 items-center w-full bg-neutral-100 rounded-full disabled:bg-neutral-300">
-                        <img className="w-8" src={logoApple} alt="" />
-                        <p className="w-full text-lg text-neutral-700">Continue with Apple</p>
-                    </button>
-                </div>
-
-                <div className="relative flex py-5 items-center">
-                    <div className="flex-grow border-t border-neutral-600"></div>
-                    <span className="flex-shrink mx-4 text-md font-semibold border-neutral-600">OR</span>
-                    <div className="flex-grow border-t border-neutral-600"></div>
-                </div>
 
                 <form onSubmit={loginUser2}>
                     <div className="flex flex-col gap-5">
@@ -93,7 +80,7 @@ function LogIn() {
                             />
                         </div>
 
-                        <p className="text-start text-md font-semibold">New to Reddit? <Link to={"/register"}>Sign Up</Link></p>
+                        <p className="text-start text-md font-semibold">New to Reddit? <Link to={"/register"} className="hover:underline">Sign Up</Link></p>
                     </div>
 
                     <input type="submit" className="w-full h-14 bg-orange-500 hover:bg-orange-600 rounded-full mt-6 text-xl font-bold" />

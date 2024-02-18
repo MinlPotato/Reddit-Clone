@@ -28,36 +28,19 @@ function Register() {
     }
 
     return (
-        <div className="w-full flex justify-center">
-            <div className="lg:w-2/3 md:w-full flex flex-col bg-neutral-900 rounded-md border border-neutral-700 justify-start px-24 py-12">
+        <div className="h-full w-full flex flex-col justify-center items-center">
+            <div className="flex w-full lg:w-2/3 justify-start mb-3"><Link to="/" className="text-neutral-500 hover:underline">Go back</Link></div>
+            <div className="lg:w-2/3 md:w-full flex flex-col bg-neutral-900 rounded-md border border-neutral-700 justify-start px-10 sm:px-24 py-12">
                 <p className="text-4xl text-left mb-3">Sign Up</p>
                 <p className="text-lg text-left mb-9">
                     By continuing, you agree to our <a href="">User Agreement</a>  and acknowledge that you understand the <a href="">Privacy Policy</a>.
                 </p>
-                <div className="flex flex-col gap-5">
-                    <button className="flex flex-row h-14 items-center w-full bg-neutral-100 rounded-full">
-                        <img className="w-10" src={logoGoogle} alt="" />
-                        <p className="w-full text-lg text-neutral-700">Continue with Google</p>
-                    </button>
 
-                    <button className="flex flex-row h-14 items-center w-full bg-neutral-100 rounded-full">
-                        <img className="w-8" src={logoApple} alt="" />
-                        <p className="w-full text-lg text-neutral-700">Continue with Apple</p>
-                    </button>
-                </div>
-
-                <div className="relative flex py-5 items-center">
-                    <div className="flex-grow border-t border-neutral-600"></div>
-                    <span className="flex-shrink mx-4 text-md font-semibold border-neutral-600">OR</span>
-                    <div className="flex-grow border-t border-neutral-600"></div>
-                </div>
-
-                
                     <form onSubmit={onRegister}>
                         <div className="flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
-                            <label htmlFor="email" className="text-start text-lg font-semibold">
-                                Email
+                            <label htmlFor="email" className="text-start flex flex-row items-top gap-2 text-lg font-semibold">
+                                Email <span className="text-neutral-500 text-sm">*Not needed</span>
                             </label>
                             <input
                                 type="text"
@@ -95,7 +78,7 @@ function Register() {
                                     placeholder="password"
                                 />
                             </div>
-                            <p className="text-start text-md font-semibold">Already a redditor? <Link to={"/login"}>Log in</Link></p>
+                            <p className="text-start text-md font-semibold">Already a redditor? <Link to={"/login"} className="hover:underline">Log in</Link></p>
                         </div>
                         <input type="submit" className="w-full h-14 bg-orange-500 hover:bg-orange-600 rounded-full mt-4 text-xl font-bold" />
                         </div>

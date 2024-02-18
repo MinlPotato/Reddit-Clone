@@ -70,19 +70,19 @@ function Header() {
                 ))}
             </div>
 
-            <button className='hidden sm:flex flex-row items-center rounded-full bg-neutral-800 my-2 border border-neutral-700 bg-transparent hover:bg-neutral-800 hover:border-transparent'>
+            <button className='hidden md:flex flex-row items-center rounded-full bg-neutral-800 my-2 border border-neutral-700 bg-transparent hover:bg-neutral-800 hover:border-transparent'>
                 <MegaphoneIcon className="w-6 h-6" />
-                <p className='hidden text-lg ml-3 visible md:hidden lg:block'>Advertise</p>
+                <p className='hidden text-lg ml-3 visible xl:block'>Advertise</p>
             </button>
 
             {data.isLogged ? (
                 <HeaderProfilePopover />
             ) : (
-                <div className='w-1/6 px-5 flex flex-row justify-around gap-5'>
-                    <Link to={"/login"} className='w-1/2 flex flex-row justify-center items-center rounded-full bg-orange-500 my-2 hover:bg-orange-600 hover:border-transparent'>
+                <div className='w-1/4 min-w-[5rem] mx-2 md:w-1/6 flex flex-row justify-around gap-5'>
+                    <Link to={"/login"} className='w-full lg:w-1/2 flex flex-row justify-center items-center rounded-full bg-orange-500 my-2 hover:bg-orange-600 hover:border-transparent'>
                         <p className='text-lg text-white'>Log In</p>
                     </Link>
-                    <Link to={"/register"} className='w-1/2 flex flex-row justify-center items-center rounded-full my-2 border bg-transparent hover:bg-neutral-800 hover:border-transparent'>
+                    <Link to={"/register"} className='w-1/2 hidden lg:flex flex-row justify-center items-center rounded-full my-2 border bg-transparent hover:bg-neutral-800 hover:border-transparent'>
                         <p className='text-lg text-white'>Register</p>
                     </Link>
                 </div>
