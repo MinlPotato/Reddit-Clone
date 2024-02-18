@@ -1,26 +1,9 @@
-from django.http import JsonResponse
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
+from rest_framework.decorators import api_view
 
-from ..serializers import (
-    CommentSerializer, PostSerializer,
-    CommunitySerializer, UserSerializer,
-    RegisterSerializer, PublishPostSerializer,
-    FeedbackSerializer, SaveSerializer)
-from base.models import Community, Post, Comment, Feedback, Saved
-from django.contrib.auth.models import User
+from ..serializers import ( PostSerializer, SaveSerializer )
+from base.models import Post, Saved
 from rest_framework import status
-from django.db import models
-from django.db.models import Count
-
-
-
 
 @api_view(['GET', 'POST', 'DELETE'])
 def SavedPost(request, pk, user_id):

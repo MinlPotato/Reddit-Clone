@@ -18,6 +18,8 @@ function SearchCardPost(params) {
     let votes = infoCard.likes - infoCard.dislikes
     let image = infoCard.image
     let comments = infoCard.comments
+    let spoiler = infoCard.spoiler
+    let nsfw = infoCard.nsfw
 
     return (
         <div onClick={() => navigate(`/reddit/${id}`)} className=" bg-neutral-900 rounded-md border-inherit hover:bg-neutral-800 py-4">
@@ -31,8 +33,21 @@ function SearchCardPost(params) {
                     <p className="text-inherit">{date_created}</p>
                 </div>
                 <div className="flex flex-row justify-between w-full">
-                    <p className="text-xl text-start font-semibold px-4 mb-1 w-full line-calmp-2">{title}</p>
-                    {image && <img src={image} alt="" className="min-w-[12rem] max-w-[12rem] h-[8rem] mr-5 rounded-lg object-cover" />}
+                    <div className="flex flex-col px-4 gap-2">
+                        <p className="text-xl text-start font-semibold w-full line-calmp-2">{title}</p>
+                        <div className="flex flex-row items-center gap-2">
+                            {spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                            {nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
+                        </div>
+                    </div>
+                    
+                    {image && (
+                        <div className="relative flex mr-5 ">
+                            <img src={image} alt="" className="min-w-[12rem] max-w-[12rem] h-[8rem] rounded-lg object-cover" />
+                            {(spoiler || nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-lg rounded-md"></div>}
+                        </div>
+                        
+                        )}
                 </div>
                 <div className="flex flex-row gap-5 mx-3  items-center text-neutral-500">
                     <p className="text-inherit">{votes} upvotes</p>

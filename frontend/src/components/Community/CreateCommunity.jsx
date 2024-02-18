@@ -51,7 +51,7 @@ function CreateCommunity(params) {
     return (
         <>
             <div className="z-10 fixed-center w-full h-full bg-black opacity-60"></div>
-            <form onSubmit={handleSubmit} className="z-20 fixed-center w-3/4 xl:w-1/3 h-2/3 bg-neutral-900 border border-neutral-700 rounded-md">
+            <form onSubmit={handleSubmit} className="z-20 fixed-center w-full sm:w-3/4 xl:w-1/3 h-5/6 sm:h-2/3 bg-neutral-900 border border-neutral-700 rounded-md">
                 <div className="flex flex-col w-full h-[87.5%] gap-5 p-6">
                     <div className="flex flex-row justify-between items-center pb-3 border-b-2 border-neutral-800">
                         <p className="text-start text-xl font-semibold">Create a community</p>
@@ -59,7 +59,7 @@ function CreateCommunity(params) {
                             <XMarkIcon className="w-6 h-6 stroke-inherit" />
                         </button>
                     </div>
-                    <div className="flex flex-col justify-start gap-5">
+                    <div className="flex flex-col justify-start gap-5 text-start">
                         <div className="flex flex-col items-start">
                             <p className="text-xl font-semibold">Name</p>
                             <p className="text-neutral-500">Community names including capitalization cannot be changed.</p>

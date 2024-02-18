@@ -35,6 +35,8 @@ class Post(models.Model):
     description = models.TextField(null=True, blank=True)
     link = models.URLField(null=True, blank=True, max_length=200)
     image = models.ImageField(null=True, blank=True, upload_to='images/')
+    spoiler = models.BooleanField(default=False)
+    nsfw = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=timezone.now)
     votes = models.IntegerField(default=0, blank=True, null=True)
     likes = models.IntegerField(default=0, blank=True, null=True)

@@ -72,6 +72,8 @@ function CommentSection() {
     let id = PostData?.id
     let image = PostData?.image
     let link = PostData?.link
+    let spoiler = PostData?.spoiler
+    let nsfw = PostData?.nsfw
 
 
     const LikeDislikeInfo1 = {
@@ -146,6 +148,8 @@ function CommentSection() {
                             {PostData && <LikeDislike123 info={LikeDislikeInfo1} />}
                         </div>
                         {(UserData != null && PostData != null) && <p className="line-clamp-1 font-semibold text-lg">{UserData.username} | {title}</p>}
+                        {spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                        {nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
                     </div>
                     <button onClick={() => navigate(-1)} className="flex flex-row h-10 items-center justify-center border-transparent rounded-full bg-transparent hover:bg-neutral-800">
                         <XMarkIcon className="w-8 h-8" />
@@ -174,7 +178,12 @@ function CommentSection() {
 
                             <p className="text-2xl font-semibold mx-3">{title}</p>
 
-                            {image && <div className="flex w-full mx-3 justify-center"><img src={`http://127.0.0.1:8000/${image}`} alt="" className="min-h-[20rem] max-w-[42rem] max-h-[40rem] object-cover" /> </div>}
+                            <div className="flex flex-row items-center gap-2 mx-3">
+                                {spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                                {nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
+                            </div>
+                
+                            {image && <div className="flex w-full mx-3 justify-center"><img src={`http://127.0.0.1:8000/${image}`} alt="" className="min-h-[20rem]  max-h-[40rem] object-cover" /> </div>}
 
                             {link &&
                                 <div className="flex flex-row items-center w-1/2">

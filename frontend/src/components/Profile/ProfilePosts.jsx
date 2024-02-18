@@ -38,8 +38,8 @@ function ProfilePosts() {
                             <OrderCard />
                             <div className="">
                                 {(UserPosts != null) ? (
-                                    UserPosts.map((Post) => (
-                                        <div key={Post.id}>
+                                    UserPosts.map((Post, index) => (
+                                        <div className="border border-b-0 border-neutral-700" key={index}>
                                             <SearchCardPost info={Post}></SearchCardPost>
                                         </div>
                                     ))

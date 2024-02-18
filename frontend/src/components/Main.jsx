@@ -1,10 +1,8 @@
 import CreatePost from "./CreatePost"
 import Card from "./Card"
-import { useState, useEffect, useRef, useMemo } from "react"
-import Policies from "./Policies"
+import { useState, useEffect, useRef } from "react"
 import RecentPosts from "./RecentPosts"
 import axios from "axios"
-import OrderCard from "./OrderCard"
 import { cachePosts } from "./State/Slices/PostsSlice"
 import { getPostsCached } from "./State/Slices/PostsSlice"
 import { useSelector, useDispatch } from "react-redux"
@@ -87,7 +85,6 @@ function Main() {
                 <div className="flex flex-row  w-full gap-7">
                     <div ref={postDiv} className="flex flex-col w-full lg:w-2/3 gap-7">
                         <CreatePost />
-                        <OrderCard />
                         {(postConf.posts != null) ? (
                             <div className="flex flex-col w-full gap-3">
                                 {postConf.posts.map((Post, index) => (

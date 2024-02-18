@@ -37,55 +37,43 @@ function SubmitPost() {
     }, [location])
 
     return (
-        <div className="absolute -translate-x-1/2 top-10 mt-16 w-full p-3  xl:w-[80rem]">
+        <div className="absolute -translate-x-1/2 top-10 mt-16 w-full p-3 xl:w-[80rem]">
             <div className="flex flex-row gap-9 w-full">
                 <div className="lg:w-10/12 w-full flex flex-col gap-7">
-                    <div className="w-full flex flex-row items-center justify-between border-b-2 border-neutral-700">
+                    
+                    <div className="w-full flex flex-row border-b-2 border-neutral-700">
                         <p className="text-left text-2xl my-5 font-semibold">Create a post</p>
-                        <button className="h-10 flex flex-row gap-3 items-center rounded-full bg-transparent hover:bg-neutral-800">
-                            <p>Drafts</p>
-                            <p className="bg-neutral-800 w-6 rounded-md">0</p>
-                        </button>
                     </div>
 
                     <div className="h-fit flex flex-col gap-4">
                         <SelectCommunityPanel />
                         <div className="flex flex-col gap-5 bg-neutral-900 rounded-md">
                             <div className="h-14 flex flex-row">
-                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-[1px] border-neutral-700 ">
+                                <div className="w-1/3 flex justify-center rounded-none border-neutral-700 ">
                                     <input defaultChecked onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="post" value='post' className="hidden peer" />
                                     <label htmlFor="post" className="w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4">
                                         <PencilSquareIcon className="w-5 hidden md:block stroke-inherit" />
-                                        <p className="text-md text-inherit">Post</p>
+                                        <p className="text-lg text-inherit">Post</p>
                                     </label>
                                 </div>
-                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-[1px] border-neutral-700 ">
+                                <div className="w-1/3 flex justify-center rounded-none border-0 border-x-[1px] border-neutral-700 ">
                                     <input onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="image&video" value="image&video" className="hidden peer" />
                                     <label htmlFor="image&video" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4">
                                         <PhotoIcon className="w-5 hidden md:block stroke-inherit" />
-                                        <p className="text-md text-inherit">Image & Video</p>
+                                        <p className="text-lg text-inherit">Image</p>
                                     </label>
                                 </div>
-                                <div className="w-1/4 flex justify-center rounded-none border-0 border-r-[1px] border-neutral-700 ">
+                                <div className="w-1/3 flex justify-center rounded-none border-neutral-700 ">
                                     <input onClick={(e) => setFormType(e.target.value)} type="radio" name="selectSubmit" id="link" value="link" className="hidden peer" />
                                     <label htmlFor="link" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
                                         text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
                                         peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4">
                                         <LinkIcon className="w-5 hidden md:block stroke-inherit" />
-                                        <p className="text-md text-inherit">Link</p>
-                                    </label>
-                                </div>
-                                <div className="w-1/4 flex justify-center rounded-none border-neutral-700 ">
-                                    <input type="radio" name="selectSubmit" id="poll" className="hidden peer" />
-                                    <label htmlFor="poll" className=" w-full flex flex-row items-center gap-3 justify-center bg-transparent 
-                                        text-neutral-500 hover:text-white stroke-neutral-500 hover:stroke-white 
-                                        peer-checked:text-white peer-checked:stroke-white peer-checked:border-b-4">
-                                        <ListBulletIcon className="w-5 hidden md:block stroke-inherit" />
-                                        <p className="text-md text-inherit">Poll</p>
+                                        <p className="text-lg text-inherit">Link</p>
                                     </label>
                                 </div>
                             </div>

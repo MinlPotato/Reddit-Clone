@@ -59,7 +59,7 @@ function SelectCommunityPanel() {
                   </>
                 ) : (
                   <>
-                    <EllipsisHorizontalCircleIcon className="w-8 stroke-neutral-400" />
+                    <EllipsisHorizontalCircleIcon className="w-8 stroke-neutral-500" />
                     <p className="text-lg">Choose a community</p>
                   </>
                 )}
@@ -92,7 +92,7 @@ function SelectCommunityPanel() {
                       <img src={subreddit} alt="" className="w-10 h-10" />
                       <div className="flex flex-col justify-start">
                         <p className="text-inherit text-lg text-start">{community.name}</p>
-                        <p className="text-neutral-500 text-md text-start">0 Members</p>
+                        <p className="text-neutral-500 text-md text-start">{community.members} Members</p>
                       </div>
                     </div>
                   </Listbox.Option>

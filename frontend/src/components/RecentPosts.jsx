@@ -18,9 +18,10 @@ function RecentPosts() {
                         <div className="border-b border-neutral-700 flex flex-row gap-3">
                             <Link to={`/reddit/${post.id}`}>
                                 {post.image ? (
-                                <div className="flex items-center justify-center w-20 h-14 border border-neutral-700 rounded-md mt-4 mb-7">
-                                    <img src={`http://127.0.0.1:8000/${post.image}`} className="w-full h-full object-cover rounded-md" alt="" />
-                                </div>
+                                    <div className="relative flex items-center justify-center w-20 h-14 border border-neutral-700 rounded-md mt-4 mb-7">
+                                        <img src={`http://127.0.0.1:8000/${post.image}`} className="w-full h-full object-cover rounded-md" alt="" />
+                                        {(post.spoiler || post.nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-lg"></div>}
+                                    </div>   
                             ) : (
                                 <div className="flex items-center justify-center w-20 h-14 border border-neutral-700 rounded-md mt-4 mb-7">
                                     <DocumentIcon className="w-5 h-5 stroke-neutral-500" />

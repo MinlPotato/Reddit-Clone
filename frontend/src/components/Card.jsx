@@ -26,6 +26,8 @@ function Card(params) {
     let image = infoCard.image
     let comments = infoCard.comments
     let link = infoCard.link
+    let spoiler = infoCard.spoiler
+    let nsfw = infoCard.nsfw
 
     const LikeDislikeInfo = {
         post_id: id,
@@ -60,18 +62,28 @@ function Card(params) {
                 <LikeDislike123 info={LikeDislikeInfo} />
             </div>
 
-            <div className="flex flex-col gap-2 mx-3 items-start w-full text-start">
+            <div className="flex flex-col gap-2 ml-3 items-start w-full text-start">
                 <div className="flex flex-row flex- gap-5 text-neutral-500 md:text-base text-xs">
                     <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`r/${community_id}`}>r/{community_name}</Link>
                     <p className="text-inherit ">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>
                     <p className="text-inherit hidden sm:block">{date_created}</p>
                 </div>
-                <p className="md:text-2xl text-base text-start font-semibold mb-1 w-full">{title}</p>
+                <div className="flex flex-row gap-2 items-center">
+                    <p className="md:text-2xl text-base text-start font-semibold mb-1 w-full">{title}</p>
+                    {spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                    {nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
+                </div>
+                
                 {image
-                    ? (<div className="flex w-full justify-center"><img src={image} alt="" className="sm:min-h-[20rem] max-h-[40rem] object-cover" /> </div>)
-                    : <div dangerouslySetInnerHTML={{ __html: description }} className="text-base md:text-xl w-full font-semibold text-neutral-500 line-clamp-3"></div>
+                    ? (  
+                        <div className="relative flex w-full justify-center">
+                            <img src={image} alt="" className="sm:min-h-[20rem] max-h-[40rem] object-cover backdrop-blur-lg" />
+                            {(spoiler || nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-2xl"></div>}
+                        </div>
+                    ) : ( spoiler || nsfw ? ( <></> ) : <div dangerouslySetInnerHTML={{ __html: description }} className="text-base md:text-xl w-full font-semibold text-neutral-500 line-clamp-3"></div>)
                 }
-                {link &&
+
+                {(link && (!spoiler && !nsfw)) &&
                     <div className="flex flex-row items-center">
                         <a href={link} target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{link}</a>
                         <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
@@ -85,10 +97,6 @@ function Card(params) {
                         <p>{comments}</p>
                         <p>Comments</p>
                     </Link>
-                    <button className='p-0 hidden sm:flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
-                        <ShareIcon className="w-6 h-6" />
-                        <p>Share</p>
-                    </button>
                     <button onClick={handleSave} className='p-0 hidden sm:flex flex-row items-center gap-3 rounded-none bg-transparent hover:bg-neutral-800 border-transparent'>
                         {Saved ? <BookmarkIcon className="w-6 h-6 fill-white" /> : <BookmarkIcon className="w-6 h-6 " />}
 

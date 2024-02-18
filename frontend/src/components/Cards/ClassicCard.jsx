@@ -50,15 +50,23 @@ function ClassicCard(params) {
                 <div className="flex flex-col w-full">
                     <div className="flex flex-row gap-3 items-center justify-between">
                         {infoCard.image ? (
-                            <img src={`http://127.0.0.1:8000/${infoCard.image}`} alt="" className="hidden sm:block min-w-[9rem] max-w-[9rem] h-[6rem] rounded-lg object-cover" />
+                            <div className="relative flex">
+                                <img src={`http://127.0.0.1:8000/${infoCard.image}`} alt="" className="hidden sm:block min-w-[9rem] max-w-[9rem] h-[6rem] rounded-lg object-cover" />
+                                 {(infoCard.spoiler || infoCard.nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-lg rounded-md"></div>}
+                            </div>
+                            
                         ) : (
                             <div className="hidden sm:flex justify-center items-center min-w-[9rem] max-w-[9rem] h-[6rem] rounded-lg bg-neutral-800">
                                 <DocumentIcon className="w-8 h-8 stroke-neutral-600" />
                             </div>
                         )}
                         <div className=" flex flex-col gap-2 justify-between py-2 w-full h-full">
-                            <div className="flex flex-col items-start">
-                                <p className="text-sm text-start lg:text-xl font-semibold">{infoCard.title}</p>
+                            <div className="flex flex-col items-start gap-1">
+                                <div className="flex flex-row gap-2 items-center">
+                                    <p className="text-sm text-start lg:text-xl font-semibold">{infoCard.title}</p>
+                                    {infoCard.spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                                    {infoCard.nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
+                                </div> 
                                 <div className="flex flex-row flex-wrap text-start gap-2 items-center">
                                     <Link className="text-xs lg:text-base text-neutral-500 hover:text-neutral-400 hover:underline">r/{infoCard.community_name}</Link>
                                     <p className="text-neutral-500 text-xs">•</p>

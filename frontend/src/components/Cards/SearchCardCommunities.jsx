@@ -47,7 +47,7 @@ export const SearchCardCommunitiesBig = (params) => {
                         <p className="text-neutral-500 font-semibold">·</p>
                         <p className="text-neutral-500 text-md text-start">{members} Members</p>
                     </div>
-                    <p className="text-start text-neutral-500 line-clamp-2">{description}</p>
+                    <p className="text-start text-neutral-500 line-clamp-2 w-11/12">{description}</p>
                 </div>
 
 

@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework import filters
 
-from ..serializers import (PostSerializer,PublishPostSerializer)
+from ..serializers import (PostSerializer)
 from base.models import Post
 from rest_framework import status
 import random
@@ -54,7 +54,7 @@ class getPostsByCommunityList(generics.ListAPIView):
 def publishPost(request):
     if request.method == 'POST':
         print(request.data)
-        serializer = PublishPostSerializer(data=request.data)
+        serializer = PostSerializer(data=request.data)
         print(serializer.is_valid())
         if serializer.is_valid():
             if 'image' in request.data:
