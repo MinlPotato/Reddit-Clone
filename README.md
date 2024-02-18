@@ -1,8 +1,8 @@
--- Reddit Clone -- 
+<h1>-- Reddit Clone --</h1> 
 
--- How to install repository and dependencies --
+<h2>-- How to install repository and dependencies --</h2> 
 
-1. Clone repo:
+1. Clone repo: <br/>
 git clone https://github.com/MinlPotato/Reddit-Clone.git
 
 3. Install dependencies for Front End:
