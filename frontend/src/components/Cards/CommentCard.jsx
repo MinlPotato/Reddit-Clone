@@ -15,7 +15,7 @@ function CommentCard(params) {
     const infoCard = params.info
     const loggedUser = useSelector(getUserData)
 
-    const [Hide, setHide] = useState(false)
+    const [Hide, setHide] = useState(() => infoCard.votes < 0 ? true : false)
     const [Reply, setReply] = useState(false)
     const [Comments, setComments] = useState(null)
     const [TextAreaValue, setTextAreaValue] = useState('')
@@ -71,7 +71,7 @@ function CommentCard(params) {
         }
     }
 
-    return Hide == false ? (
+    return (Hide == false) ? (
         <>
             <div className='grid grid-cols-12 gap-x-12'>
                 <div className='flex flex-col items-center justify-center w-10 col-span-1 row-span-6'>
@@ -141,6 +141,8 @@ function CommentCard(params) {
                     <Link to={`/reddit/user/${infoCard.id}`} className='font-semibold'>{infoCard.username}</Link>
                     <p className='text-neutral-500'>·</p>
                     <p className='text-neutral-500'>{moment(infoCard.date_created).fromNow()}</p>
+                    <p className='text-neutral-500'>·</p>
+                     <p className='text-neutral-500'>{infoCard.votes} votes</p>
                 </div>
             </div>
         </>

@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getMember, leaveMember, joinMember } from '../services/communityService'
+import MemberJoinButton from "./MemberJoinButton"
 
 function CommunityInfoCard(params) {
 
@@ -66,15 +67,8 @@ function CommunityInfoCard(params) {
 
                 <div className="border-b-2 pb-6 pt-6 border-neutral-800">
 
-                    {IsMember ? (
-                        <button onClick={handleJoin} title="Joined" className="w-full border-white bg-transparent hover:bg-neutral-800 font-semibold rounded-full">
-                            <p className="text-white text-lg">Joined</p>
-                        </button>
-                    ) : (
-                        <button onClick={handleJoin} className="w-full bg-neutral-200 hover:bg-neutral-300 font-semibold rounded-full">
-                            <p className="text-black text-lg">Join</p>
-                        </button>
-                    )}
+                    <MemberJoinButton className={"w-full"} communityData={infoCard} info={{ user_id: userData.id, community_id: infoCard.id }} />
+
                 </div>
             </div>
         </div>

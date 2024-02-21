@@ -5,14 +5,18 @@ import { Listbox, Transition } from "@headlessui/react";
 import subreddit from "../../assets/subreddit.png"
 import { useNavigate } from "react-router-dom";
 import { getCommunitiesJoinedByUser } from "../services/communityService";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../State/Slices/AuthUser";
 import CreateCommunity from "../Community/CreateCommunity";
+import { getCommunitiesCached, addCommunities } from "../State/Slices/CommunitySlice";
 
 function HeaderHomePopover() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const userData = useSelector(getUserData)
+    const communitiesCached = useSelector(getCommunitiesCached).joinedCommunities
 
     const [Communities, setCommunities] = useState([])
     const [selected, setSelected] = useState(null)
@@ -24,9 +28,16 @@ function HeaderHomePopover() {
 
     useEffect(() => {
         if (userData.isLogged) {
-            getCommunitiesJoinedByUser(userData.id).then((response) => setCommunities(response))
+            if (communitiesCached.length == 0) {
+                getCommunitiesJoinedByUser(userData.id).then((response) => {
+                    dispatch(addCommunities(response))
+                    setCommunities(response)
+                })
+            } else {
+                setCommunities(communitiesCached)
+            }
         }
-    }, [])
+    }, [communitiesCached])
 
     const handleChange = (e) => {
         setSelected(e)

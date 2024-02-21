@@ -76,19 +76,28 @@ function SearchSortPanel() {
 
     const handleSort = (e) => {
         setSelectedSort(e)
-        const queryParameters = new URLSearchParams(window.location.search)
-        const search = queryParameters.get("q")
-        const date = queryParameters.get("date")
-        navigate(location.pathname + `?q=${search}` + `&sort=${e.sort_type}` + `&date=${date}`)
+        const url = new URL(window.location.href)
+
+        if (!(url.searchParams.has('sort'))){
+            url.searchParams.append('sort', e.sort_type);
+        } else {
+            url.searchParams.set("sort", e.sort_type)
+        }
+
+        navigate(location.pathname + url.search)
     }
 
     const handleDate = (e) => {
         setSelectedDate(e)
-        const queryParameters = new URLSearchParams(window.location.search)
-        const search = queryParameters.get("q")
-        const sort = queryParameters.get("sort")
-            
-        navigate(location.pathname + `?q=${search}` + `&sort=${sort}` + `&date=${e.sort_type}`)
+        const url = new URL(window.location.href)
+
+        if (!(url.searchParams.has('date'))){
+            url.searchParams.append('date', e.sort_type);
+        } else {
+            url.searchParams.set("date", e.sort_type)
+        }
+
+        navigate(location.pathname + url.search)
     }
 
     return (

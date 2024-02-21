@@ -20,7 +20,7 @@ function RecentPosts() {
                                 {post.image ? (
                                     <div className="relative flex items-center justify-center w-20 h-14 border border-neutral-700 rounded-md mt-4 mb-7">
                                         <img src={`http://127.0.0.1:8000/${post.image}`} className="w-full h-full object-cover rounded-md" alt="" />
-                                        {(post.spoiler || post.nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-lg"></div>}
+                                        {(post.spoiler || post.nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-lg rounded-md"></div>}
                                     </div>   
                             ) : (
                                 <div className="flex items-center justify-center w-20 h-14 border border-neutral-700 rounded-md mt-4 mb-7">
@@ -31,6 +31,10 @@ function RecentPosts() {
                             
                             <div className="row row-col text-start mt-3">
                                 <Link to={`/reddit/${post.id}`} className="font-medium  text-lg text-left line-clamp-1 hover:underline">{post.title}</Link>
+                                <div className="flex flex-row gap-2 items-center">
+                                    {post.spoiler && <div className="border border-neutral-500 px-2 rounded-sm"><p>spoiler</p></div>}
+                                    {post.nsfw && <div className="border border-red-500 px-2 rounded-sm"><p className="text-red-500">nsfw</p></div>}
+                                </div>     
                                 <p className=" text-left mb-3 text-neutral-500">{post.votes} points • {post.comments} comments • {moment(post.date_created).fromNow()}</p>
                             </div>
 

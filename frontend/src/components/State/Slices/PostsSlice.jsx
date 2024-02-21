@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     seed: Math.floor(Math.random() * 100),
     start: 0,
-    limit: 3,
+    limit: 5,
     posts: [],
     recent: []
 }
@@ -15,7 +15,7 @@ const PostSlice = createSlice({
         cachePosts(state, action) {
             state.posts = [...state.posts, ...action.payload]
             state.start = state.limit
-            state.limit = state.limit + 3
+            state.limit = state.limit + 5
         },
         recentPosts(state, action) {
             if (state.recent.length == 6) {

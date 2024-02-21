@@ -17,10 +17,9 @@ import QuillTextArea from "./QuillTextArea";
 import { getSaved, deleteSaved, publishSaved } from "./services/voteService";
 import { recentPosts } from "./State/Slices/PostsSlice";
 import urlMetadata from 'url-metadata';
+import SearchSortPanel from './SearchComponents/SearchSortPanel';
 
 function CommentSection() {
-
-    window.scrollTo({ top: 0, left: 0 });
 
     const loggedUser = useSelector(getUserData)
     const location = useLocation()
@@ -39,15 +38,26 @@ function CommentSection() {
 
     useEffect(() => {
         const post_id = location.pathname.split('/')[2]
+        window.scrollTo({ top: 0, left: 0 });
+
         getPost(post_id).then((response) => {
             setPostData(response)
             getCommunity(response.community_id).then((response) => setCommunityData(response))
             getUser(response.user_id).then((response) => setUserData(response))
-            getCommentsByPost(post_id).then((response) => setComments(response))
             getSaved({ post_id: post_id, user_id: loggedUser.id }).then((response) => setSaved(response))
         })
 
+    }, [])
+
+    useEffect(() => {
+        const post_id = location.pathname.split('/')[2]
+        const queryParameters = new URLSearchParams(window.location.search)
+        const sort = queryParameters.get("sort") || ""
+        const date = queryParameters.get("date") || ""
+
+        getCommentsByPost(post_id, sort, date).then((response) => setComments(response))
     }, [location])
+    
 
     useEffect(() => {
         if (PostData != null) {
@@ -209,16 +219,16 @@ function CommentSection() {
                                     <EllipsisHorizontalIcon className="w-6 h-6" />
                                 </button>
                             </div>
-                            <div className="flex flex-col gap-2 w-full mx-3 pb-20 mb-5 border-b-2 border-neutral-700">
+                            <div className="relative flex flex-col gap-2 w-full mx-3 mb-5 border-b-2 border-neutral-700">
                                 <p className="text-start">Comment as  <Link to={`/reddit/user/${loggedUser.id}`} className="text-sky-500">{loggedUser.username}</Link></p>
                                 <QuillTextArea info={QuillTextAreaInfo} />
-                                <div className="w-full flex justify-end mt-2">
+                                <div className="w-full flex justify-end mt-2 mb-5">
                                     <button onClick={handleSubmit} disabled={DisableCommentSubmit}
                                         className="rounded-full w-1/5 p-2 bg-white disabled:bg-neutral-200 text-neutral-800 disabled:text-neutral-500">
                                         {loading ? <p className="text-black">loading...</p> : <p className="text-inherit font-semibold text-base">Comment</p>}
                                     </button>
                                 </div>
-
+                                <SearchSortPanel/>
                             </div>
 
                             {Comments ? (

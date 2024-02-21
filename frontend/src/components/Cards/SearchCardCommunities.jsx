@@ -22,7 +22,7 @@ export default function SearchCardCommunitiesSmall(params) {
                 </div>
             </div>
 
-            <MemberJoinButton info={{user_id: userData.id, community_id: infoCard.id}}/>
+            <MemberJoinButton className={"w-24 h-10"} communityData={infoCard} info={{user_id: userData.id, community_id: infoCard.id}}/>
             
         </div>
     )
@@ -53,7 +53,7 @@ export const SearchCardCommunitiesBig = (params) => {
 
             </div>
 
-            <MemberJoinButton info={{user_id: userData.id, community_id: infoCard.id}}/>
+            <MemberJoinButton className={"w-24 h-10"} communityData={infoCard} info={{user_id: userData.id, community_id: infoCard.id}}/>
 
         </div>
     )

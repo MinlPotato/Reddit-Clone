@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export let getCommentsByPost = async (id) => (
-    await axios.get(`http://127.0.0.1:8000/api/posts/${id}/comments`)
+export let getCommentsByPost = async (id, order, date) => (
+    await axios.get(`http://127.0.0.1:8000/api/posts/${id}/comments?ordering=${order}&date=${date}`)
         .then(async function (response) {
             const data = response.data
             return data

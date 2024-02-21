@@ -4,7 +4,7 @@ import Card from "../Card"
 import subreddit from "../../assets/subreddit.png"
 import OrderCard from "../OrderCard"
 import { CakeIcon } from "@heroicons/react/24/outline"
-import { getPostByCommunity, getCommunity, getMember, joinMember, leaveMember } from "../services/communityService"
+import { getPostByCommunity, getCommunity } from "../services/communityService"
 import { useLocation } from "react-router-dom"
 import moment from "moment"
 import { Link } from "react-router-dom"
@@ -51,7 +51,7 @@ function CommunityPage() {
                         <div className="flex flex-row w-full sm:gap-10 justify-between items-center">
                             <p className="text-3xl sm:text-4xl font-bold ">{CommunityData.name}</p>
 
-                            <MemberJoinButton info={{ user_id: userData.id, community_id: community_id }} />
+                            <MemberJoinButton className={"w-24 h-10"} communityData={CommunityData} info={{ user_id: userData.id, community_id: community_id }} />
 
                         </div>
                         <p className="text-lg text-neutral-500 font-semibold">r/{CommunityData.name}</p>

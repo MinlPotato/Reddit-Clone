@@ -6,6 +6,50 @@ from rest_framework import filters
 from ..serializers import (CommentSerializer)
 from base.models import Comment
 from rest_framework import status
+from django.utils import timezone
+from datetime import timedelta
+
+
+class DateFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+
+        date = request.query_params.get('date', None)
+
+        if date == "all":
+            return queryset
+
+        if date == "year":
+            one_year_ago = timezone.now() - timedelta(days=365)
+            queryset = queryset.filter(date_created__gte=one_year_ago)
+
+            return queryset
+
+        if date == "month":
+            one_month_ago = timezone.now() - timedelta(days=30)
+            queryset = queryset.filter(date_created__gte=one_month_ago)
+
+            return queryset
+
+        if date == "week":
+            one_week_ago = timezone.now() - timedelta(days=7)
+            queryset = queryset.filter(date_created__gte=one_week_ago)
+
+            return queryset
+
+        if date == "day":
+            one_day_ago = timezone.now() - timedelta(days=1)
+            queryset = queryset.filter(date_created__gte=one_day_ago)
+
+            return queryset
+
+        if date == "hour":
+            one_hour_ago = timezone.now() - timedelta(hours=1)
+            queryset = queryset.filter(date_created__gte=one_hour_ago)
+
+            return queryset
+
+        return queryset
+
 
 @api_view(['GET'])
 def getAllComments(request):
@@ -26,7 +70,7 @@ def getCommentsInComment(request, pk):
 
 class getCommentsByPostList(generics.ListAPIView):
     serializer_class = CommentSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DateFilter]
     ordering_fields = ['date_created', 'votes']
 
     def get_queryset(self):
@@ -36,7 +80,6 @@ class getCommentsByPostList(generics.ListAPIView):
 
 @api_view(['POST'])
 def publishComment(request):
-    
     if request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
