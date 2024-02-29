@@ -1,4 +1,4 @@
-import { ListBulletIcon, LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
+import { LinkIcon, PhotoIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 import rulesImg from "../../assets/rulesThingy2.png"
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Slices/AuthUser";

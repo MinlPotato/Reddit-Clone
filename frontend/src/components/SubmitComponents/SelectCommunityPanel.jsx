@@ -4,7 +4,7 @@ import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import subreddit from "../../assets/subreddit.png"
 import { useNavigate } from "react-router-dom";
-import { getCommunities, getCommunitiesJoinedByUser, getCommunity } from "../services/communityService";
+import { getCommunitiesJoinedByUser, getCommunity } from "../services/communityService";
 import { useSelector } from "react-redux";
 import { getUserData } from "../State/Slices/AuthUser";
 

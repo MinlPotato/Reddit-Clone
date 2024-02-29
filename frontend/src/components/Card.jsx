@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChatBubbleLeftIcon, ShareIcon, BookmarkIcon, EllipsisHorizontalIcon, LinkIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleLeftIcon, BookmarkIcon, EllipsisHorizontalIcon, LinkIcon } from "@heroicons/react/24/outline"
 import { useSelector } from "react-redux";
 import { getUserData } from "./State/Slices/AuthUser";
 import moment from 'moment';
@@ -85,7 +85,7 @@ function Card(params) {
 
                 {(link && (!spoiler && !nsfw)) &&
                     <div className="flex flex-row items-center">
-                        <a href={link} target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{link}</a>
+                        <a href={link} rel="noreferrer" target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{link}</a>
                         <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
                     </div>
                 }

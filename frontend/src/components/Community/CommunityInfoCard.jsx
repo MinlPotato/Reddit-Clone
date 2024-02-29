@@ -2,35 +2,12 @@ import subreddit from '../../assets/subreddit.png'
 import { CakeIcon } from "@heroicons/react/24/outline"
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { getMember, leaveMember, joinMember } from '../services/communityService'
 import MemberJoinButton from "./MemberJoinButton"
 
 function CommunityInfoCard(params) {
 
     const infoCard = params.info
     const userData = params.userData
-
-    const [IsMember, setIsMember] = useState(false)
-    const [Members, setMembers] = useState(infoCard.members || 0)
-    const [ActiveMembers, setActiveMembers] = useState(infoCard.active_members || 0)
-
-    useEffect(() => {
-        getMember({ user_id: userData.id, community_id: infoCard.id }).then((response) => setIsMember(response))
-    }, [params])
-
-
-    const handleJoin = () => {
-        if (IsMember) {
-            leaveMember({ user_id: userData.id, community_id: infoCard.id }).then(() => setIsMember(false))
-            setMembers(Members - 1)
-            setActiveMembers(Members - 1)
-        } else {
-            joinMember({ user_id: userData.id, community_id: infoCard.id }).then(() => setIsMember(true))
-            setMembers(Members + 1)
-            setActiveMembers(Members + 1)
-        }
-    }
 
     return (
         <div className="hidden lg:flex flex-col gap-7 w-full">
@@ -52,13 +29,13 @@ function CommunityInfoCard(params) {
                 </div>
                 <div className="flex flex-row gap-20 border-b-2 pb-6 pt-6 border-neutral-800">
                     <div className='flex flex-col'>
-                        <p className="text-xl font-semibold ">{Members}</p>
+                        <p className="text-xl font-semibold ">{infoCard.members || 0}</p>
                         <p className="text-md font-semibold text-neutral-500">Members</p>
                     </div>
                     <div className='flex flex-col'>
                         <div className='flex flex-row items-center gap-1'>
                             <div className='rounded-full w-2 h-2 bg-green-400'></div>
-                            <p className="text-xl font-semibold">{ActiveMembers}</p>
+                            <p className="text-xl font-semibold">{infoCard.active_members || 0}</p>
                         </div>
                         <p className="text-md font-semibold text-neutral-500">Online</p>
                     </div>

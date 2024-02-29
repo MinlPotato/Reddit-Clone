@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { getUserData } from "../State/Slices/AuthUser";
 import { useSelector } from "react-redux";
@@ -20,14 +20,11 @@ function ProfileHeader() {
         }
     })
 
-
-    let overviewURL = `/reddit/user/${user_id}`
     let postsURL = `/reddit/user/${user_id}/posts`
     let commentsURL = `/reddit/user/${user_id}/comments`
     let upvotedURL = `/reddit/user/${user_id}/upvoted`
     let downvotedURL = `/reddit/user/${user_id}/downvoted`
     let savedURL = `/reddit/user/${user_id}/saved`
-
 
     return (
         <>

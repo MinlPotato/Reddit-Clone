@@ -1,8 +1,7 @@
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { PlusIcon, TagIcon } from "@heroicons/react/24/outline"
+
+import { PlusIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
-import { useState, useEffect } from "react"
-import QuillTextArea from "../QuillTextArea"
+import { useState } from "react"
 import 'react-quill/dist/quill.snow.css';
 import { useSelector } from "react-redux"
 import { getUserData } from "../State/Slices/AuthUser"

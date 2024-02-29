@@ -1,5 +1,4 @@
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { PlusIcon, TagIcon } from "@heroicons/react/24/outline"
+import { PlusIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import QuillTextArea from "../QuillTextArea"
@@ -15,7 +14,7 @@ function FormPost() {
     const [TitleLimit, setTitleLimit] = useState(false)
 
     const [Fields, setFields] = useState({})
-    const [Errors, setErrors] = useState([])
+    const [setErrors] = useState([])
 
     const [TextAreaValue, setTextAreaValue] = useState('')
     const [TextTitleValue, setTextTitleValue] = useState('')

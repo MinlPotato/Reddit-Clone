@@ -16,7 +16,6 @@ import DOMPurify from 'dompurify';
 import QuillTextArea from "./QuillTextArea";
 import { getSaved, deleteSaved, publishSaved } from "./services/voteService";
 import { recentPosts } from "./State/Slices/PostsSlice";
-import urlMetadata from 'url-metadata';
 import SearchSortPanel from './SearchComponents/SearchSortPanel';
 
 function CommentSection() {
@@ -128,18 +127,6 @@ function CommentSection() {
         }
     }
 
-    async function MetaData(url) {
-        try {
-            const metadata = await urlMetadata(url, {
-                mode: 'no-cors',
-                
-            });
-            console.log(metadata);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     const handleSave = () => {
         if (Saved) {
             deleteSaved({ post_id: id, user_id: loggedUser.id }).then(() => setSaved(false))
@@ -197,7 +184,7 @@ function CommentSection() {
 
                             {link &&
                                 <div className="flex flex-row items-center w-1/2">
-                                    <a href={link} target="_blank" className="mx-3 hover:underline text-blue-500 line-clamp-1">{link}</a>
+                                    <a href={link} rel="noreferrer" target="_blank" className="mx-3 hover:underline text-blue-500 line-clamp-1">{link}</a>
                                     <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
                                 </div>
                             }

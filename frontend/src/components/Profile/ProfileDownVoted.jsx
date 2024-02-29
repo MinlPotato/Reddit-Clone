@@ -35,7 +35,7 @@ function ProfileDownVoted() {
                     <div className="">
                         {(PostsDisliked != null) ? (
                             PostsDisliked.length == 0 ? (
-                                <p className="text-xl font-semibold">hmm... looks like you haven't disliked anything yet</p>
+                                <p className="text-xl font-semibold">{`hmm... looks like you haven't disliked anything yet`}</p>
                             ) : (
                                 PostsDisliked.map((Post) => (
                                     <div key={Post.id}>

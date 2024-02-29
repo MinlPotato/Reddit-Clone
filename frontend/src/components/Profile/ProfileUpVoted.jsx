@@ -35,7 +35,7 @@ function ProfileUpVoted() {
                     <div className="">
                         {(PostsLiked != null) ? (
                             PostsLiked.length == 0 ? (
-                                <p className="text-xl font-semibold">hmm... looks like you haven't liked anything yet</p>
+                                <p className="text-xl font-semibold">{`hmm... looks like you haven't liked anything yet`}</p>
                             ) : (
                                 PostsLiked.map((Post) => (
                                     <div key={Post.id}>

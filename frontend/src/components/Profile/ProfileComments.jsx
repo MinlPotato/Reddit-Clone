@@ -12,18 +12,8 @@ function ProfileComments() {
 
     const location = useLocation()
 
-    const sortList = {
-        Hot:'',
-        New:'-date_created',
-        Top:'-votes'
-    }
-
     useEffect(() => {
         const user_id = location.pathname.split('/')[3]
-        const queryParameters = new URLSearchParams(window.location.search)
-        const sort = queryParameters.get("sort")
-        const sortType = sortList[sort] || ''
-
         getUserComments(user_id).then((response) => setUserComments(response))
         getUser(user_id).then((response) => setUserData(response))
     }, [location])
@@ -37,7 +27,7 @@ function ProfileComments() {
                     
                         {(UserComments != null) ? (
                             UserComments.length == 0 ? (
-                                <p className="text-xl font-semibold">hmm... looks like you haven't commented anything yet</p>
+                                <p className="text-xl font-semibold">{`hmm... looks like you haven't commented anything yet`}</p>
                             ) : (
                                 UserComments.map((comment) => (
                                     <div  key={comment.id}>

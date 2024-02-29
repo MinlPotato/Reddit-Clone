@@ -35,7 +35,7 @@ function ProfileSaved() {
                     <div className="">
                         {(PostsSaved != null) ? (
                             PostsSaved.length == 0 ? (
-                                <p className="text-xl font-semibold">hmm... looks like you haven't saved anything yet</p>
+                                <p className="text-xl font-semibold">{`hmm... looks like you haven't saved anything yet`}</p>
                             ) : (
                                 PostsSaved.map((Post) => (
                                     <div  key={Post.id}>

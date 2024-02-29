@@ -35,7 +35,7 @@ function ClassicCard(params) {
 
     const handleSave = () => {
         if (Saved) {
-            deleteSaved({ post_id: infoCard, id, user_id: loggedUser.id }).then(() => setSaved(false))
+            deleteSaved({ post_id: infoCard.id, user_id: loggedUser.id }).then(() => setSaved(false))
         } else {
             publishSaved({ post_id: infoCard.id, user_id: loggedUser.id }).then(() => setSaved(true))
         }
@@ -108,7 +108,7 @@ function ClassicCard(params) {
 
                         {infoCard.link && 
                         <div className="flex flex-row items-center w-1/2">
-                            <a href={infoCard.link} target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{infoCard.link}</a>
+                            <a href={infoCard.link} rel="noreferrer" target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{infoCard.link}</a>
                             <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
                         </div>
                         }

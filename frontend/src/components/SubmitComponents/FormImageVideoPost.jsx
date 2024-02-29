@@ -1,10 +1,8 @@
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { PlusIcon, TagIcon, PhotoIcon } from "@heroicons/react/24/outline"
+import { PlusIcon, PhotoIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { getUserData } from "../State/Slices/AuthUser"
-import { useNavigate } from "react-router-dom"
 
 function FormImageVideoPost() {
 
@@ -15,7 +13,7 @@ function FormImageVideoPost() {
     const [ImageData, setImageData] = useState(null)
 
     const [Fields, setFields] = useState({})
-    const [Errors, setErrors] = useState({})
+    const [setErrors] = useState({})
 
     const handleValidation = () => {
         const formFields = { ...Fields };

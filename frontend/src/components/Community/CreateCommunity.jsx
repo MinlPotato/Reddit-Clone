@@ -1,6 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { useState, useEffect } from "react"
-import { publishCommunity } from "../services/communityService"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
