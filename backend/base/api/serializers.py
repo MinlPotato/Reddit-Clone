@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from base.models import (Community, Post, Comment, Feedback, Saved, CommunityMember)
 from django.contrib.auth.models import User

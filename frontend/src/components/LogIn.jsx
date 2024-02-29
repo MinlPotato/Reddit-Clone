@@ -24,12 +24,12 @@ function LogIn() {
         ).then((response) => {
                 dispatch(login(response.data))
                 navigate('/')
-        }).catch(err => ({
-            valid: err.response?.data?.valid ?? false,
-            data: {
-                message: err.response?.data?.data?.message ?? "Validation failed"
+        }).catch((err) => {
+            const errors = err.response.data
+            for (const [key, value] of Object.entries(errors)) {        
+                alert(`${key}: ${value}`)        
             }
-        }));
+        })
         e.target.username.value = ""
         e.target.password.value = ""
     }

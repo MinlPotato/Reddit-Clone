@@ -78,11 +78,11 @@ function Header() {
             {data.isLogged ? (
                 <HeaderProfilePopover />
             ) : (
-                <div className='w-1/4 min-w-[5rem] mx-2 md:w-1/6 flex flex-row justify-around gap-5'>
-                    <Link to={"/login"} className='w-full lg:w-1/2 flex flex-row justify-center items-center rounded-full bg-orange-500 my-2 hover:bg-orange-600 hover:border-transparent'>
+                <div className='w-1/4 min-w-[5rem] my-1 lg:my-0 mx-2 md:w-1/6 flex flex-col  lg:flex-row justify-around gap-1 lg:gap-5'>
+                    <Link id="login" to={"/login"} className='w-full lg:w-1/2 flex flex-row justify-center items-center rounded-full bg-orange-500 lg:my-2 hover:bg-orange-600 hover:border-transparent'>
                         <p className='text-lg text-white'>Log In</p>
                     </Link>
-                    <Link to={"/register"} className='w-1/2 hidden lg:flex flex-row justify-center items-center rounded-full my-2 border bg-transparent hover:bg-neutral-800 hover:border-transparent'>
+                    <Link id="register" to={"/register"} className='w-full lg:w-1/2 flex flex-row justify-center items-center rounded-full lg:my-2 border bg-transparent hover:bg-neutral-800 hover:border-transparent'>
                         <p className='text-lg text-white'>Register</p>
                     </Link>
                 </div>
