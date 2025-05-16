@@ -56,24 +56,27 @@ class PostSerializer(ModelSerializer):
 class CommentSerializer(ModelSerializer):
 
     username = SerializerMethodField('get_username')
+    post_details = serializers.SerializerMethodField()
 
     def get_username(self, obj):
         return getattr(obj, 'get_username')
 
+    def get_post_details(self, obj):
+        return PostSerializer(obj.post_id).data
+
+
     class Meta:
         model = Comment
         fields = ['id', 'description', 'date_created', 'user_id', 'post_id', 'parent_comment', 
-                  'votes', 'likes', 'dislikes', 'username']
+                  'votes', 'likes', 'dislikes', 'username', 'post_details']
         
     def create(self, validated_data):
-        comment = Comment(
+        return Comment.objects.create(
             description=validated_data['description'],
             user_id=validated_data['user_id'],
-            post_id=validated_data['post_id'],
-            parent_comment=validated_data['parent_comment']
+            post_id=validated_data['post_id'],  # already a Post instance
+            parent_comment=validated_data.get('parent_comment')
         )
-        comment.save()
-        return comment
 
 class UserSerializer(ModelSerializer):
     class Meta:
