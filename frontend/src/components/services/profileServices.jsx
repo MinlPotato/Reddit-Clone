@@ -43,7 +43,7 @@ export let getUserSaved = async (id) => (
         
 
 export let getUserComments = async (id) => (
-    await axios.get(`http://127.0.0.1:8000/api/users/${id}/comments`)
+    await axios.get(`http://127.0.0.1:8000/api/users/${id}/comments?join=true`)
         .then(async function (response) {
             const data = response.data
             return data

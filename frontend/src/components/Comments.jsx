@@ -112,6 +112,9 @@ function CommentSection() {
     const handleSubmit = async () => {
         if (!DisableCommentSubmit) {
 
+            console.log("a");
+            
+
             const data = {
                 description: TextAreaValue,
                 user_id: loggedUser.id,

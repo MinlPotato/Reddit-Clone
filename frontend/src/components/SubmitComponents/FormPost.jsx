@@ -14,7 +14,7 @@ function FormPost() {
     const [TitleLimit, setTitleLimit] = useState(false)
 
     const [Fields, setFields] = useState({})
-    const [setErrors] = useState([])
+    const [Errors, setErrors] = useState([])
 
     const [TextAreaValue, setTextAreaValue] = useState('')
     const [TextTitleValue, setTextTitleValue] = useState('')
@@ -61,6 +61,8 @@ function FormPost() {
     const handleSubmit = async (e) => {
          const [formIsValid, formErrors] = handleValidation()
 
+         console.log(formIsValid);
+         
         if (formIsValid) {
             const queryParameters = new URLSearchParams(window.location.search)
             const community_id = queryParameters.get("community")

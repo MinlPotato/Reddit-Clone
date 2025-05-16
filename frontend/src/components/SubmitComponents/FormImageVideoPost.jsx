@@ -13,7 +13,7 @@ function FormImageVideoPost() {
     const [ImageData, setImageData] = useState(null)
 
     const [Fields, setFields] = useState({})
-    const [setErrors] = useState({})
+    const [Errors, setErrors] = useState({})
 
     const handleValidation = () => {
         const formFields = { ...Fields };

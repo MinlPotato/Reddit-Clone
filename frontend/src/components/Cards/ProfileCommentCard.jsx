@@ -9,13 +9,7 @@ function ProfileCommentCard(params) {
 
     const commentInfo = params.info
 
-    const [PostData, setPostData] = useState(null)
-
-    useEffect(() => {
-        getPost(commentInfo.post_id).then((response) => { setPostData(response) })
-    }, [commentInfo])
-
-    return PostData ? (
+    return (
         <>
             <div className="w-full flex flex-row items-center p-3 gap-5 text-start bg-neutral-900 border border-b-0 hover:border-b hover:border-neutral-400 border-neutral-700">
                 <div className="w-5">
@@ -23,12 +17,12 @@ function ProfileCommentCard(params) {
                 </div>
                 <div className="flex flex-row flex-wrap gap-x-3 items-center">
                     <p className="font-semibold">{commentInfo.username}</p>
-                    <p className="text-neutral-500">Commented on <Link to={`/reddit/${PostData.id}`} className="text-lg font-semibold text-neutral-300 hover:underline">{PostData.title}</Link></p>
+                    <p className="text-neutral-500">Commented on <Link to={`/reddit/${commentInfo.post_details.id}`} className="text-md font-semibold text-neutral-300 hover:underline">{commentInfo.post_details.title}</Link></p>
                     <p className="text-lg text-neutral-500">·</p>
-                    <Link to={`/reddit/r/${PostData.community_id}`} className="hover:underline">r/{PostData.community_name}</Link>
+                    <Link to={`/reddit/r/${commentInfo.post_details.community_id}`} className="hover:underline">r/{commentInfo.post_details.community_name}</Link>
                     <div className="flex flex-row items-center gap-2">
                         <p className="text-neutral-500">Posted by</p>
-                        <Link to={`/reddit/user/${PostData.user_id}`} className="text-neutral-500  hover:underline">u/{PostData.username}</Link>
+                        <Link to={`/reddit/user/${commentInfo.post_details.user_id}`} className="text-neutral-500  hover:underline">u/{commentInfo.post_details.username}</Link>
                     </div>
                 </div>
             </div>
@@ -55,7 +49,7 @@ function ProfileCommentCard(params) {
                 </div>
             </div>
         </>
-    ) : (<></>)
+    )
 }
 
 export default ProfileCommentCard

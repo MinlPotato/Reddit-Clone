@@ -63,10 +63,10 @@ function Card(params) {
             </div>
 
             <div className="flex flex-col gap-2 ml-3 items-start w-full text-start">
-                <div className="flex flex-row flex- gap-5 text-neutral-500 md:text-base text-xs">
-                    <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`r/${community_id}`}>r/{community_name}</Link>
-                    <p className="text-inherit ">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>
-                    <p className="text-inherit hidden sm:block">{date_created}</p>
+                <div className="flex flex-row  gap-5 text-neutral-500 md:text-base text-xs">
+                    <Link onClick={(e) => e.stopPropagation()} className="text-inherit hover:text-neutral-400 hover:underline" to={`/reddit/r/${community_id}`}>r/{community_name}</Link>
+                    <p className="text-inherit ">Posted by <Link onClick={(e) => e.stopPropagation()} to={`/reddit/user/${user_id}`} className="hover:text-neutral-400 hover:underline">u/{username}</Link></p>                    
+                    <p className="text-inherit sm:block">{date_created}</p>
                 </div>
                 <div className="flex flex-row gap-2 items-center">
                     <p className="md:text-2xl text-base text-start font-semibold mb-1 w-full">{title}</p>
@@ -80,12 +80,14 @@ function Card(params) {
                             <img src={image} alt="" className="sm:min-h-[20rem] max-h-[40rem] object-cover backdrop-blur-lg" />
                             {(spoiler || nsfw ) && <div className="absolute h-full w-full bg-white/30 backdrop-blur-2xl"></div>}
                         </div>
-                    ) : ( spoiler || nsfw ? ( <></> ) : <div dangerouslySetInnerHTML={{ __html: description }} className="text-base md:text-xl w-full font-semibold text-neutral-500 line-clamp-3"></div>)
+                    ) : ( spoiler || nsfw 
+                        ? ( <></> ) 
+                        : <div dangerouslySetInnerHTML={{ __html: description }} className="text-xs md:text-xl w-full font-semibold text-neutral-500 line-clamp-3 pr-2"></div>)
                 }
 
                 {(link && (!spoiler && !nsfw)) &&
-                    <div className="flex flex-row items-center">
-                        <a href={link} rel="noreferrer" target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-1/2">{link}</a>
+                    <div className="flex flex-row ">
+                        <a href={link} rel="noreferrer" target="_blank" className="hover:underline text-blue-500 line-clamp-1 w-3/4">{link}</a>
                         <div><LinkIcon className="w-4 h-4 stroke-blue-500" /></div>
                     </div>
                 }
